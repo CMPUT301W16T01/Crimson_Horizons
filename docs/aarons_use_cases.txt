@@ -1,0 +1,49 @@
+use case name:		displayParkingSpotInfo
+participating actors:	user(primary)
+goal:			find parking stall info
+trigger:		user selects a parking stall
+precondition:		program knows parking stall info
+postcondition:		display parking stall info
+basic flow:	1 	user selects a parking stall
+		2	program display details on that parking stall
+
+use case name:		userSignUp
+participating actors:	user(primary)
+goal:			Create an account for the user
+trigger:		user clicks on sign-up button
+precondition:		program knows user data-base
+postcondition:		create a new account for the user
+basic flow:	1	User fills out user sign-up page and clicks the next button
+		2	Program displays the account was successfully made
+		3	User clicks the next button
+		4	Program displays the main screen
+
+use case name:		userEditProfile
+participating actors:	user(primary)
+goal:			Modify the user's account
+trigger:		user clicks on edit account button
+precondition:		program knows user data-base
+postcondition:		The user's account is modified
+basic flow:	1	User clicks on edit profile button
+		2	Program displays edit profile page
+		3	User fills out parts of the edit profile page and clicks save
+		4	Program displays the modified user webpage
+
+use case name:		userDisplayProfile
+participating actors:	user(primary)
+goal:			Display the selected user's account info
+trigger:		user clicks on a user's profile name
+precondition:		program knows user data-base
+postcondition:		The program displays an user's account info
+basic flow:	1	User clicks on an user name
+		2	Program displays the selected user's basic information
+
+use case name:		notifyOwnerOfBid
+participating actors:	owner(primary) user
+goal:			Owner is notified of bid
+trigger:		user clicks on the bid button of the owner's parking stall
+precondition:		program knows user data-base, owner data-base, and can contact owner
+postcondition:		The program notifies the owner of a bid
+basic flow: 	1	user clicks on bid button
+		2	Program sends notification to owner
+		3	Owner recieves notification on their main menu
