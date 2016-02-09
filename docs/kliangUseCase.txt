@@ -1,4 +1,4 @@
-Use Case Name: US 01.04.01
+Use Case Name: UC 01.04.01
 Participating Actors: Owner
 Goal: Able to edit the status of his parking stall
 Trigger: Click on the Object that he owns
@@ -16,7 +16,7 @@ Exceptiosn: 5.0: His changes are invalid
 	    5.1 System notifies user of error
 
 
-Use Case Name: US 01.05.01
+Use Case Name: UC 01.05.01
 Participating Actors: Owner
 Goal: Able to delete the parking stalls
 Trigger: Click on the Object that he owns
@@ -29,7 +29,7 @@ Basic Flow: 1. Owner opens up the list of parking stalls he owns.
 	    5. Parking stall is deleted, the intent is closed and the owner
 	       sees under in the list that it is no longer there.
 
-Use Case Name: US 05.01.01
+Use Case Name: UC 05.01.01
 Participating Actors: User/Borrower
 Goal: Able to bid on available things with monetary rate
 Trigger: Click on the parking stalls that is available and bid
@@ -45,10 +45,11 @@ Basic Flow: 1. Able to browse through a list of availabe parking stalls.
 	    7. System updates bidding information
 Exceptions: 2.0: user did not hit a avaiable item.
 	    2.1: systems does nothing.
-	    6.0: User does not enter valid numbers (negatives)
+	    6.0: User does not enter valid numbers, negatives or less than
+	    	 current bid.
 	    6.1: User informs user of invalid inputs.
 
-Use Case Name:US 05.02.01
+Use Case Name:UC 05.02.01
 Participating Actors: User/Borrower
 Goal: Able to view pending bids each thing with its description, 
       owner username, and my bid.
