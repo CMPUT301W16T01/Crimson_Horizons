@@ -1,0 +1,51 @@
+US 01.01.01
+use case name:		addNewItem	
+participating actors:	user(primary)
+goal:			add a new item to the users inventory
+trigger:		user presses the add button
+precondition:		user has an account
+postcondition:		new item is added to the user`s account
+basic flow:	1 	user presses the add button
+		2	system prompts the user to add the item`s info
+		3	user fills in the information fields
+		4	user presses the add button
+		5	system adds the item to the user`s account
+		6	system returns to the user`s account menu
+Exceptions:	3.0.0	user enters invalid information
+		-3.0.1	system prompts the user to enter valid information
+		-3.0.2	user enters valid information
+		3.1.0	user is not online
+		-3.1.1	system prompts user to save the item for later
+		-3.1.2	user saves the item for later
+
+US 01.02.01
+US 01.03.01
+use case name:		viewInventoryItem	
+participating actors:	user(primary)
+goal:			view the details of an Item in the user`s inventory
+trigger:		user presses the Account button
+precondition:		user has an item in their inventory
+postcondition:		user is viewing the items information
+basic flow:	1 	user presses the Account button
+      		2	system presents a list of the item in the user`s inventory
+		-	US 01.02.01 is met
+		3	user presses the item they wish to view more closely
+Exceptions:	3.0	user does not have an item in their inventory
+		-3.1	user is unable to select an item until there is one in the inventory
+
+US 08.01.01
+use case name:		addNewItem	
+participating actors:	user(primary)
+goal:			saves an item to the local system to be added later
+trigger:		user presses the add button
+precondition:		user has an account
+postcondition:		new item is added to the user`s account
+basic flow:	1 	user presses the add button
+		2	system prompts the user to add the item`s info
+		3	user fills in the information fields
+		4	user presses the save button
+		5	system save the item information locally to be reviewed later
+		6	system returns to the user`s account menu
+Exceptions:	3.0	User enters invalid information
+		-3.1	system prompts the user to enter valid information
+		-3.2	user enters valid information
