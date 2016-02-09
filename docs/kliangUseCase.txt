@@ -12,6 +12,9 @@ Basic Flow: 1. Owner opens his list of parking stalls that he owns
 	    5. He clicks "save"
 	    6. The intent closes
 	    7. The status have been changedUse Case Name: US 01.04.01
+Exceptiosn: 5.0: His changes are invalid
+	    5.1 System notifies user of error
+
 
 Use Case Name: US 01.05.01
 Participating Actors: Owner
@@ -26,21 +29,24 @@ Basic Flow: 1. Owner opens up the list of parking stalls he owns.
 	    5. Parking stall is deleted, the intent is closed and the owner
 	       sees under in the list that it is no longer there.
 
-
 Use Case Name: US 05.01.01
 Participating Actors: User/Borrower
 Goal: Able to bid on available things with monetary rate
 Trigger: Click on the parking stalls that is available and bid
-Precondition: There are avaiable objects
-Postcondition: He has bidded on the item and is displayed
-Basic Flow: 1. Able to browse through a list of availabe items.
-      	    2. Select the items.
-	    3. System opens up the information of that item as well as owner
+Precondition: There are avaiable parking stalls
+Postcondition: He has bidded on the parking stalls and is displayed
+Basic Flow: 1. Able to browse through a list of availabe parking stalls.
+      	    2. Select the available stall.
+	    3. System opens up the information of that stall as well as owner's
+	       information.
 	    4. User hit the "bid" button.
 	    5. System promps user to enter bid amount
 	    6. User hit confirm
 	    7. System updates bidding information
-
+Exceptions: 2.0: user did not hit a avaiable item.
+	    2.1: systems does nothing.
+	    6.0: User does not enter valid numbers (negatives)
+	    6.1: User informs user of invalid inputs.
 
 Use Case Name:US 05.02.01
 Participating Actors: User/Borrower
@@ -53,6 +59,6 @@ Basic Flow: 1. The user hits the pending bid button
       	    2. The system opens up a new intent
 	    3. The systems display each item with all the information
 	    4. There is a close button when the user wants to exit
-	    5. The user can hit cancel  when bid is offered.
+	    5. The user can hit cancel when bid is offered.
       	   
  
