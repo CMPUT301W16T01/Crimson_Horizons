@@ -9,35 +9,36 @@ import java.util.ArrayList;
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
-public class ParkingStallsTests extends ActivityInstrumentationTestCase2 {
-    public ParkingStallsTests() {
+public class StallListTest extends ActivityInstrumentationTestCase2 {
+    public StallListTest() {
         //We make a test with the starting point of app so have access to everything.
-        super(ParkingStalls.class);
+        super(StallList.class);
     }
-    //Test use cases US 01.04.01
-    public void TestEdit(){
+    //Test use cases UC 01.04.01
+    public void testEdit(){
         ArrayList<Stalls> OwnStalls= new ArrayList<>();
-        StallList stallList = new StallList();
-        OwnStalls=stallList.ObtainOwnStalls();
+        Stalls stall_add = new Stalls();
+        OwnStalls.add(stall_add);
         Stalls stall = OwnStalls.get(0);
         Stalls nStall= new Stalls();
-        assertNotSame(stall,nStall);
+        assertNotSame(stall, nStall);
         stall.editOwnStall(stall, nStall);
         assertEquals(stall,nStall);
 
-
-
     }
-    // Test use cases US 01.05.01
-    public void TestdeleteStall(){
-        ArrayList<Stalls>OwnStalls= new ArrayList<>();
-        StallList stalllist = new StallList();
-        OwnStalls=stalllist.ObtainOwnStalls();
-        Stalls stall =OwnStalls.get(0);
+    // Test use cases UC 01.05.01
+    public void testdeleteStall(){
+        StallList OwnStalls = new StallList();
+        Stalls nstall = new Stalls();
+        OwnStalls.addStall(nstall);;
         int sizeBefore=OwnStalls.size();
-        stalllist.deleteStalls(stall);
+        OwnStalls.deleteStalls(0);
         int sizeAfter=OwnStalls.size();
         assertEquals(sizeBefore,sizeAfter+1);
+
+    }
+
+    public void testAddStall(){
 
     }
 }

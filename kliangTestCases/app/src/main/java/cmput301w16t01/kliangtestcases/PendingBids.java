@@ -7,14 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import java.util.ArrayList;
+public class PendingBids extends AppCompatActivity {
 
-public class ParkingStalls extends AppCompatActivity {
-    ArrayList<Stalls> OwnStalls = new ArrayList<Stalls>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parking_stalls);
+        setContentView(R.layout.activity_pending_bids);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -27,6 +25,5 @@ public class ParkingStalls extends AppCompatActivity {
             }
         });
     }
-    public void editOwnStall(Stalls stall1, Stalls stall2){}
 
 }
