@@ -15,6 +15,7 @@ public class TestBids extends ActivityInstrumentationTestCase2 {
         super(BidList.class);
     }
     // This test UC 05.01.01
+    //Depends on: StallsForBid.class
     //This use cases assumes that there will be some stalls availabe for bidding
     // It just test whether using the "bid" method can succesfully update the status
     public void testBidding(){
@@ -26,6 +27,8 @@ public class TestBids extends ActivityInstrumentationTestCase2 {
         assertEquals(sfb.getbidAmt(),200);
     }
     //This test UC 05.02.01
+    // Depends on: BidList.class
+        //       : PendingBids.class
     // This test assumes that by using the adpater, the UI will be updated
     //It just test if calling for the get method can succesfully retrieve the updated list
     public void testViewPending(){

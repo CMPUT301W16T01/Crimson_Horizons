@@ -4,4 +4,6 @@
     <string name="title_activity_parking_stalls">ParkingStalls</string>
     <string name="title_activity_bids">Bids</string>
     <string name="title_activity_pending_bids">PendingBids</string>
+    <string name="title_activity_own_stall_controller">OwnStallController</string>
+    <string name="title_activity_each_stall_vw">EachStallVw</string>
 </resources>

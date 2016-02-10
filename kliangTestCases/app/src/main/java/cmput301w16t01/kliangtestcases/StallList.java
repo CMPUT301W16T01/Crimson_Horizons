@@ -22,4 +22,13 @@ public class StallList {
         OwnStalls.remove(Index);
 
     }
+    public Stalls get(int Index){
+        return OwnStalls.get(Index);
+    }
+    public void clearLst(){
+        OwnStalls.clear();
+    }
+    public ArrayList<Stalls> getLst(){
+        return OwnStalls;
+    }
 }

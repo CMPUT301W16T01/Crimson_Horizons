@@ -1,8 +1,11 @@
 package cmput301w16t01.kliangtestcases;
 
 import android.app.Application;
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ApplicationTestCase;
+import android.test.ViewAsserts;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -15,6 +18,8 @@ public class StallListTest extends ActivityInstrumentationTestCase2 {
         super(StallList.class);
     }
     //Test use cases UC 01.04.01
+    //Depends on: StallList.class
+            //  : Stalls.class
     public void testEdit(){
         ArrayList<Stalls> OwnStalls= new ArrayList<>();
         Stalls stall_add = new Stalls();
@@ -27,6 +32,8 @@ public class StallListTest extends ActivityInstrumentationTestCase2 {
 
     }
     // Test use cases UC 01.05.01
+    // Depends on: StallList.class
+        //       : Stalls.class
     public void testdeleteStall(){
         StallList OwnStalls = new StallList();
         Stalls nstall = new Stalls();
@@ -37,8 +44,51 @@ public class StallListTest extends ActivityInstrumentationTestCase2 {
         assertEquals(sizeBefore,sizeAfter+1);
 
     }
-
+    //Tests UC 01.01.01
+    //Depends on: StallList.class
+        //      : Stalls.class
     public void testAddStall(){
+        StallList OwnStalls= new StallList();
+        int sizeBeforeAdd = OwnStalls.size();
+        Stalls stall = new Stalls();
+        stall.setInformation("Hi");
+        OwnStalls.addStall(stall);
+        int sizeAfter=OwnStalls.size();
+        assertEquals(sizeBeforeAdd+1,sizeAfter);
+        assertEquals(OwnStalls.get(OwnStalls.size()-1).getInformation(),"Hi");
+    }
+    //Tests UC 01.02.01
+    //Depends on: StallList.class
+    //      : Stalls.class
+    public void testViewList(){
+        StallList OwnStalls = new StallList();
+        OwnStalls.clearLst();
+        Stalls stall = new Stalls();
+        stall.setInformation("hi");
+        OwnStalls.addStall(stall);
+        ArrayList<Stalls> ReturnedLst=OwnStalls.getLst();
+        assertEquals(ReturnedLst.get(0),OwnStalls.get(0));
+        assertEquals(ReturnedLst.get(0).getInformation(), OwnStalls.get(0).getInformation());
+        OwnStallController osc = new OwnStallController();
+        ViewAsserts.assertOnScreen(osc.getWindow().getDecorView(),osc.findViewById(R.id.OwnStallLv));
+    }
+    //Tests UC 01.03.01
+    //Depends on: UITesting.class
+        //      : EachStallVw.class
+    public void testDisplayOneItem(){
+        UITesting ui = new UITesting();
+        //Here will open the list of owned stalls and will hit one of the stalls specify
+        ui.clickOwnStallButton();
+        //ui clicks one stall and returns the intent.
+            //This is similar to the onClick that will be implemented in the controller class for
+            // for the listview
+        //It will click some stall and let it open up a view.
+        //I will check if that view is actually present.
+       ui.clickOneStall(0);
+        //This is the list that contains all the stalls owned
+        EachStallVw esv = new EachStallVw();
+        ViewAsserts.assertOnScreen(esv.getWindow().getDecorView(),
+                esv.findViewById(R.id.eachStallLv));
 
     }
 }

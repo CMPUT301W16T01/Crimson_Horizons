@@ -5,8 +5,8 @@ import java.util.ArrayList;
 /**
  * Created by kliang on 2/9/16.
  */
-public class BidList {
-    private ArrayList<StallsForBid>AvailableStalls;
+public class BidList extends StallList{
+    private ArrayList<StallsForBid>AvailableStalls = new ArrayList<>();
 
     public ArrayList<StallsForBid> getAvailableStalls(){
         return AvailableStalls;
