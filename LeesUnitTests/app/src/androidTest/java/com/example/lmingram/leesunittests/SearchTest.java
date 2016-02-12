@@ -37,7 +37,8 @@ public class SearchTest extends ActivityInstrumentationTestCase2 {
     }
 
     // US 4.01.01
-    // us 4.02.01
+    // US 4.02.01
+    // depends on LeeThing and SearchActivty
     @UiThreadTest
     private void testSearch(String tags){
         SearchActivity activity = (SearchActivity)getActivity();

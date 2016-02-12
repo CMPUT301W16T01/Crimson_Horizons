@@ -1,6 +1,7 @@
 package com.example.lmingram.leesunittests;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -28,7 +29,8 @@ public class BorrowedTest extends ActivityInstrumentationTestCase2 {
     protected void addThings(){}
 
     //US 6.01.01
-    //depends on
+    //depends on SearchActivity and LeeThing
+    @UiThreadTest
     public void testBorrowed(){
         addThings();
         borrowedButton.performClick();
@@ -38,6 +40,8 @@ public class BorrowedTest extends ActivityInstrumentationTestCase2 {
     }
 
     //US 6.02.01
+    //depends on SearchActivity and LeeThing
+    @UiThreadTest
     public void testOwned(){
         addThings();
         ownedButton.performClick();

@@ -1,6 +1,7 @@
 package com.example.lmingram.leesunittests;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.widget.ListView;
 
 /**
@@ -19,6 +20,9 @@ public class ReturnActivityTest extends ActivityInstrumentationTestCase2 {
         view = (ListView)activity.findViewById(R.id.returned_things);
     }
 
+    //US 7.01.01
+    //depends on return activity and LeeThing
+    @UiThreadTest
     public void testReturn(){
         int before = activity.getNumItems();
         view.performClick();
