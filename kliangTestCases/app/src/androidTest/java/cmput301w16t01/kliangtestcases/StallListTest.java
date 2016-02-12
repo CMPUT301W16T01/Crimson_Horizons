@@ -54,23 +54,6 @@ public class StallListTest extends ActivityInstrumentationTestCase2 {
         ViewAsserts.assertOnScreen(osc.getWindow().getDecorView(),osc.findViewById(R.id.OwnStallLv));
     }
 
-    //Test use case UC 01.04.01
-    //Depends on: StallList.class
-            //  : Stalls.class
-    //This will test whether owner can edit their own stalls
-    // It will create a stall, add the stall to the list. Use the Edit function, and assert that
-    // It has changed.
-    public void testEdit(){
-        ArrayList<Stalls> OwnStalls= new ArrayList<>();
-        Stalls stall_add = new Stalls();
-        OwnStalls.add(stall_add);
-        Stalls stall = OwnStalls.get(0);
-        Stalls nStall= new Stalls();
-        assertNotSame(stall, nStall);
-        stall.editOwnStall(stall, nStall);
-        assertEquals(stall,nStall);
-
-    }
     // Test use cases UC 01.05.01
     // Depends on: StallList.class
         //       : Stalls.class
