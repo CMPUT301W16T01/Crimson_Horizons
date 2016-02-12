@@ -21,4 +21,7 @@ public class UITesting extends ActivityInstrumentationTestCase2{
         Button button = (Button) ira.findViewById(R.id.Account);
         button.performClick();
     }
+    public Boolean checkOnlineData(Stalls stall){
+        return Boolean.FALSE;
+    }
 }

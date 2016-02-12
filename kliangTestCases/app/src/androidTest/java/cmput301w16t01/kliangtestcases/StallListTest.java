@@ -87,5 +87,26 @@ public class StallListTest extends ActivityInstrumentationTestCase2 {
         assertEquals(sizeBefore,sizeAfter+1);
 
     }
+    //Tests: UC 08.01.01
+    // Depends on: UITesting.class
+    // This will test if it can do changes offline, store it and will be able to write it once
+    // connection is made.
+    public void testOffline(){
+        //Will simulate a offline behaviour by not using any method that requires connection like
+        // elastic search.
+        // It will make a new item, use the offlineSave and onlineSave method to determine if the
+        // methods was working and the data are stored.
+        Stalls stall1 = new Stalls();
+        StallList lst = new StallList();
+        ArrayList<Stalls> OwnStalls = lst.getLst();
+        OwnStalls.add(stall1);
+        Save save = new Save();
+        save.offlineSave();
+        save.onlineSave();
+        UITesting ui = new UITesting();
+        //This will check if it was stored properly
+        assertTrue(ui.checkOnlineData(stall1));
+
+    }
 
 }
