@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">kliangTestCases</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_parking_stalls">ParkingStalls</string>
+    <string name="title_activity_bids">Bids</string>
+    <string name="title_activity_pending_bids">PendingBids</string>
+    <string name="title_activity_own_stall_controller">OwnStallController</string>
+    <string name="title_activity_each_stall_vw">EachStallVw</string>
+    <string name="title_activity_profile_view">ProfileView</string>
+    <string name="title_activity_search_result_vw">SearchResultVw</string>
+    <string name="title_activity_notification">Notification</string>
+    <string name="title_activity_borrow_vw">BorrowVw</string>
+    <string name="title_activity_lended_vw">LendedVw</string>
+</resources>
