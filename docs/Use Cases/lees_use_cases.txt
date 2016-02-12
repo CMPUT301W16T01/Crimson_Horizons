@@ -1,0 +1,95 @@
+Searching
+
+Use Case Name: Search Unborrowed Things by keyword
+
+Participating Actors: User 
+
+Goal: Produce a list of things that aren't borrowed
+
+Trigger: click search bar
+
+Precondition: at main menu
+
+Postcondition: a list of relevant unborrowed objects
+
+
+Basic Flow
+1. user clicks on search bar
+2. system prompts user to enter keywords
+3. user submits keywords 
+
+
+
+Use Case Name: Examine Unborrowed Things
+
+Participating Actors: User(Primary) 
+
+Goal: Scroll through unborrowed 
+
+Trigger: submit search query
+
+Precondition: after search queries are submitted
+
+Postcondition: after search queires are submitted
+
+Basic Flow
+1. user scrolls either up or down
+
+
+Borrowing 
+
+Use Case Name: View borrowed items (Borrower)
+
+Participating Actors:  Borrower
+
+Goal: Borrower can view borrowed items
+
+Trigger: Borrower selects "view borrowed items"
+
+Precondition: main menu
+
+Postcondition: list of Borrower's borrowed items with
+relevent information is displayed
+
+Basic Flow
+1.  Borrower selects "view borrowed items"
+2.  Borrowed items are displayed  
+
+
+Use Case Name: View borrowed items (Owner)
+
+Participating Actors: Owner
+
+Goal: Owner can view borrowed things
+
+Trigger: Owner selects "view my borrowed items"
+
+Precondition: main menu
+
+Postconditioin: list of items borrowed from Owner is displayed with
+relevent information
+
+Basic Flow:
+1. Owner selects "view my borrowed items"
+2. a list of items borrowed from Owner is displayed
+ 
+
+Returning
+
+Use Case Name: Return Thing
+
+Participating Actors:  Owner
+
+Goal: Owner can set returned things to available
+
+Trigger: Owner selects "view returned items"
+
+Precondition: main menu
+
+Postcondition: relevent thing is now available
+
+Basic Flow
+1.  Owner selects "view returned"
+2.  Owner selects a thing
+3.  Thing's info is displayed, with "make available"
+3.  Owner selects "make available"
