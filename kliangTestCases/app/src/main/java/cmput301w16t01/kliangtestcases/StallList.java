@@ -6,9 +6,29 @@ import java.util.ArrayList;
  * Created by kliang on 2/5/16.
  */
 public class StallList {
-    public static ArrayList<Stalls> ObtainOwnStalls(){
-        ArrayList<Stalls> something=new ArrayList<>();
-        return something;
+    ArrayList<Stalls> OwnStalls= new ArrayList<>();
+
+    public int size(){
+        return OwnStalls.size();
     }
-    public void deleteStalls(Stalls stall){}
+
+    public void editOwnStall(Stalls stall1, Stalls stall2){}
+
+    public void addStall(Stalls stall){
+        OwnStalls.add(stall);
+    }
+
+    public void deleteStalls(int Index){
+        OwnStalls.remove(Index);
+
+    }
+    public Stalls get(int Index){
+        return OwnStalls.get(Index);
+    }
+    public void clearLst(){
+        OwnStalls.clear();
+    }
+    public ArrayList<Stalls> getLst(){
+        return OwnStalls;
+    }
 }

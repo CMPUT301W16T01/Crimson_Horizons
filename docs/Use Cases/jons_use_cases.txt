@@ -1,0 +1,45 @@
+US 05.04.01
+US 05.05.01
+use case name:		viewItemBids
+participating actors:	user (primary)
+goal:			bids on a given item are displayed to the user
+trigger:		Item selected from "Items with Bids" menu
+precondition:		User has an account with at least one item
+postcondition:		Selected item's bids are displayed
+basic flow:	1	User selects the "Bids on My Items" button
+		2	List of user's items with bids is displayed
+		-	US 05.04.01 is met
+		3	User selects an item
+		4	List of item's bids is displayed
+exceptions:	3	If user has no items with bids
+		3.1	User has no item to select
+
+use case name:		acceptItemBid
+participating actors:	user (primary), all bidders
+goal:			the selected bid is accepted, all other bids on the same item are declined
+trigger:		"Accept" button is selected on a specific bid
+precondition:		User has an item with at least one bid
+postcondition:		All bids cleared from item, item listed as "Lending" to user who placed the accepted bid
+basic flow:	1	User selects the "Bids on My Items" button
+		2	List of user's items with bids is displayed
+		3	User selects an item
+		4	List of item's bids is displayed
+		5	"Accept" button is selected for a bid
+		6	Item is lent to bidder
+exceptions:	3	If user has no items with bids
+		3.1	User has no item to select
+
+use case name:		declineItemBid
+participating actors:	user (primary), bidder
+goal:			the selected bid is declined
+trigger:		"Decline" button is selected on a specific bid
+precondition:		User has an item with at least one bid
+postcondition:		Declined bid is absent from the item's bids
+basic flow:	1	User selects the "Bids on My Items" button
+		2	List of user's items with bids is displayed
+		3	User selects an item
+		4	List of item's bids is displayed
+		5	"Decline" button is selected for a bid
+		6	Bid is removed
+exceptions:	3	If user has no items with bids
+		3.1	User has no item to select

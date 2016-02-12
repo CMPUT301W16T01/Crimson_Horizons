@@ -1,0 +1,63 @@
+2.1.1
+use case name:		displayParkingSpotInfo
+participating actors:	user(primary)
+goal:			find parking stall status
+trigger:		user selects a parking stall
+precondition:		program knows parking stall info
+postcondition:		display parking stall info
+basic flow:	1 	user selects a parking stall
+		2	program display details on that parking stall
+
+3.1.1
+use case name:		userSignUp
+participating actors:	user(primary)
+goal:			Create an account for the user
+trigger:		user clicks on sign-up button
+precondition:		program knows user data-base
+postcondition:		create a new account for the user
+basic flow:	1	User fills out user sign-up page and clicks the next button
+		2	Program displays the account was successfully made
+		3	User clicks the next button
+		4	Program displays the main screen
+exceptions:	1.0.0	User inputs invalid data
+		1.0.1	Program displays error message
+		1.0.2	User inputs valid data and clicks the next button
+		
+
+3.2.1
+use case name:		userEditProfile
+participating actors:	user(primary)
+goal:			Modify the user's account
+trigger:		user clicks on edit account button
+precondition:		program knows user data-base
+postcondition:		The user's account is modified
+Extends:		userSignUp
+basic flow:	1	User clicks on edit profile button
+		2	Program displays edit profile page
+		3	User fills out parts of the edit profile page and clicks save
+		4	Program displays the modified user webpage
+exceptions:	3.0.0	User inputs invalid data
+		3.0.1	Program displays error message
+		3.0.2	User inputs valid data and clicks save
+
+3.3.1
+use case name:		userDisplayProfile
+participating actors:	user(primary)
+goal:			Display the selected user's account info
+trigger:		user clicks on a user's profile name
+precondition:		program knows user data-base
+postcondition:		The program displays an user's account info
+Extends:		displayParkingSpotInfo
+basic flow:	1	User clicks on an user name
+		2	Program displays the selected user's basic information
+
+5.3.1
+use case name:		notifyOwnerOfBid
+participating actors:	owner(primary) user
+goal:			Owner is notified of bid
+trigger:		user clicks on the bid button of the owner's parking stall
+precondition:		program knows user data-base, owner data-base, and can contact owner
+postcondition:		The program notifies the owner of a bid
+extends:		bidOnParkingStall	
+basic flow: 	1	Program sends notification to owner
+		2	Owner recieves notification on their main menu

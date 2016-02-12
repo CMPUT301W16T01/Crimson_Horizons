@@ -1,0 +1,26 @@
+Feb 09/2016
+
+Lee I: 
+    Done: Use cases, UML started.
+    Will Do: Test cases for all use cases he has done
+    Blockers: Capstone project, Midterm
+    
+Jon O: 
+    Done: Wrote use cases
+    Will Do: Turn those to test cases, and also do all needed for part 3.
+    Blockers: No blocker, Midterm
+
+Jon P:
+    Done: Finished UI mock up, Wrote Use cases, Have mostly finished Story Board
+    Will Do: Finish story board, and write test cases
+    Blockers: Capstone project, Midterm
+
+Aaron:
+	Done: Five of the use cases, Started making the unit tests.
+	Will Do: Unit cases done
+	Blockers: Two midterms.
+
+Kevin:
+	Done: Test cases(4), Use cases(4), started on glossary
+	Will Do: Finish/proofread everything I did for project 2.
+	Blockers: Assignments/projects this week(3).

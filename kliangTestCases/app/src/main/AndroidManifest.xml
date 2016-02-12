@@ -19,8 +19,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ParkingStalls"
-            android:label="@string/title_activity_parking_stalls"
+            android:name=".PendingBids"
+            android:label="@string/title_activity_pending_bids"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".OwnStallController"
+            android:label="@string/title_activity_own_stall_controller"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EachStallVw"
+            android:label="@string/title_activity_each_stall_vw"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
