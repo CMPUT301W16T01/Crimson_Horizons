@@ -196,11 +196,12 @@ public class ApplicationTest extends ActivityInstrumentationTestCase2 {
     }
 
     //1.04.01
-    public void testAddNewItem(){
+    public void testEditParkingStall(){
         Intent intent = new Intent();
 
         ParkingStall parkingStall = generateParkingStalls();
         intent.putExtra(MainActivity.ADD_PARKING_STALL,parkingStall.getAvailability());
+        intent.putExtra(MainActivity.TEXT_TO_TRANSFORM_KEY, "OLD_DATA");
 
         setActivityIntent(intent);
         MainActivity ira = (MainActivity) getActivity();
@@ -216,6 +217,8 @@ public class ApplicationTest extends ActivityInstrumentationTestCase2 {
 
         button = (Button) ira.findViewById(R.id.tempButton);
         button.performClick();
+
+        intent.putExtra(MainActivity.TEXT_TO_TRANSFORM_KEY, "NEW_DATA");
 
         View view = ira.getWindow().getDecorView();
 
