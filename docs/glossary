@@ -1,7 +1,26 @@
 Terms and definition:
 
-Stalls: Parking Stalls
-User: Renters/Owners of parking stalls. User of this app.
+Stalls/Items: Parking Stalls
+
+User: Renters/Owners of parking stalls. a person who uses our App
+	It is similar to a ebay account holder, but 
+	only for parking stalls.
+
 Owner: Owner of 1 or more parking stalls.
-Retner: Renter of 1 or more parking stalls.
+	Same idea as those who sells things on ebay. They own those things.
+	Only in our case, it is a parking stall and they are lending it out.
+
+Renter: Renter of 1 or more parking stalls.
+	Like a buyers in eBay, but they only borrow the item.
+
 Available stalls: Stalls that are not rented out by anyone.
+
+Borrowed Stalls: Stalls the user borrowed.
+
+Lending Stalls: Stalls the user lended out.
+
+Similar and/or cometetive products:
+	It is similar to eBay, but just for parking
+		stall owners/users and for android device only.
+		
+		links: http://www.ebay.com/

@@ -14,12 +14,52 @@ import java.util.ArrayList;
  */
 public class StallListTest extends ActivityInstrumentationTestCase2 {
     public StallListTest() {
-        //We make a test with the starting point of app so have access to everything.
         super(StallList.class);
     }
-    //Test use cases UC 01.04.01
+    //Tests UC 01.01.01
+    //Depends on: StallList.class
+    //      : Stalls.class
+    // This tests if the owner can add a stall to his collections.
+    // It will create a list, get the size before adding, create a stall, add the stall
+    // using the addStalls method and check that the size of the list has increased by 1.
+    public void testAddStall(){
+        StallList OwnStalls= new StallList();
+        int sizeBeforeAdd = OwnStalls.size();
+        Stalls stall = new Stalls();
+        stall.setInformation("Hi");
+        OwnStalls.addStall(stall);
+        int sizeAfter=OwnStalls.size();
+        assertEquals(sizeBeforeAdd+1,sizeAfter);
+        assertEquals(OwnStalls.get(OwnStalls.size()-1).getInformation(),"Hi");
+    }
+    //Tests UC 01.02.01
+    //Depends on: StallList.class
+    //      : Stalls.class
+    //      : UITesting.class
+    // This will test if Owner can view a lists of their stalls with their status.
+    // It will test the method getLst to see if it returns the right list.
+    // It will also test the UI by hitting the button and asserting that the view exists.
+    public void testViewList(){
+        StallList OwnStalls = new StallList();
+        OwnStalls.clearLst();
+        UITesting ui = new UITesting();
+        Stalls stall = new Stalls();
+        stall.setInformation("hi");
+        OwnStalls.addStall(stall);
+        ArrayList<Stalls> ReturnedLst=OwnStalls.getLst();
+        assertEquals(ReturnedLst.get(0),OwnStalls.get(0));
+        assertEquals(ReturnedLst.get(0).getInformation(), OwnStalls.get(0).getInformation());
+        ui.clickAccount();
+        OwnStallController osc = new OwnStallController();
+        ViewAsserts.assertOnScreen(osc.getWindow().getDecorView(),osc.findViewById(R.id.OwnStallLv));
+    }
+
+    //Test use case UC 01.04.01
     //Depends on: StallList.class
             //  : Stalls.class
+    //This will test whether owner can edit their own stalls
+    // It will create a stall, add the stall to the list. Use the Edit function, and assert that
+    // It has changed.
     public void testEdit(){
         ArrayList<Stalls> OwnStalls= new ArrayList<>();
         Stalls stall_add = new Stalls();
@@ -34,6 +74,9 @@ public class StallListTest extends ActivityInstrumentationTestCase2 {
     // Test use cases UC 01.05.01
     // Depends on: StallList.class
         //       : Stalls.class
+    // This tests if Owner can delete things. It will create a stall add to list, get the size of
+    // the list and use the deleteStalls method and get the size again.
+    // It will assert that the size is 1 less.
     public void testdeleteStall(){
         StallList OwnStalls = new StallList();
         Stalls nstall = new Stalls();
@@ -44,51 +87,5 @@ public class StallListTest extends ActivityInstrumentationTestCase2 {
         assertEquals(sizeBefore,sizeAfter+1);
 
     }
-    //Tests UC 01.01.01
-    //Depends on: StallList.class
-        //      : Stalls.class
-    public void testAddStall(){
-        StallList OwnStalls= new StallList();
-        int sizeBeforeAdd = OwnStalls.size();
-        Stalls stall = new Stalls();
-        stall.setInformation("Hi");
-        OwnStalls.addStall(stall);
-        int sizeAfter=OwnStalls.size();
-        assertEquals(sizeBeforeAdd+1,sizeAfter);
-        assertEquals(OwnStalls.get(OwnStalls.size()-1).getInformation(),"Hi");
-    }
-    //Tests UC 01.02.01
-    //Depends on: StallList.class
-    //      : Stalls.class
-    public void testViewList(){
-        StallList OwnStalls = new StallList();
-        OwnStalls.clearLst();
-        Stalls stall = new Stalls();
-        stall.setInformation("hi");
-        OwnStalls.addStall(stall);
-        ArrayList<Stalls> ReturnedLst=OwnStalls.getLst();
-        assertEquals(ReturnedLst.get(0),OwnStalls.get(0));
-        assertEquals(ReturnedLst.get(0).getInformation(), OwnStalls.get(0).getInformation());
-        OwnStallController osc = new OwnStallController();
-        ViewAsserts.assertOnScreen(osc.getWindow().getDecorView(),osc.findViewById(R.id.OwnStallLv));
-    }
-    //Tests UC 01.03.01
-    //Depends on: UITesting.class
-        //      : EachStallVw.class
-    public void testDisplayOneItem(){
-        UITesting ui = new UITesting();
-        //Here will open the list of owned stalls and will hit one of the stalls specify
-        ui.clickOwnStallButton();
-        //ui clicks one stall and returns the intent.
-            //This is similar to the onClick that will be implemented in the controller class for
-            // for the listview
-        //It will click some stall and let it open up a view.
-        //I will check if that view is actually present.
-       ui.clickOneStall(0);
-        //This is the list that contains all the stalls owned
-        EachStallVw esv = new EachStallVw();
-        ViewAsserts.assertOnScreen(esv.getWindow().getDecorView(),
-                esv.findViewById(R.id.eachStallLv));
 
-    }
 }

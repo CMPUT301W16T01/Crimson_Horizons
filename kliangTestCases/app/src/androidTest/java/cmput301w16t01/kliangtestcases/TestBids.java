@@ -2,6 +2,7 @@ package cmput301w16t01.kliangtestcases;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -11,13 +12,12 @@ import java.util.ArrayList;
  */
 public class TestBids extends ActivityInstrumentationTestCase2 {
     public TestBids() {
-        //We make a test with the starting point of app so have access to everything.
         super(BidList.class);
     }
     // This test UC 05.01.01
     //Depends on: StallsForBid.class
-    //This use cases assumes that there will be some stalls availabe for bidding
-    // It just test whether using the "bid" method can succesfully update the status
+    //This use cases assumes that there will be some stalls available for bidding
+    // It just test whether using the "bid" method can successfully update the status.
     public void testBidding(){
 
         StallsForBid sfb = new StallsForBid();
@@ -29,12 +29,14 @@ public class TestBids extends ActivityInstrumentationTestCase2 {
     //This test UC 05.02.01
     // Depends on: BidList.class
         //       : PendingBids.class
-    // This test assumes that by using the adpater, the UI will be updated
-    //It just test if calling for the get method can succesfully retrieve the updated list
+    //It test if calling for the get method can successfully retrieve the updated list
+    // It also checks if the view exists.
     public void testViewPending(){
         BidList bidlst=new BidList();
         ArrayList<StallsForBid>AvailabeStalls=bidlst.getAvailableStalls();
         assertTrue(AvailabeStalls.getClass().equals(ArrayList.class));
+        UITesting ui = new UITesting();
+        ui.clickPending();
         PendingBids pb = new PendingBids();
         ListView lv=(ListView)pb.findViewById(R.id.pendinglst);
         ViewAsserts.assertOnScreen(pb.getWindow().getDecorView(),lv);
