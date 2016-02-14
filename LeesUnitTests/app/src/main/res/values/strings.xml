@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LeesUnitTests</string>
+    <string name="title_activity_borrowing">Borrowing</string>
+    <string name="title_activity_returning">ReturningActivity</string>
+</resources>

@@ -14,6 +14,7 @@ basic flow:	1	User selects the "Bids on My Items" button
 exceptions:	3	If user has no items with bids
 		3.1	User has no item to select
 
+US 05.06.01
 use case name:		acceptItemBid
 participating actors:	user (primary), all bidders
 goal:			the selected bid is accepted, all other bids on the same item are declined
@@ -29,6 +30,7 @@ basic flow:	1	User selects the "Bids on My Items" button
 exceptions:	3	If user has no items with bids
 		3.1	User has no item to select
 
+US 05.07.01
 use case name:		declineItemBid
 participating actors:	user (primary), bidder
 goal:			the selected bid is declined
