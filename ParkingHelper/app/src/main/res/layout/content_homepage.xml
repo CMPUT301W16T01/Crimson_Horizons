@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="cmput301w16t01crimsonhorizons.parkinghelper.HomepageActivity"
+    tools:showIn="@layout/activity_homepage">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Account"
+        android:id="@+id/AccountBtn"
+        android:layout_marginTop="41dp"
+        android:layout_below="@+id/HomepageTitle"
+        android:layout_centerHorizontal="true"
+        android:onClick="clickAccount"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home Page"
+        android:id="@+id/HomepageTitle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="50sp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search For Parking Stalls"
+        android:id="@+id/SearchBtn"
+        android:layout_below="@+id/AccountBtn"
+        android:layout_centerHorizontal="true"
+        android:onClick="clickSearch"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Your Bids"
+        android:id="@+id/YourBidsBtn"
+        android:layout_below="@+id/SearchBtn"
+        android:layout_centerHorizontal="true"
+        android:onClick="clickYourBids"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bids On Your Stalls"
+        android:id="@+id/BidsOwnStallBtn"
+        android:layout_below="@+id/YourBidsBtn"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stalls Lending"
+        android:id="@+id/LendingBtn"
+        android:layout_below="@+id/BidsOwnStallBtn"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stalls Borrowing"
+        android:id="@+id/BorrowingBtn"
+        android:layout_below="@+id/LendingBtn"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

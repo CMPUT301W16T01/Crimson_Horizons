@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cmput301w16t01crimsonhorizons.parkinghelper">
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".WelcomeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".WelcomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cmput301w16t01crimsonhorizons.parkinghelper.WelcomeActivity" />
+        </activity>
+        <activity
+            android:name=".SigninActivity"
+            android:label="@string/title_activity_signin"
+            android:parentActivityName=".WelcomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cmput301w16t01crimsonhorizons.parkinghelper.WelcomeActivity" />
+        </activity>
+        <activity
+            android:name=".HomepageActivity"
+            android:label="@string/title_activity_homepage"
+            android:parentActivityName=".WelcomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cmput301w16t01crimsonhorizons.parkinghelper.WelcomeActivity" />
+        </activity>
+        <activity
+            android:name=".AccountAcitivity"
+            android:label="@string/title_activity_account_acitivity"
+            android:parentActivityName=".HomepageActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cmput301w16t01crimsonhorizons.parkinghelper.HomepageActivity" />
+        </activity>
+        <activity
+            android:name=".SearchActivity"
+            android:label="@string/title_activity_search"
+            android:parentActivityName=".HomepageActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cmput301w16t01crimsonhorizons.parkinghelper.HomepageActivity" />
+        </activity>
+        <activity
+            android:name=".OwnStallsWithBidsActivity"
+            android:label="@string/title_activity_own_stalls_with_bids"
+            android:parentActivityName=".HomepageActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cmput301w16t01crimsonhorizons.parkinghelper.HomepageActivity" />
+        </activity>
+        <activity
+            android:name=".BidsForStall"
+            android:label="@string/title_activity_bids_for_stall"
+            android:parentActivityName=".HomepageActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cmput301w16t01crimsonhorizons.parkinghelper.HomepageActivity" />
+        </activity>
+    </application>
+
+</manifest>
