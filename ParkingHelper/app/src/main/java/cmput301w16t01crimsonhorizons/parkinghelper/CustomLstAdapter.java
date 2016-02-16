@@ -14,6 +14,9 @@ import java.util.List;
 
 /**
  * Created by Kevin L on 2/15/2016.
+ *
+ * Idea obtained from https://www.youtube.com/watch?v=ZEEYYvVwJGY
+ * This is created so that we can have a listview with buttons.
  */
 public class CustomLstAdapter extends ArrayAdapter<String> {
     private int layout;
