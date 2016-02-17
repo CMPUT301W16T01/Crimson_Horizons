@@ -47,7 +47,7 @@
         android:id="@+id/YourBidsBtn"
         android:layout_below="@+id/SearchBtn"
         android:layout_centerHorizontal="true"
-        android:onClick="clickYourBids"/>
+/>
 
     <Button
         android:layout_width="wrap_content"
@@ -55,7 +55,8 @@
         android:text="Bids On Your Stalls"
         android:id="@+id/BidsOwnStallBtn"
         android:layout_below="@+id/YourBidsBtn"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="clickBidsOnStall"/>
 
     <Button
         android:layout_width="wrap_content"

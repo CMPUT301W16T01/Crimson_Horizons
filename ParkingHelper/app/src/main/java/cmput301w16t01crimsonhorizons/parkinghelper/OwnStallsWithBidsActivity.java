@@ -24,13 +24,16 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        final ArrayList<String>TempString = new ArrayList<>();
+        ArrayList<String>TempString = new ArrayList<>();
         TempString.add("first\n");
         TempString.add("second\n");
         YourBids.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent clickBids = new Intent(view.getContext(), BidsForStall.class);
+                ArrayList<String>TempString = new ArrayList<>();
+                TempString.add("first\n");
+                TempString.add("second\n");
                 String entry;
                 entry = YourBids.getItemAtPosition(position).toString();
                 clickBids.putExtra("entry", entry);

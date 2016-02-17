@@ -50,7 +50,7 @@
                 android:value="cmput301w16t01crimsonhorizons.parkinghelper.WelcomeActivity" />
         </activity>
         <activity
-            android:name=".AccountAcitivity"
+            android:name=".AccountActivity"
             android:label="@string/title_activity_account_acitivity"
             android:parentActivityName=".HomepageActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -79,11 +79,38 @@
         <activity
             android:name=".BidsForStall"
             android:label="@string/title_activity_bids_for_stall"
-            android:parentActivityName=".HomepageActivity"
+            android:parentActivityName=".OwnStallsWithBidsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="cmput301w16t01crimsonhorizons.parkinghelper.HomepageActivity" />
+                android:value="cmput301w16t01crimsonhorizons.parkinghelper.OwnStallsWithBidsActivity" />
+        </activity>
+        <activity
+            android:name=".AddStall"
+            android:label="@string/title_activity_add_stall"
+            android:parentActivityName=".AccountActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".AccountActivity" />
+        </activity>
+        <activity
+            android:name=".Profile"
+            android:label="@string/title_activity_profile"
+            android:parentActivityName=".AccountActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".AccountActivity" />
+        </activity>
+        <activity
+            android:name=".EditStall"
+            android:label="@string/title_activity_edit_stall"
+            android:parentActivityName=".AccountActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cmput301w16t01crimsonhorizons.parkinghelper.AccountActivity" />
         </activity>
     </application>
 

@@ -28,4 +28,7 @@
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_own_stalls_with_bids">OwnStallsWithBidsActivity</string>
     <string name="title_activity_bids_for_stall">BidsForStall</string>
+    <string name="title_activity_add_stall">AddStall</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_edit_stall">EditStall</string>
 </resources>

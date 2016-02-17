@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="cmput301w16t01crimsonhorizons.parkinghelper.AccountAcitivity"
+    tools:context=".AccountActivity"
     tools:showIn="@layout/activity_account_acitivity">
 
     <TextView
@@ -37,7 +37,8 @@
         android:text="Add"
         android:id="@+id/AddBtn"
         android:layout_above="@+id/ProfileBtn"
-        android:layout_alignStart="@+id/ProfileBtn" />
+        android:layout_alignStart="@+id/ProfileBtn"
+        android:onClick="addStall"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -46,7 +47,8 @@
         android:id="@+id/ProfileBtn"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/AccountTitle"
-        android:layout_marginBottom="52dp" />
+        android:layout_marginBottom="52dp"
+        android:onClick="profile"/>
 
 
 </RelativeLayout>

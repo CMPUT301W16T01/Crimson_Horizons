@@ -17,15 +17,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Your Bids"
-        android:id="@+id/YourBidsTitle"
+        android:text=" Stalls With Bids"
+        android:id="@+id/StallsWithBidsTitle"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/YourBidsTitle"
+        android:layout_below="@+id/StallsWithBidsTitle"
         android:layout_centerHorizontal="true"
         android:id="@+id/YourBidsLv"/>
 </RelativeLayout>
