@@ -31,4 +31,6 @@
     <string name="title_activity_add_stall">AddStall</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_edit_stall">EditStall</string>
+    <string name="title_activity_your_bids">YourBids</string>
+    <string name="title_activity_edit_bids">EditBids</string>
 </resources>

@@ -9,23 +9,22 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="cmput301w16t01crimsonhorizons.parkinghelper.OwnStallsWithBidsActivity"
-    tools:showIn="@layout/activity_own_stalls_with_bids">
-
+    tools:context="cmput301w16t01crimsonhorizons.parkinghelper.YourBids"
+    tools:showIn="@layout/activity_your_bids">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=" Stalls With Bids"
-        android:id="@+id/StallsWithBidsTitle"
+        android:text="YourBids"
+        android:id="@+id/YourBidsTitle"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textSize="40sp"/>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/StallsWithBidsTitle"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/OwnStalls"/>
+        android:id="@+id/YourBidsLv"
+        android:layout_below="@+id/YourBidsTitle"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
