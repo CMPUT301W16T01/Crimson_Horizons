@@ -34,7 +34,7 @@ public class HomepageActivity extends AppCompatActivity {
     }
 
     public void clickSearch(View view){
-        Intent intent = new Intent(this, SearchActivity.class);
+        Intent intent = new Intent(this, Search.class);
         startActivity(intent);
     }
     public void clickBidsOnStall(View view){

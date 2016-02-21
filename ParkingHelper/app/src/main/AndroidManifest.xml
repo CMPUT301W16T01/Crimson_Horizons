@@ -59,7 +59,7 @@
                 android:value="cmput301w16t01crimsonhorizons.parkinghelper.HomepageActivity" />
         </activity>
         <activity
-            android:name=".SearchActivity"
+            android:name=".Search"
             android:label="@string/title_activity_search"
             android:parentActivityName=".HomepageActivity"
             android:theme="@style/AppTheme.NoActionBar">
