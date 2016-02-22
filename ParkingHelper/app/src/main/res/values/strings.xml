@@ -33,4 +33,5 @@
     <string name="title_activity_edit_stall">EditStall</string>
     <string name="title_activity_your_bids">YourBids</string>
     <string name="title_activity_edit_bids">EditBids</string>
+    <string name="title_activity_bid_stall">BidStall</string>
 </resources>

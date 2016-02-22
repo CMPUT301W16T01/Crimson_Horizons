@@ -130,6 +130,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cmput301w16t01crimsonhorizons.parkinghelper.YourBids" />
         </activity>
+        <activity
+            android:name=".BidStall"
+            android:label="@string/title_activity_bid_stall"
+            android:parentActivityName=".Search"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cmput301w16t01crimsonhorizons.parkinghelper.Search" />
+        </activity>
     </application>
 
 </manifest>

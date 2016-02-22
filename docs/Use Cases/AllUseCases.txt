@@ -1,0 +1,291 @@
+US 01.01.01
+use case name:		addNewItem	
+participating actors:	user(primary)
+goal:			add a new item to the users inventory
+trigger:		user presses the add button
+precondition:		user has an account
+postcondition:		new item is added to the user`s account
+basic flow:	1 	user presses the add button
+		2	system prompts the user to add the item`s info
+		3	user fills in the information fields
+		4	user presses the add button
+		5	system adds the item to the user`s account
+		6	system returns to the user`s account menu
+Exceptions:	3.0.0	user enters invalid information
+		-3.0.1	system prompts the user to enter valid information
+		-3.0.2	user enters valid information
+		3.1.0	user is not online
+		-3.1.1	system prompts user to save the item for later
+		-3.1.2	user saves the item for later
+
+US 01.02.01
+US 01.03.01
+use case name:		viewInventoryItem	
+participating actors:	user(primary)
+goal:			view the details of an Item in the user`s inventory
+trigger:		user presses the Account button
+precondition:		user has an item in their inventory
+postcondition:		user is viewing the items information
+basic flow:	1 	user presses the Account button
+      		2	system presents a list of the item in the user`s inventory
+		-	US 01.02.01 is met
+		3	user presses the item they wish to view more closely
+Exceptions:	3.0	user does not have an item in their inventory
+		-3.1	user is unable to select an item until there is one in the inventory
+Related Artifacts: US 01.03.01
+
+US 01.04.01
+Use Case Name: Edit his own stalls.
+Participating Actors: Owner
+Goal: Able to edit the status of his parking stall
+Trigger: Click on the Object that he owns
+Precondition: He owns the object and has a status
+Postcondition: Status of his objec is changed
+Basic Flow: 1. Owner opens his list of parking stalls that he owns
+      	    2. He selects on one of the parking stalls
+	    3. The program opens up another intent with the information of 
+	       that objects
+	    4. He then edits the parking stalls status
+	    5. He clicks "save"
+	    6. The intent closes
+	    7. The status have been changedUse Case Name: US 01.04.01
+Exceptiosn: 5.0: His changes are invalid
+	    -5.1 System notifies user of error
+
+US 01.05.01
+Use Case Name: Delete parking stalls.
+Participating Actors: Owner
+Goal: Able to delete the parking stalls
+Trigger: Click on the Object that he owns
+Precondition: He owns the object and has a status
+Postcondition: He no longers owns the parking stalls
+Basic Flow: 1. Owner opens up the list of parking stalls he owns.
+      	    2. Owner selects the parking stalls he wishes to delete.
+	    3. System opens an intent of the parking stall information.
+	    4. Owner selects delete.
+	    5. Parking stall is deleted, the intent is closed and the owner
+	       sees under in the list that it is no longer there.
+
+US 02.01.01
+use case name:		displayParkingSpotInfo
+participating actors:	user(primary)
+goal:			find parking stall status
+trigger:		user selects a parking stall
+precondition:		program knows parking stall info
+postcondition:		display parking stall info
+basic flow:	1 	user selects a parking stall
+		2	program display details on that parking stall
+
+
+US 03.01.01
+use case name:		userSignUp
+participating actors:	user(primary)
+goal:			Create an account for the user
+trigger:		user clicks on sign-up button
+precondition:		program knows user data-base
+postcondition:		create a new account for the user
+basic flow:	1	User fills out user sign-up page and clicks the next button
+		2	Program displays the account was successfully made
+		3	User clicks the next button
+		4	Program displays the main screen
+exceptions:	1.0.0	User inputs invalid data
+		1.0.1	Program displays error message
+		1.0.2	User inputs valid data and clicks the next button
+		
+
+US 03.02.01
+use case name:		userEditProfile
+participating actors:	user(primary)
+goal:			Modify the user's account
+trigger:		user clicks on edit account button
+precondition:		program knows user data-base
+postcondition:		The user's account is modified
+Extends:		userSignUp
+basic flow:	1	User clicks on edit profile button
+		2	Program displays edit profile page
+		3	User fills out parts of the edit profile page and clicks save
+		4	Program displays the modified user webpage
+exceptions:	3.0.0	User inputs invalid data
+		3.0.1	Program displays error message
+		3.0.2	User inputs valid data and clicks save
+
+US 03.03.01
+use case name:		userDisplayProfile
+participating actors:	user(primary)
+goal:			Display the selected user's account info
+trigger:		user clicks on a user's profile name
+precondition:		program knows user data-base
+postcondition:		The program displays an user's account info
+Extends:		displayParkingSpotInfo
+basic flow:	1	User clicks on an user name
+		2	Program displays the selected user's basic information
+
+
+US 04.01.01
+Use Case Name: Search Unborrowed Things by keyword
+Participating Actors: User 
+Goal: Produce a list of things that aren't borrowed
+Trigger: click search bar
+Precondition: at main menu
+Postcondition: a list of relevant unborrowed objects
+Basic Flow
+1. user clicks on search bar
+2. system prompts user to enter keywords
+3. user submits keywords 
+
+US 04.02.01
+Use Case Name: Examine Unborrowed Things
+Participating Actors: User(Primary) 
+Goal: Scroll through unborrowed 
+Trigger: submit search query
+Precondition: after search queries are submitted
+Postcondition: after search queires are submitted
+Basic Flow
+1. user scrolls either up or down
+
+US 05.01.01
+Use Case Name: Bid on stalls
+Participating Actors: User/Borrower
+Goal: Able to bid on available things with monetary rate
+Trigger: Click on the parking stalls that is available and bid
+Precondition: There are avaiable parking stalls
+Postcondition: He has bidded on the parking stalls and is displayed
+Basic Flow: 1. Able to browse through a list of availabe parking stalls.
+      	    2. Select the available stall.
+	    3. System opens up the information of that stall as well as owner's
+	       information.
+	    4. User hit the "bid" button.
+	    5. System promps user to enter bid amount
+	    6. User hit confirm
+	    7. System updates bidding information
+Exceptions: 2.0: user did not hit a avaiable item.
+
+US 05.02.01
+Use Case Name: View pending bids.
+Participating Actors: User/Borrower
+Goal: Able to view pending bids each thing with its description, 
+      owner username, and my bid.
+Trigger: Click on "View your bids"
+Precondition: User has a valid account with the app
+Postcondition: All items that he has bidded on is displayed with the information
+Basic Flow: 1. The user hits the pending bid button
+      	    2. The system opens up a new intent
+	    3. The systems display each item with all the information
+	    4. There is a close button when the user wants to exit
+	    5. The user can hit cancel when bid is offered.
+
+US 05.03.01
+use case name:		notifyOwnerOfBid
+participating actors:	owner(primary) user
+goal:			Owner is notified of bid
+trigger:		user clicks on the bid button of the owner's parking stall
+precondition:		program knows user data-base, owner data-base, and can contact owner
+postcondition:		The program notifies the owner of a bid
+extends:		bidOnParkingStall	
+basic flow: 	1	Program sends notification to owner
+		2	Owner recieves notification on their main menu
+
+US 05.04.01
+US 05.05.01
+use case name:		viewItemBids
+participating actors:	user (primary)
+goal:			bids on a given item are displayed to the user
+trigger:		Item selected from "Items with Bids" menu
+precondition:		User has an account with at least one item
+postcondition:		Selected item's bids are displayed
+basic flow:	1	User selects the "Bids on My Items" button
+		2	List of user's items with bids is displayed
+		-	US 05.04.01 is met
+		3	User selects an item
+		4	List of item's bids is displayed
+exceptions:	3	If user has no items with bids
+		3.1	User has no item to select
+Related Artifacts: US 05.04.01
+
+
+US 05.06.01
+use case name:		acceptItemBid
+participating actors:	user (primary), all bidders
+goal:			the selected bid is accepted, all other bids on the same item are declined
+trigger:		"Accept" button is selected on a specific bid
+precondition:		User has an item with at least one bid
+postcondition:		All bids cleared from item, item listed as "Lending" to user who placed the accepted bid
+basic flow:	1	User selects the "Bids on My Items" button
+		2	List of user's items with bids is displayed
+		3	User selects an item
+		4	List of item's bids is displayed
+		5	"Accept" button is selected for a bid
+		6	Item is lent to bidder
+exceptions:	3	If user has no items with bids
+		3.1	User has no item to select
+
+US 05.07.01
+use case name:		declineItemBid
+participating actors:	user (primary), bidder
+goal:			the selected bid is declined
+trigger:		"Decline" button is selected on a specific bid
+precondition:		User has an item with at least one bid
+postcondition:		Declined bid is absent from the item's bids
+basic flow:	1	User selects the "Bids on My Items" button
+		2	List of user's items with bids is displayed
+		3	User selects an item
+		4	List of item's bids is displayed
+		5	"Decline" button is selected for a bid
+		6	Bid is removed
+exceptions:	3	If user has no items with bids
+		3.1	User has no item to select
+
+
+US 06.01.01
+Use Case Name: View borrowed items (Borrower)
+Participating Actors:  Borrower
+Goal: Borrower can view borrowed items
+Trigger: Borrower selects "view borrowed items"
+Precondition: main menu
+Postcondition: list of Borrower's borrowed items with
+relevent information is displayed
+Basic Flow
+1.  Borrower selects "view borrowed items"
+2.  Borrowed items are displayed  
+
+US 06.02.01
+Use Case Name: View borrowed items (Owner)
+Participating Actors: Owner
+Goal: Owner can view borrowed things
+Trigger: Owner selects "view my borrowed items"
+Precondition: main menu
+Postconditioin: list of items borrowed from Owner is displayed with
+relevent information
+Basic Flow:
+1. Owner selects "view my borrowed items"
+2. a list of items borrowed from Owner is displayed
+
+US 07.01.01
+Use Case Name: Return Thing
+Participating Actors:  Owner
+Goal: Owner can set returned things to available
+Trigger: Owner selects "view returned items"
+Precondition: main menu
+Postcondition: relevent thing is now available
+Basic Flow
+1.  Owner selects "view returned"
+2.  Owner selects a thing
+3.  Thing's info is displayed, with "make available"
+4.  Owner selects "make available"
+
+US 08.01.01
+use case name:		addNewItem	
+participating actors:	user(primary)
+goal:			saves an item to the local system to be added later
+trigger:		user presses the add button
+precondition:		user has an account
+postcondition:		new item is added to the user`s account
+basic flow:	1 	user presses the add button
+		2	system prompts the user to add the item`s info
+		3	user fills in the information fields
+		4	user presses the save button
+		5	system save the item information locally to be reviewed later
+		6	system returns to the user`s account menu
+Exceptions:	3.0	User enters invalid information
+		-3.1	system prompts the user to enter valid information
+		-3.2	user enters valid information
