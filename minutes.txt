@@ -24,3 +24,31 @@ Kevin:
 	Done: Test cases(4), Use cases(4), started on glossary
 	Will Do: Finish/proofread everything I did for project 2.
 	Blockers: Assignments/projects this week(3).
+
+
+Feb 23, 2016
+Lee I: 
+    Done: UML parts
+    Will Do: Part 4 some requirements
+    Blockers: Capstone project, Midterm
+    
+Jon O: 
+    Done: Suggestions UML and checking.
+    Will Do: Part 4 some requirements.
+    Blockers: projects, Midterm
+
+Jon P:
+    Done: Suggestions some UML.
+    Will Do: Part 4 some requirements.
+    Blockers: Capstone project, Midterm
+
+Aaron:
+	Done: UML done some parts.
+	Will Do: Part 4 some requirements.
+	Blockers: Two midterms.
+
+Kevin:
+	Done: UML, UI interface in program
+	Will Do: Part 4 some requirements.
+	Blockers: Midterm
+
