@@ -280,7 +280,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public Boolean Validate(String email){
         // TODO Make it authenticate through elastic search.
-        ArrayList<String> UserName = new ArrayList<>();
+        //ArrayList<String> UserName = new ArrayList<>();
+        String UserName = "";
         ElasticSearchCtr.GetUserName getUserName = new ElasticSearchCtr.GetUserName();
         getUserName.execute(email);
         try {
@@ -290,7 +291,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        if (UserName.contains(email)){
+        if (UserName.equals(email)){
             return true;
         } else {
             return false;
