@@ -9,10 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 public class HomepageActivity extends AppCompatActivity {
-
-    @Override
+    static String USERNAME;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        final String USERNAME = intent.getStringExtra("username");
         setContentView(R.layout.activity_homepage);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

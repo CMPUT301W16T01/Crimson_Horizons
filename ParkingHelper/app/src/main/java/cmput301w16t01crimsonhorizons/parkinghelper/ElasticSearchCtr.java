@@ -24,33 +24,30 @@ public class ElasticSearchCtr {
 
     //TODO: A function that gets tweets
     //static function works with class. so just class.method()
-    public static class GetUserName extends AsyncTask<String, Void,Boolean> {
+    public static class GetUserName extends AsyncTask<String, Void,ArrayList<String>> {
 
         @Override
-        protected Boolean doInBackground(String... search_string) {
+        protected ArrayList<String> doInBackground(String... search_string) {
             verifyClient();
             //start initial array lsit empty.
             ArrayList<String> UserName = new ArrayList<String>();
             //Searches the email address, will be the first element.
-            String query = "{\"query\":{\"term\":{\"UserName\":" + search_string[0] + "}}}";
-            Search search = new Search.Builder(query).
+            Search search = new Search.Builder(search_string[0]).
                     addIndex("T01").
-                    addType("stalls").build();
+                    addType("User_Database").build();
 
             try {
                 SearchResult execute = client.execute(search);
                 if (execute.isSucceeded()){
                     //return list of things
-                    List<String> returned_UserName = execute.getSourceAsObjectList(String.class);
+                    ArrayList<String> returned_UserName = (ArrayList<String>)execute.getSourceAsObjectList(String.class);
                     UserName.addAll(returned_UserName);
-                    return UserName.contains(search_string[0]);
-                } else {
-                    return Boolean.FALSE;
+                    return UserName;
                 }
             } catch (IOException e) {
                     Log.i("TODO", "SEARCH PROBLEMS");
             }
-            return Boolean.FALSE;
+            return UserName;
         }
     }
     //Helper function
