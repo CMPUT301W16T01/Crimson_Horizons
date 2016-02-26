@@ -32,9 +32,14 @@ public class ElasticSearchCtr {
             //start initial array lsit empty.
             ArrayList<String> UserName = new ArrayList<String>();
             //Searches the email address, will be the first element.
-            Search search = new Search.Builder(search_string[0]).
-                    addIndex("T01").
-                    addType("User_Database").build();
+            String query = "{" +
+                    "    \"query\": {" +
+                    "        \"match\" :{ \"Username\":\"" + search_string[0]+ "\""+
+                    "    }" +
+                    "}}";
+            Search search = new Search.Builder(query).
+                    addIndex("t01").
+                    addType("user_database").build();
 
             try {
                 SearchResult execute = client.execute(search);
