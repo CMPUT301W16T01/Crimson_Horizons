@@ -283,8 +283,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //ArrayList<String> UserName = new ArrayList<>();
         String UserName = "";
         ElasticSearchCtr.GetUserName getUserName = new ElasticSearchCtr.GetUserName();
-        getUserName.execute(email);
+
         try {
+            getUserName.execute("");
             UserName = getUserName.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
