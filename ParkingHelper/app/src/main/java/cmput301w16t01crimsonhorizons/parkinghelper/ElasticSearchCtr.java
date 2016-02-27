@@ -22,6 +22,59 @@ import io.searchbox.core.SearchResult;
 public class ElasticSearchCtr {
     private static JestDroidClient client;
 
+    //Tries to add user and returns TRUE if one was added
+    //If something goes horribly wrong it returns null
+    public static Boolean addUser(Account newAccount)  {
+        verifyClient();
+
+        if(!verifyUserName(newAccount)) {
+
+            Index index = new Index.Builder(newAccount).index("T01").type("User_Database").build();
+            try {
+                DocumentResult result = client.execute(index);
+                if (result.isSucceeded()) {
+                    //Set the ID to newAccount that elasticsearch told me it was
+                    newAccount.setId(result.getId());
+                    return Boolean.TRUE;
+                } else {
+                    return Boolean.FALSE;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public static Boolean verifyUserName(Account userAccount){
+        String search_string = userAccount.getUsername();
+
+        //inaccurate search, most likely looks at all properties that contain that username.
+        Search search = new Search.Builder("my_index , my_type, { \"document\" : {\"message\" : {\"type\", search_string + &size=10000").build();
+
+        try {
+            SearchResult execute = client.execute(search);
+            if(execute.isSucceeded()){
+
+                List<Account> returned_accounts = execute.getSourceAsObjectList(Account.class);
+                if(returned_accounts.isEmpty()){
+                    return Boolean.FALSE;
+                } else{
+                    return Boolean.TRUE;
+                }
+
+            } else {
+                //TODO:
+                //TODO:
+                return Boolean.FALSE;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     //TODO: A function that gets tweets
     //static function works with class. so just class.method()
     public static class GetUserName extends AsyncTask<String, Void,ArrayList<String>> {
@@ -62,4 +115,5 @@ public class ElasticSearchCtr {
             client = (JestDroidClient)factory.getObject();
         }
     }
+
 }

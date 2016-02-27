@@ -7,9 +7,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 
 public class SigninActivity extends AppCompatActivity {
+    private Account userAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +34,19 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     public void clickSignin(View view){
-        // TODO: 2/15/2016 make it to create the account
 
         //Here is assuming that it was able to verify the account
-        if (Boolean.TRUE){
+
+        userAccount.setUsername(findViewById(R.id.SigninUsernameEditTxt).toString());
+        userAccount.setEmail(findViewById(R.id.SigninEmailEditTxt).toString());
+        userAccount.setWorkPhone(findViewById(R.id.SigninHomePhonEditTxt).toString());
+        userAccount.setUsername(findViewById(R.id.SigninCellPhonEditTxt).toString());
+
+        if (ElasticSearchCtr.addUser(userAccount)){
             Intent intent = new Intent(this,HomepageActivity.class);
             startActivity(intent);
+        } else {
+            //TODO: make it display a pop-up error informing the user that the username already exists
         }
     }
 

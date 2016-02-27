@@ -1,5 +1,7 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import io.searchbox.annotations.JestId;
+
 /**
  * Created by schuman on 2/23/16.
  */
@@ -8,6 +10,9 @@ public class Account {
     private String Username;
     private String CellPhone;
     private String WorkPhone;
+
+    @JestId
+    protected String id;
 
     public String getWorkPhone() {
         return WorkPhone;
@@ -40,5 +45,14 @@ public class Account {
     public void setCellPhone(String cellPhone) {
         CellPhone = cellPhone;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 
 }
