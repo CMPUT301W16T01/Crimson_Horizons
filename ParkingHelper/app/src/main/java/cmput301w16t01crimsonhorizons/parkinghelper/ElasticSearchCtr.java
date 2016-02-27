@@ -8,7 +8,6 @@ import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import io.searchbox.core.DocumentResult;
