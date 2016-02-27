@@ -74,6 +74,7 @@ public class ElasticSearchCtr {
         return null;
     }
 
+
     //TODO: A function that gets tweets
     //static function works with class. so just class.method()
     public static class GetUserName extends AsyncTask<String, Void, String> {
@@ -98,7 +99,7 @@ public class ElasticSearchCtr {
                     return (String)execute.getSourceAsString();
                 }
             } catch (IOException e) {
-                    Log.i("TODO", "SEARCH PROBLEMS");
+                Log.i("TODO", "SEARCH PROBLEMS");
             }
             return "";
         }
