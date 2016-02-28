@@ -88,8 +88,7 @@ public class ElasticSearchCtr {
                     "        \"match\" :{ \"Email\":\"" + search_string+ "\""+
                     "    }" +
                     "}}";
-            Search search = new Search.Builder(query).
-                    addIndex("t01").
+            Search search = new Search.Builder(query).addIndex("t01").
                     addType("user_database").build();
 
             try {
