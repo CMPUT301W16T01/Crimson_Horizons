@@ -12,4 +12,63 @@
     tools:context="cmput301w16t01crimsonhorizons.parkinghelper.EditStall"
     tools:showIn="@layout/activity_edit_stall">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Stall"
+        android:id="@+id/EditStallTitle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:id="@+id/NameTtitle"
+        android:layout_below="@+id/EditStallTitle"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="26dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/NamePrompEditStall"
+        android:layout_below="@+id/NameTtitle"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:id="@+id/DescriptionTitle"
+        android:layout_below="@+id/NamePrompEditStall"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="33dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/DescriptionPrompEditStall"
+        android:layout_below="@+id/DescriptionTitle"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/NamePrompEditStall" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/SaveEdit"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="124dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/CancelEdit"
+        android:layout_alignTop="@+id/SaveEdit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp" />
 </RelativeLayout>

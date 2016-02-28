@@ -7,12 +7,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.test.suitebuilder.TestMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class AccountActivity extends AppCompatActivity {
     private ListView MyStalls;
@@ -25,9 +27,25 @@ public class AccountActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        ArrayList<String> TempArray = new ArrayList<>();
-        TempArray.add("Something");
-        TempArray.add("Another thing");
+        //Retrieve the email from homepage and use elastic search to get the account
+        //After it gets the stalls for that account and store it.
+        //It will set the adapter with this list of stalls.
+        Intent intent = getIntent();
+        Account account = null;
+        final String username = intent.getStringExtra("username");
+        ElasticSearchCtr.GetAccount getAccount = new ElasticSearchCtr.GetAccount();
+        try {
+            getAccount.execute(username);
+            account = getAccount.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            Log.d("getting account","account not retrieved, not assigned");
+        }
+        ArrayList<Stalls>StallAry = account.getOwnStalls();
         MyStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -38,9 +56,10 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(clickStall);
             }
         });
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.account_stalls,TempArray);
+        ArrayAdapter<Stalls> adapter = new ArrayAdapter<Stalls>(this,
+                R.layout.account_stalls,StallAry);
         MyStalls.setAdapter(adapter);
+
     }
 
     public void addStall(View view){

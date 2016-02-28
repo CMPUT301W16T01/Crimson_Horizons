@@ -1,11 +1,9 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.widget.EditText;
 
 public class EditStall extends AppCompatActivity {
 
@@ -13,18 +11,16 @@ public class EditStall extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_stall);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Retrieve my stall that user clicked
+        Intent intent = getIntent();
+        Stalls stall = (Stalls)intent.getSerializableExtra("entry");
+        int pos = intent.getIntExtra("id",-1);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //Set all the fields
+        EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
+        EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
+        title.setText(stall.getStallID());
+        description.setText(stall.getDescription());
     }
 
 }

@@ -1,9 +1,13 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by schuman on 2/23/16.
  */
-public class Stalls {
+public class Stalls implements Serializable{
     private String Owner;
     private String Description;
     private String Status;

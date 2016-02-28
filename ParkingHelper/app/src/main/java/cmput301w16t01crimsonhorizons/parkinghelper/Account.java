@@ -1,5 +1,7 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import java.util.ArrayList;
+
 import io.searchbox.annotations.JestId;
 
 /**
@@ -9,6 +11,7 @@ public class Account {
     private String Email;
     private String CellPhone;
     private String WorkPhone;
+    private ArrayList<Stalls> OwnStalls;
 
     @JestId
     protected String id;
@@ -45,5 +48,11 @@ public class Account {
         this.id = id;
     }
 
+    public ArrayList<Stalls> getOwnStalls() {
+        return OwnStalls;
+    }
 
+    public void setOwnStalls(ArrayList<Stalls> ownStalls) {
+        OwnStalls = ownStalls;
+    }
 }

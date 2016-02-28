@@ -28,7 +28,6 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -284,7 +283,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             Boolean UserName = new Boolean(false);
-            UserName = ElasticSearchCtr.GetUserName(mEmail);
+            UserName = ElasticSearchCtr.CheckAccount(mEmail);
             return UserName;
             // TODO: attempt authentication against a network service.
 

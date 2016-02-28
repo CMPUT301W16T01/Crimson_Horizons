@@ -31,6 +31,7 @@ public class HomepageActivity extends AppCompatActivity {
 
     public void clickAccount(View view){
         Intent intent = new Intent(this,AccountActivity.class);
+        intent.putExtra("username",USERNAME);
         startActivity(intent);
     }
 

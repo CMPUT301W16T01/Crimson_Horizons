@@ -76,16 +76,41 @@ public class ElasticSearchCtr {
         }
         return null;
     }
+    public static class GetAccount extends AsyncTask<String, Void,Account>{
 
+        @Override
+        protected Account doInBackground(String... search_string) {
+            verifyClient();
+            Account account = null;
+            //start initial array lsit empty.
+            String query = "{" +
+                    "    \"query\": {" +
+                    "        \"match\" :{ \"Email\":\"" + search_string+ "\""+
+                    "    }" +
+                    "}}";
+            Search search = new Search.Builder(query).
+                    addIndex("t01").
+                    addType("user_database").build();
 
-    //TODO: A function that gets tweets
-    //static function works with class. so just class.method()
-    public static Boolean GetUserName(String search_string){
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()){
+                    //return list of things
+                    account= (Account)execute.getSourceAsObjectList(Account.class);
+                }
+            } catch (IOException e) {
+                Log.i("TODO", "SEARCH PROBLEMS");
+            }
+
+            return account;
+        }
+    }
+    public static Boolean CheckAccount(String search_string){
             verifyClient();
             Boolean value = new Boolean(false);
         String query = "{" +
                 "    \"query\": {" +
-                "        \"match\" :{ \"Email\":\"" + search_string+ "\""+
+                "        \"match\" :{ \"Username\":\"" + search_string+ "\""+
                 "    }" +
                 "}}";
         Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
