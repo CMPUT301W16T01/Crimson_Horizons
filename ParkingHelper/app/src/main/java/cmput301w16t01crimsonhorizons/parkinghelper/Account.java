@@ -7,7 +7,6 @@ import io.searchbox.annotations.JestId;
  */
 public class Account {
     private String Email;
-    private String Username;
     private String CellPhone;
     private String WorkPhone;
 
@@ -28,14 +27,6 @@ public class Account {
 
     public void setEmail(String email) {
         Email = email;
-    }
-
-    public String getUsername() {
-        return Username;
-    }
-
-    public void setUsername(String username) {
-        Username = username;
     }
 
     public String getCellPhone() {

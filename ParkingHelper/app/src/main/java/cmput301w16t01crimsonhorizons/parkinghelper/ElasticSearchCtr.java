@@ -8,6 +8,8 @@ import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.searchbox.core.DocumentResult;
@@ -28,7 +30,7 @@ public class ElasticSearchCtr {
 
         if(!verifyUserName(newAccount)) {
 
-            Index index = new Index.Builder(newAccount).index("T01").type("User_Database").build();
+            Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
             try {
                 DocumentResult result = client.execute(index);
                 if (result.isSucceeded()) {
@@ -46,10 +48,11 @@ public class ElasticSearchCtr {
     }
 
     public static Boolean verifyUserName(Account userAccount){
-        String search_string = userAccount.getUsername();
-
+        String search_string = userAccount.getEmail();
+        String query = "{\"fields\":[\"Email\",\"CellPhone\",\"WorkPhone\"],\"query\":{\"match\":{\"Email\"," +
+                search_string + "}}}";
         //inaccurate search, most likely looks at all properties that contain that username.
-        Search search = new Search.Builder("my_index , my_type, { \"document\" : {\"message\" : {\"type\", search_string + &size=10000").build();
+        Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
 
         try {
             SearchResult execute = client.execute(search);
@@ -77,33 +80,32 @@ public class ElasticSearchCtr {
 
     //TODO: A function that gets tweets
     //static function works with class. so just class.method()
-    public static class GetUserName extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... search_string) {
+    public static Boolean GetUserName(String search_string){
             verifyClient();
-            //start initial array lsit empty.
-            //ArrayList<String> UserName = new ArrayList<String>();
-            //Searches the email address, will be the first element.
-            Search search = new Search.Builder(search_string[0]).
-                    addIndex("T01").
-                    addType("User_Database").build();
-
+            Boolean value = new Boolean(false);
+        String query = "{" +
+                "    \"query\": {" +
+                "        \"match\" :{ \"Email\":\"" + search_string+ "\""+
+                "    }" +
+                "}}";
+        Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
             try {
                 SearchResult execute = client.execute(search);
                 if (execute.isSucceeded()){
-                    //return list of things
-                    //ArrayList<String> returned_UserName = (ArrayList<String>)execute.getSourceAsObjectList(String.class);
-                    //UserName.addAll(returned_UserName);
-                    //return UserName;
-                    return (String)execute.getSourceAsString();
+                    Account account = execute.getSourceAsObject(Account.class);
+                    if (account.getEmail().equals(search_string)){
+                        return value;
+                    } else {
+                        return value;
+                    }
+                } else{
+                    return value;
                 }
             } catch (IOException e) {
                 Log.i("TODO", "SEARCH PROBLEMS");
             }
-            return "";
+            return value;
         }
-    }
     //Helper function
     public static void verifyClient(){
         //verify that "client" exists and if it does not make it.

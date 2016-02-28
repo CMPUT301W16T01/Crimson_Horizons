@@ -180,7 +180,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        /*return email.contains("@");*/
+        return true;
     }
 
 
@@ -274,29 +275,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public Boolean Validate(String email){
-        // TODO Make it authenticate through elastic search.
-        //ArrayList<String> UserName = new ArrayList<>();
-        String UserName = "";
-        ElasticSearchCtr.GetUserName getUserName = new ElasticSearchCtr.GetUserName();
-        getUserName.execute(email);
-        try {
-            UserName = getUserName.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        if (UserName.equals(email)){
-            return true;
-        } else {
-            return false;
-        }
-    }
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         UserLoginTask(String email) {
@@ -305,20 +283,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
+            Boolean UserName = new Boolean(false);
+            UserName = ElasticSearchCtr.GetUserName(mEmail);
+            return UserName;
             // TODO: attempt authentication against a network service.
-/*
-            try {
-               *//* // Simulate network access.
-                Thread.sleep(2000);*//*
-            } catch (InterruptedException e) {
-                return false;
-            }*/
-            if (Validate(mEmail)){
-                return true;
-            }
 
             // TODO: register the new account here.
-            return false;
         }
 
         @Override

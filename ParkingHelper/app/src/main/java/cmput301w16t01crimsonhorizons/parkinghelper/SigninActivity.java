@@ -37,10 +37,9 @@ public class SigninActivity extends AppCompatActivity {
 
         //Here is assuming that it was able to verify the account
 
-        userAccount.setUsername(findViewById(R.id.SigninUsernameEditTxt).toString());
         userAccount.setEmail(findViewById(R.id.SigninEmailEditTxt).toString());
         userAccount.setWorkPhone(findViewById(R.id.SigninHomePhonEditTxt).toString());
-        userAccount.setUsername(findViewById(R.id.SigninCellPhonEditTxt).toString());
+        userAccount.setCellPhone(findViewById(R.id.SigninCellPhonEditTxt).toString());
 
         if (ElasticSearchCtr.addUser(userAccount)){
             Intent intent = new Intent(this,HomepageActivity.class);
