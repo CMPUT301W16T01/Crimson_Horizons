@@ -20,14 +20,14 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         //Here is to create database with one thing.
-        ArrayList<Stalls>StAry = new ArrayList<>();
+/*        ArrayList<Stalls>StAry = new ArrayList<>();
         Stalls s1 = new Stalls();
         s1.setOwner("second");
         s1.setStatus("another account");
         StAry.add(s1);
         Account a1 = new Account("ABC","123456","workphone",StAry);
         AsyncTask<Account, Void, Void> execute = new ElasticSearchCtr.MakeDatabase().execute(a1);
-        setResult(RESULT_OK);
+        setResult(RESULT_OK);*/
     }
 
     @Override
