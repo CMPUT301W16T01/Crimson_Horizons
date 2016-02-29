@@ -16,8 +16,22 @@ public class Account {
     @JestId
     protected String id;
 
+    public Account(String email, String cellPhone, String workPhone, ArrayList<Stalls> ownStalls) {
+        Email = email;
+        CellPhone = cellPhone;
+        WorkPhone = workPhone;
+        OwnStalls = ownStalls;
+    }
+
+    public Account(String email, String cellPhone, String workPhone) {
+        Email = email;
+        CellPhone = cellPhone;
+        WorkPhone = workPhone;
+    }
+
     public String getWorkPhone() {
         return WorkPhone;
+
     }
 
     public void setWorkPhone(String workPhone) {
@@ -54,5 +68,9 @@ public class Account {
 
     public void setOwnStalls(ArrayList<Stalls> ownStalls) {
         OwnStalls = ownStalls;
+    }
+
+    public String toString(){
+        return Email + " | " + CellPhone + " | " + WorkPhone + " | " + OwnStalls.toString();
     }
 }
