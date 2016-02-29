@@ -1,5 +1,6 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import io.searchbox.annotations.JestId;
@@ -7,7 +8,7 @@ import io.searchbox.annotations.JestId;
 /**
  * Created by schuman on 2/23/16.
  */
-public class Account {
+public class Account implements Serializable{
     private String Email;
     private String CellPhone;
     private String WorkPhone;

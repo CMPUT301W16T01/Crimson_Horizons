@@ -8,30 +8,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.util.concurrent.ExecutionException;
+
 public class HomepageActivity extends AppCompatActivity {
-    static String USERNAME;
+    static Account ACCOUNT;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        final String USERNAME = intent.getStringExtra("username");
+        ElasticSearchCtr.GetAccount getAccount = new ElasticSearchCtr.GetAccount();
+        try{
+            String email = intent.getStringExtra("email");
+            getAccount.execute(email);
+            ACCOUNT = getAccount.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         setContentView(R.layout.activity_homepage);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void clickAccount(View view){
         Intent intent = new Intent(this,AccountActivity.class);
-        intent.putExtra("username",USERNAME);
+        intent.putExtra("account",ACCOUNT);
         startActivity(intent);
     }
 

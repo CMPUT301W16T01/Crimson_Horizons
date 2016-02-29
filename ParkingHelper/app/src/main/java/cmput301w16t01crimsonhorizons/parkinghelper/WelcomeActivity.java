@@ -1,6 +1,7 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,23 +11,22 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        //Here is to create database with one thing.
+/*        ArrayList<Stalls>StAry = new ArrayList<>();
+        Stalls s1 = new Stalls();
+        s1.setOwner("first");
+        StAry.add(s1);
+        Account a1 = new Account("123@123","123456","workphone",StAry);
+        AsyncTask<Account, Void, Void> execute = new ElasticSearchCtr.MakeDatabase().execute(a1);
+        setResult(RESULT_OK);*/
     }
 
     @Override
