@@ -130,16 +130,17 @@ public class ElasticSearchCtr {
             }
             return value;
         }
-    //Helper function
-    public static void verifyClient(){
+
+    //Helper functions
+    public static void verifyClient() {
         //verify that "client" exists and if it does not make it.
         //This had to be done the other functions anyway. Just make a helper function.
-        if (client == null ){
+        if (client == null) {
             DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080");
             DroidClientConfig config = builder.build();
             JestClientFactory factory = new JestClientFactory();
             factory.setDroidClientConfig(config);
-            client = (JestDroidClient)factory.getObject();
+            client = (JestDroidClient) factory.getObject();
         }
     }
 

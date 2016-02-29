@@ -22,7 +22,7 @@ public class Search extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        ArrayList<String> TempString = new ArrayList<>();
+        ArrayList<String> TempString = new ArrayList<String>();
         TempString.add("first\n");
         TempString.add("second\n");
         Result.setOnItemClickListener(new AdapterView.OnItemClickListener() {

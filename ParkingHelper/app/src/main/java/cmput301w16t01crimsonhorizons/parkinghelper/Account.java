@@ -71,6 +71,9 @@ public class Account {
     }
 
     public String toString(){
-        return Email + " | " + CellPhone + " | " + WorkPhone + " | " + OwnStalls.toString();
+        return "{"  + "Email: " + Email + "\n" +
+                "CellPhone: " + CellPhone + "\n" +
+                "WorkPhone" + WorkPhone + "\n" +
+                "OwnStalls: " + OwnStalls.toString() + "}";
     }
 }
