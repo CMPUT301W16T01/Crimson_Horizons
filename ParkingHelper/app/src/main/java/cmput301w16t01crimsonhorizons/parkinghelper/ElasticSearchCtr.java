@@ -77,25 +77,22 @@ public class ElasticSearchCtr {
         return null;
     }
     public static class GetAccount extends AsyncTask<String, Void,Account>{
-
         @Override
         protected Account doInBackground(String... search_string) {
             verifyClient();
             Account account = null;
-            //start initial array lsit empty.
+            //start initial array list empty.
             String query = "{" +
                     "    \"query\": {" +
                     "        \"match\" :{ \"Email\":\"" + search_string+ "\""+
                     "    }" +
                     "}}";
-            Search search = new Search.Builder(query).addIndex("t01").
-                    addType("user_database").build();
+            Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
 
             try {
                 SearchResult execute = client.execute(search);
                 if (execute.isSucceeded()){
-                    //return list of things
-                    account= (Account)execute.getSourceAsObjectList(Account.class);
+                    account = execute.getSourceAsObject(Account.class);
                 }
             } catch (IOException e) {
                 Log.i("TODO", "SEARCH PROBLEMS");
@@ -109,7 +106,7 @@ public class ElasticSearchCtr {
             Boolean value = new Boolean(false);
         String query = "{" +
                 "    \"query\": {" +
-                "        \"match\" :{ \"Username\":\"" + search_string+ "\""+
+                "        \"match\" :{ \"Email\":\"" + search_string+ "\""+
                 "    }" +
                 "}}";
         Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
@@ -117,11 +114,9 @@ public class ElasticSearchCtr {
                 SearchResult execute = client.execute(search);
                 if (execute.isSucceeded()){
                     Account account = execute.getSourceAsObject(Account.class);
-                    if (account.getEmail().equals(search_string)){
-                        return value;
-                    } else {
-                        return value;
-                    }
+                    String temp = account.getEmail();
+                    value = temp.equals(search_string);
+                    return value;
                 } else{
                     return value;
                 }
@@ -131,8 +126,32 @@ public class ElasticSearchCtr {
             return value;
         }
 
-    //Helper functions
-    public static void verifyClient() {
+    public static class MakeDatabase extends AsyncTask<Account, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Account... accounts) {
+            verifyClient();
+            //Since AsyncTasks work on arrays, we need to work with arrays as well
+            for (int i = 0; i < accounts.length; i++){
+                Account account = accounts[i];
+                Index index = new Index.Builder(account).index("t01").type("user_database").build();
+                try {
+                    DocumentResult result = client.execute(index);
+                    if (result.isSucceeded()){
+                        //Set Id for tweet, can find and edit in elastic search
+                        account.setId(result.getId());
+                    }
+                    //Can also use get id,get index,get type
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            return null;
+        }
+    }
+    //Helper function
+    public static void verifyClient(){
         //verify that "client" exists and if it does not make it.
         //This had to be done the other functions anyway. Just make a helper function.
         if (client == null) {
