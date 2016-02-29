@@ -122,6 +122,8 @@ public class ElasticSearchCtr {
                 }
             } catch (IOException e) {
                 Log.i("TODO", "SEARCH PROBLEMS");
+            } catch (NullPointerException e ){
+                value = false;
             }
             return value;
         }
