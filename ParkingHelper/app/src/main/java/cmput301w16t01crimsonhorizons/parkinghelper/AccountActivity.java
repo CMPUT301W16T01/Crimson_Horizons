@@ -43,9 +43,7 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(clickStall);
             }
         });
-        ArrayAdapter<Stalls> adapter = new ArrayAdapter<Stalls>(this,
-                R.layout.account_stalls,StallAry);
-        MyStalls.setAdapter(adapter);
+        MyStalls.setAdapter(new AdapterEditStall(this,R.layout.account_stalls,StallAry));
 
     }
 

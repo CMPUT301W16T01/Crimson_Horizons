@@ -22,7 +22,31 @@ import io.searchbox.core.SearchResult;
  */
 public class ElasticSearchCtr {
     private static JestDroidClient client;
+    public static class GetAccount extends AsyncTask<String, Void,Account>{
+        @Override
+        protected Account doInBackground(String... search_string) {
+            verifyClient();
+            Account account = new Account("","","",new ArrayList<Stalls>());
+            //start initial array list empty.
+            String query = "{" +
+                    "    \"query\": {" +
+                    "        \"match\" :{ \"Email\":\"" + search_string[0]+ "\""+
+                    "    }" +
+                    "}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
 
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()){
+                    account = execute.getSourceAsObject(Account.class);
+                }
+            } catch (IOException e) {
+                Log.i("TODO", "SEARCH PROBLEMS");
+            }
+
+            return account;
+        }
+    }
     //Tries to add user and returns TRUE if one was added
     //If something goes horribly wrong it returns null
     public static Boolean addUser(Account newAccount)  {
@@ -76,31 +100,7 @@ public class ElasticSearchCtr {
         }
         return null;
     }
-    public static class GetAccount extends AsyncTask<String, Void,Account>{
-        @Override
-        protected Account doInBackground(String... search_string) {
-            verifyClient();
-            Account account = null;
-            //start initial array list empty.
-            String query = "{" +
-                    "    \"query\": {" +
-                    "        \"match\" :{ \"Email\":\"" + search_string+ "\""+
-                    "    }" +
-                    "}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
 
-            try {
-                SearchResult execute = client.execute(search);
-                if (execute.isSucceeded()){
-                    account = execute.getSourceAsObject(Account.class);
-                }
-            } catch (IOException e) {
-                Log.i("TODO", "SEARCH PROBLEMS");
-            }
-
-            return account;
-        }
-    }
     public static Boolean CheckAccount(String search_string){
             verifyClient();
             Boolean value = new Boolean(false);
