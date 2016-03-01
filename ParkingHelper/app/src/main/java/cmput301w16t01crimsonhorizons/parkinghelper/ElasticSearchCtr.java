@@ -8,7 +8,6 @@ import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class ElasticSearchCtr {
     public static Boolean addUser(Account newAccount)  {
         verifyClient();
 
-        if(!verifyUserName(newAccount)) {
+        if(!verifyUserName(newAccount.getEmail())) {
 
             Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
             try {
@@ -71,10 +70,32 @@ public class ElasticSearchCtr {
         return null;
     }
 
-    public static Boolean verifyUserName(Account userAccount){
-        String search_string = userAccount.getEmail();
-        String query = "{\"fields\":[\"Email\",\"CellPhone\",\"WorkPhone\"],\"query\":{\"match\":{\"Email\"," +
-                search_string + "}}}";
+    public static Boolean deleteUser(Account oldAccount){
+        verifyClient();
+
+        if(verifyUserName(oldAccount.getEmail())) {
+            String deleteString = oldAccount.getEmail();
+            //I am not quite sure how deletion works using android notation
+            String deletion = "{\"delete\":\"\"fields\":[\"Email\",\"CellPhone\",\"WorkPhone\"],\"query\":{\"match\":{\"Email\",\" +\n" +
+                    "                deleteString + \"}}}";
+            Index index = new Index.Builder(oldAccount).index("t01").type("user_database").build();
+            try {
+                DocumentResult result = client.execute(index);
+                if (result.isSucceeded()) {
+                    return Boolean.TRUE;
+                } else {
+                    return Boolean.FALSE;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public static Boolean verifyUserName(String userAccount){
+        String query = "{\"fields\":[\"Email\"],\"query\":{\"match\":{\"Email\"," +
+                userAccount + "}}}";
         //inaccurate search, most likely looks at all properties that contain that username.
         Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
 
