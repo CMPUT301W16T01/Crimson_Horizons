@@ -10,6 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * The sign-in activity is the activity that allows users to create new accounts, which consist
+ * of an email address, work phone number and cellphone number. If the email address already exists
+ * then a pop-up error will be displayed to the user.
+ *
+ * <p><code>SigninActivity</code></p> is designed for creating new accounts,
+ * @author Aaron Schuman
+ */
 public class SigninActivity extends AppCompatActivity {
     private Account userAccount;
     private EditText SigninEmailEditTxt;
@@ -63,11 +71,23 @@ public class SigninActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * Changes the current activity to the HomepageActivity activity
+     * @param ()
+     * @return null
+     */
     public void clickCancel(){
         Intent intent = new Intent(this,HomepageActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Assigns the values currently in the edit text to the account and then uses elastic search
+     * to see if the email exists in the database. If there was no email then the activity changes
+     * to the HomepageActivity activity, otherwise a pop-up error is displayed.
+     * @param ()
+     * @return null
+     */
     public void clickSignin(){
 
         //Here is assuming that it was able to verify the account

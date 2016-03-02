@@ -24,12 +24,6 @@ public class Account implements Serializable{
         OwnStalls = ownStalls;
     }
 
-    public Account(String email, String cellPhone, String workPhone) {
-        Email = email;
-        CellPhone = cellPhone;
-        WorkPhone = workPhone;
-    }
-
     public String getWorkPhone() {
         return WorkPhone;
 

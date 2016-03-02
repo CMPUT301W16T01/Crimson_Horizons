@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.searchbox.core.Delete;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
@@ -75,12 +76,13 @@ public class ElasticSearchCtr {
 
         if(verifyUserName(oldAccount.getEmail())) {
             String deleteString = oldAccount.getEmail();
+
+            // curl -XDELETE https://path.to.elasticsearch/group/type/$id
+            // https://softwareprocess.es:9999/t01/user_database/my_user_id
             //I am not quite sure how deletion works using android notation
-            String deletion = "{\"delete\":\"\"fields\":[\"Email\",\"CellPhone\",\"WorkPhone\"],\"query\":{\"match\":{\"Email\",\" +\n" +
-                    "                deleteString + \"}}}";
-            Index index = new Index.Builder(oldAccount).index("t01").type("user_database").build();
+            Delete delete = new Delete.Builder(oldAccount.getId()).index("t01").type("user_database").build();
             try {
-                DocumentResult result = client.execute(index);
+                DocumentResult result = client.execute(delete);
                 if (result.isSucceeded()) {
                     return Boolean.TRUE;
                 } else {
@@ -91,6 +93,26 @@ public class ElasticSearchCtr {
             }
         }
         return null;
+    }
+
+    public static Boolean updateUser(Account newAccount)  {
+        verifyClient();
+
+        if(verifyUserName(newAccount.getEmail())) {
+
+            Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
+            try {
+                DocumentResult result = client.execute(index);
+                if (result.isSucceeded()) {
+                    return Boolean.TRUE;
+                } else {
+                    return null;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return Boolean.FALSE;
     }
 
     public static Boolean verifyUserName(String userAccount){
