@@ -285,9 +285,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             Boolean UserName = new Boolean(false);
             UserName = ElasticSearchCtr.CheckAccount(mEmail);
             return UserName;
-            // TODO: attempt authentication against a network service.
-
-            // TODO: register the new account here.
         }
 
         @Override

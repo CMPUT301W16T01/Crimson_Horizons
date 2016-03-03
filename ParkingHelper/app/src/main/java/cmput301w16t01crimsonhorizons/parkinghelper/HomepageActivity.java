@@ -1,19 +1,13 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class HomepageActivity extends AppCompatActivity {
-    private Account ACCOUNT = new Account("","","",new ArrayList<Stalls>());
     private String email;
 
     @Override
@@ -29,7 +23,7 @@ public class HomepageActivity extends AppCompatActivity {
         ElasticSearchCtr.GetAccount getAccount = new ElasticSearchCtr.GetAccount();
         try {
             getAccount.execute(email);
-            ACCOUNT=getAccount.get();
+            CurrentAccount.setAccount(getAccount.get());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -38,7 +32,7 @@ public class HomepageActivity extends AppCompatActivity {
     }
     public void clickAccount(View view){
         Intent intent = new Intent(this,AccountActivity.class);
-        intent.putExtra("account",ACCOUNT);
+        intent.putExtra("account",CurrentAccount.getAccount());
         startActivity(intent);
     }
 

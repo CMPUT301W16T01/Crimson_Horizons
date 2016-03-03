@@ -61,7 +61,8 @@
         android:id="@+id/SaveEdit"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="124dp" />
+        android:layout_marginBottom="124dp"
+        android:onClick="saveStallInformation"/>
 
     <Button
         android:layout_width="wrap_content"

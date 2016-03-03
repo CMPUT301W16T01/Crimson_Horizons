@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class AccountActivity extends AppCompatActivity {
     private ListView MyStalls;
@@ -27,13 +27,23 @@ public class AccountActivity extends AppCompatActivity {
         //It will set the adapter with this list of stalls.
         Intent intent = getIntent();
         Account account = (Account) intent.getSerializableExtra("account");
-        ArrayList<Stalls>StallAry = account.getOwnStalls();
+        ArrayList<Stalls>StallAry = new ArrayList<>();
+        String email = account.getEmail();
+        ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
+        try {
+            getStall.execute(email);
+            StallAry = getStall.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         MyStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent clickStall = new Intent(view.getContext(), EditStall.class);
-                String entry = MyStalls.getItemAtPosition(position).toString();
-                new ListViewWithUserName(view, position, id, MyStalls, (TextView)findViewById(R.id.EmailET));
+                Stalls entry = (Stalls)MyStalls.getItemAtPosition(position);
+                new ListViewWithUserName(view, position, id, MyStalls, findViewById(R.id.EmailET).toString());
                 clickStall.putExtra("entry", entry);
                 clickStall.putExtra("id", position);
                 startActivity(clickStall);
