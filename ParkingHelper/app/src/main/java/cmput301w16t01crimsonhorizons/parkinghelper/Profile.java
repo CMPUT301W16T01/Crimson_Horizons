@@ -100,7 +100,8 @@ public class Profile extends AppCompatActivity {
         userAccount.setWorkPhone(WorkPhoneET.toString());
         userAccount.setCellPhone(CellPhoneET.toString());
 
-        if (ElasticSearchCtr.updateUser(userAccount)){
+        ElasticSearchCtr.updateUser elasticSearchCtr = new ElasticSearchCtr.updateUser();
+        if (elasticSearchCtr.doInBackground(userAccount)){
 
         } else {
             //TODO: make it display a pop-up error informing the user that the username already exists

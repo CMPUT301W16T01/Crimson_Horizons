@@ -31,9 +31,9 @@ public class AccountActivity extends AppCompatActivity {
         MyStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                new ListViewWithUserName(view, position, id, MyStalls, (TextView)findViewById(R.id.EmailET));
                 Intent clickStall = new Intent(view.getContext(), EditStall.class);
                 String entry = MyStalls.getItemAtPosition(position).toString();
+                new ListViewWithUserName(view, position, id, MyStalls, (TextView)findViewById(R.id.EmailET));
                 clickStall.putExtra("entry", entry);
                 clickStall.putExtra("id", position);
                 startActivity(clickStall);

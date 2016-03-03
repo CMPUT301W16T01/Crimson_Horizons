@@ -1,5 +1,6 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
@@ -16,7 +17,12 @@ public class ViewProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_view_profile);
-        //TODO: Read SINGLETON
+
+        Intent intent = getIntent();
+        account.setEmail((String)intent.getSerializableExtra("Email"));
+        account.setWorkPhone((String)intent.getSerializableExtra("Work"));
+        account.setCellPhone((String)intent.getSerializableExtra("Cell"));
+
         emailAddress = (TextView)findViewById(R.id.emailAddress);
         workNumber = (TextView)findViewById(R.id.workNumber);
         cellNumber = (TextView)findViewById(R.id.cellNumber);
