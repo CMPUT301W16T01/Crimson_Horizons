@@ -52,3 +52,28 @@ Kevin:
 	Will Do: Part 4 some requirements.
 	Blockers: Midterm
 
+March 01, 2016
+
+Lee:
+	Done:  Search how to search by keyword on elastic search
+	Will Do: Implement search use cases.
+	Blockers: Capstone, sleeping,eating
+
+JP: 
+	Done: a little bit of loocking into how to use elastic search commands
+	      such as post,put and differences.
+	Will Do: Implement the addition personal items in the program, 
+	     	 and view a list of items.
+	Blockers: Capstone,Midterms
+
+Aaron: 
+       Done: All of the sign in activity and the profile, added few thigns 
+       	     to elastic search.
+	Will Do: Javadocs maybe work on new things and usecases
+       Blockers: Midterm
+JO: absent.
+
+Kevin:
+	Done: Login stuff.
+	Will Do: display/edit stall and store on elastic search
+	Blockers: midterm

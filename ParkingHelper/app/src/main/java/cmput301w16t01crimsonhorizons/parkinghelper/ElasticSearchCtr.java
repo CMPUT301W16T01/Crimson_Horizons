@@ -8,10 +8,10 @@ import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.searchbox.core.Delete;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
@@ -52,7 +52,7 @@ public class ElasticSearchCtr {
     public static Boolean addUser(Account newAccount)  {
         verifyClient();
 
-        if(!verifyUserName(newAccount)) {
+        if(!verifyUserName(newAccount.getEmail())) {
 
             Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
             try {
@@ -71,10 +71,53 @@ public class ElasticSearchCtr {
         return null;
     }
 
-    public static Boolean verifyUserName(Account userAccount){
-        String search_string = userAccount.getEmail();
-        String query = "{\"fields\":[\"Email\",\"CellPhone\",\"WorkPhone\"],\"query\":{\"match\":{\"Email\"," +
-                search_string + "}}}";
+    public static Boolean deleteUser(Account oldAccount){
+        verifyClient();
+
+        if(verifyUserName(oldAccount.getEmail())) {
+            String deleteString = oldAccount.getEmail();
+
+            // curl -XDELETE https://path.to.elasticsearch/group/type/$id
+            // https://softwareprocess.es:9999/t01/user_database/my_user_id
+            //I am not quite sure how deletion works using android notation
+            Delete delete = new Delete.Builder(oldAccount.getId()).index("t01").type("user_database").build();
+            try {
+                DocumentResult result = client.execute(delete);
+                if (result.isSucceeded()) {
+                    return Boolean.TRUE;
+                } else {
+                    return Boolean.FALSE;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public static Boolean updateUser(Account newAccount)  {
+        verifyClient();
+
+        if(verifyUserName(newAccount.getEmail())) {
+
+            Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
+            try {
+                DocumentResult result = client.execute(index);
+                if (result.isSucceeded()) {
+                    return Boolean.TRUE;
+                } else {
+                    return null;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return Boolean.FALSE;
+    }
+
+    public static Boolean verifyUserName(String userAccount){
+        String query = "{\"fields\":[\"Email\"],\"query\":{\"match\":{\"Email\"," +
+                userAccount + "}}}";
         //inaccurate search, most likely looks at all properties that contain that username.
         Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
 

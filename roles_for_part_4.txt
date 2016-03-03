@@ -1,13 +1,14 @@
 Complete everything individually by March 5th
 Start integrating the individual parts after March 5th.
 
-Aaron: US 03.01.01, US 03.02.01
-Kevin: US 01.04.01, US 01.05.01
-JP:    US 01.01.01, US 01.02.01
-JO:    US 01.03.01, US 02.01.01
-Lee:   US 04.01.01, US 04.02.01, login page
+Aaron: US 03.01.01, US 03.02.01,US 03.03.01
+Kevin: US 01.04.01, US 01.05.01, US 05.01.01
+JP:    US 01.01.01, US 01.02.01, US 05.04.01
+JO:    US 01.03.01, US 02.01.01, US 05.05.01
+Lee:   US 04.01.01, US 04.02.01,US 05.02.01
 
 Needs to be claimed by Tuesday March 1st:
-US 03.03.01
+
+
 
 Reminder: Pull before you Push.
