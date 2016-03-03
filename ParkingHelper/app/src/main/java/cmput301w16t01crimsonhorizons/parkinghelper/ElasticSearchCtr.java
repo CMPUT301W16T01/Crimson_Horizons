@@ -49,110 +49,138 @@ public class ElasticSearchCtr {
     }
     //Tries to add user and returns TRUE if one was added
     //If something goes horribly wrong it returns null
-    public static Boolean addUser(Account newAccount)  {
-        verifyClient();
+    public static class addUser extends AsyncTask<Account, Void, Boolean>  {
+        @Override
+        protected Boolean doInBackground(Account... newAccount) {
+            verifyClient();
+            verifyUserName verifyUserName = new verifyUserName();
+            if(!verifyUserName.doInBackground(newAccount[0].getEmail())) {
 
-        if(!verifyUserName(newAccount.getEmail())) {
+                Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
+                try {
+                    DocumentResult result = client.execute(index);
+                    if (result.isSucceeded()) {
+                        //Set the ID to newAccount that elasticsearch told me it was
+                        newAccount[0].setId(result.getId());
+                        return Boolean.TRUE;
+                    } else {
+                        return Boolean.FALSE;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
 
-            Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
+
+    }
+
+    public static class deleteUser extends AsyncTask<Account, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Account... oldAccount) {
+            verifyClient();
+
+            verifyUserName verifyUserName = new verifyUserName();
+            if(verifyUserName.doInBackground(oldAccount[0].getEmail())) {
+                String deleteString = oldAccount[0].getEmail();
+
+                // curl -XDELETE https://path.to.elasticsearch/group/type/$id
+                // https://softwareprocess.es:9999/t01/user_database/my_user_id
+                //I am not quite sure how deletion works using android notation
+                Delete delete = new Delete.Builder(oldAccount[0].getId()).index("t01").type("user_database").build();
+                try {
+                    DocumentResult result = client.execute(delete);
+                    if (result.isSucceeded()) {
+                        return Boolean.TRUE;
+                    } else {
+                        return Boolean.FALSE;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+    }
+
+    public static class updateUser extends AsyncTask<Account, Void, Boolean>  {
+
+
+        @Override
+        protected Boolean doInBackground(Account... newAccount) {
+            verifyClient();
+
+            verifyUserName verifyUserName = new verifyUserName();
+            if (verifyUserName.doInBackground(newAccount[0].getEmail())) {
+
+                Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
+                try {
+                    DocumentResult result = client.execute(index);
+                    if (result.isSucceeded()) {
+                        return Boolean.TRUE;
+                    } else {
+                        return null;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return Boolean.FALSE;
+        }
+
+    }
+
+    public static class verifyUserName extends AsyncTask<String, Void, Boolean >{
+
+
+        @Override
+        protected Boolean doInBackground(String... userAccount) {
+            String query = "{\"fields\":[\"Email\"],\"query\":{\"match\":{\"Email\"," +
+                    userAccount[0] + "}}}";
+            //inaccurate search, most likely looks at all properties that contain that username.
+            Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
+
             try {
-                DocumentResult result = client.execute(index);
-                if (result.isSucceeded()) {
-                    //Set the ID to newAccount that elasticsearch told me it was
-                    newAccount.setId(result.getId());
-                    return Boolean.TRUE;
+                SearchResult execute = client.execute(search);
+                if(execute.isSucceeded()){
+
+                    List<Account> returned_accounts = execute.getSourceAsObjectList(Account.class);
+                    if(returned_accounts.isEmpty()){
+                        return Boolean.FALSE;
+                    } else{
+                        return Boolean.TRUE;
+                    }
+
                 } else {
+                    //TODO:
+                    //TODO:
                     return Boolean.FALSE;
                 }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            return null;
         }
-        return null;
+
     }
 
-    public static Boolean deleteUser(Account oldAccount){
-        verifyClient();
+    public static class CheckAccount extends AsyncTask<String, Void, Boolean>{
 
-        if(verifyUserName(oldAccount.getEmail())) {
-            String deleteString = oldAccount.getEmail();
 
-            // curl -XDELETE https://path.to.elasticsearch/group/type/$id
-            // https://softwareprocess.es:9999/t01/user_database/my_user_id
-            //I am not quite sure how deletion works using android notation
-            Delete delete = new Delete.Builder(oldAccount.getId()).index("t01").type("user_database").build();
-            try {
-                DocumentResult result = client.execute(delete);
-                if (result.isSucceeded()) {
-                    return Boolean.TRUE;
-                } else {
-                    return Boolean.FALSE;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    public static Boolean updateUser(Account newAccount)  {
-        verifyClient();
-
-        if(verifyUserName(newAccount.getEmail())) {
-
-            Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
-            try {
-                DocumentResult result = client.execute(index);
-                if (result.isSucceeded()) {
-                    return Boolean.TRUE;
-                } else {
-                    return null;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return Boolean.FALSE;
-    }
-
-    public static Boolean verifyUserName(String userAccount){
-        String query = "{\"fields\":[\"Email\"],\"query\":{\"match\":{\"Email\"," +
-                userAccount + "}}}";
-        //inaccurate search, most likely looks at all properties that contain that username.
-        Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
-
-        try {
-            SearchResult execute = client.execute(search);
-            if(execute.isSucceeded()){
-
-                List<Account> returned_accounts = execute.getSourceAsObjectList(Account.class);
-                if(returned_accounts.isEmpty()){
-                    return Boolean.FALSE;
-                } else{
-                    return Boolean.TRUE;
-                }
-
-            } else {
-                //TODO:
-                //TODO:
-                return Boolean.FALSE;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static Boolean CheckAccount(String search_string){
+        @Override
+        protected Boolean doInBackground(String... search_string) {
             verifyClient();
             Boolean value = new Boolean(false);
-        String query = "{" +
-                "    \"query\": {" +
-                "        \"match\" :{ \"Email\":\"" + search_string+ "\""+
-                "    }" +
-                "}}";
-        Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
+            String query = "{" +
+                    "    \"query\": {" +
+                    "        \"match\" :{ \"Email\":\"" + search_string[0]+ "\""+
+                    "    }" +
+                    "}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
             try {
                 SearchResult execute = client.execute(search);
                 if (execute.isSucceeded()){
@@ -170,6 +198,7 @@ public class ElasticSearchCtr {
             }
             return value;
         }
+    }
 
     public static class MakeDatabase extends AsyncTask<Account, Void, Void>{
 

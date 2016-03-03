@@ -2,19 +2,14 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.test.suitebuilder.TestMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class AccountActivity extends AppCompatActivity {
     private ListView MyStalls;
@@ -36,6 +31,7 @@ public class AccountActivity extends AppCompatActivity {
         MyStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                new ListViewWithUserName(view, position, id, MyStalls, (TextView)findViewById(R.id.EmailET));
                 Intent clickStall = new Intent(view.getContext(), EditStall.class);
                 String entry = MyStalls.getItemAtPosition(position).toString();
                 clickStall.putExtra("entry", entry);
@@ -43,16 +39,31 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(clickStall);
             }
         });
-        MyStalls.setAdapter(new AdapterEditStall(this,R.layout.account_stalls,StallAry));
+        MyStalls.setAdapter(new AdapterEditStall(this, R.layout.account_stalls, StallAry));
+        Button profileButton = (Button) findViewById(R.id.ProfileBtn);
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                profile();
+            }
+        });
+
+        Button addButton = (Button) findViewById(R.id.AddBtn);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addStall();
+            }
+        });
 
     }
 
-    public void addStall(View view){
+    public void addStall(){
         Intent intent = new Intent(this,AddStall.class);
         startActivity(intent);
     }
 
-    public void profile(View view){
+    public void profile(){
         Intent intent = new Intent(this,Profile.class);
         startActivity(intent);
     }

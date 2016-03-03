@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email Address:"
+        android:id="@+id/UserNameText"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        android:layout_above="@+id/emailAddress"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Work Phone Number:"
+        android:id="@+id/WorkPhoneText"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        android:layout_above="@+id/workNumber"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WORKNUMBER"
+        android:id="@+id/workNumber"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cellphone Number:"
+        android:id="@+id/textView9"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/workNumber"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CELLNUMBER"
+        android:id="@+id/cellNumber"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        android:layout_below="@+id/textView9"
+        android:layout_alignEnd="@+id/UserNameText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EMAILHERE"
+        android:id="@+id/emailAddress"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        android:layout_marginBottom="40dp"
+        android:layout_above="@+id/WorkPhoneText"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
