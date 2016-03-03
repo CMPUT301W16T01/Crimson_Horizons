@@ -16,6 +16,7 @@ import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
+import io.searchbox.core.Update;
 
 /**
  * Created by Kevin L on 2/24/2016.
@@ -26,7 +27,7 @@ public class ElasticSearchCtr {
         @Override
         protected Account doInBackground(String... search_string) {
             verifyClient();
-            Account account = new Account("","","",new ArrayList<Stalls>());
+            Account account = new Account("","","");
             //start initial array list empty.
             String query = "{" +
                     "    \"query\": {" +
@@ -45,6 +46,32 @@ public class ElasticSearchCtr {
             }
 
             return account;
+        }
+    }
+    public static class GetStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
+        @Override
+        protected ArrayList<Stalls> doInBackground(String... search_string) {
+            verifyClient();
+            ArrayList<Stalls> AllStall = new ArrayList<>();
+            //start initial array list empty.
+            String query = "{" +
+                    "    \"query\": {" +
+                    "        \"match\" :{ \"Owner\":\"" + search_string[0]+ "\""+
+                    "    }" +
+                    "}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
+
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()){
+                    List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
+                    AllStall.addAll(returned_stalls);
+                }
+            } catch (IOException e) {
+                Log.i("TODO", "SEARCH PROBLEMS");
+            }
+
+            return AllStall;
         }
     }
     //Tries to add user and returns TRUE if one was added
@@ -171,7 +198,7 @@ public class ElasticSearchCtr {
             return value;
         }
 
-    public static class MakeDatabase extends AsyncTask<Account, Void, Void>{
+    public static class MakeAccount extends AsyncTask<Account, Void, Void>{
 
         @Override
         protected Void doInBackground(Account... accounts) {
@@ -191,6 +218,50 @@ public class ElasticSearchCtr {
                     e.printStackTrace();
                 }
 
+            }
+            return null;
+        }
+    }
+    public static class MakeStall extends AsyncTask<Stalls, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Stalls... stalls) {
+            verifyClient();
+            //Since AsyncTasks work on arrays, we need to work with arrays as well
+            for (int i = 0; i < stalls.length; i++){
+                Stalls stall = stalls[i];
+                Index index = new Index.Builder(stall).index("t01").type("user_database").build();
+                try {
+                    DocumentResult result = client.execute(index);
+                    if (result.isSucceeded()){
+                        //Set Id for tweet, can find and edit in elastic search
+                        stall.setStallID(result.getId());
+                    }
+                    //Can also use get id,get index,get type
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            return null;
+        }
+    }
+    public class updateStallES extends AsyncTask<Stalls,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Stalls... stall) {
+            verifyClient();
+            String status = stall[0].getStatus();
+            String Description = stall[0].getDescription();
+            String Owner = stall[0].getOwner();
+            String doc = "{" +
+                    "\"doc\": { \"Status\": " + status +
+                    " \"Description\": " + Description +
+                    " \"Owner\": " + Owner +"}}";
+            try {
+                client.execute(new Update.Builder(doc).index("t01").type("user_database").id(stall[0].getStallID()).build());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             return null;
         }

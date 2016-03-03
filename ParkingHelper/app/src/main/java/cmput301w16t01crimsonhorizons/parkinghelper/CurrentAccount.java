@@ -4,22 +4,21 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
  * Created by schuman on 3/1/16.
  */
 public class CurrentAccount extends Account{
-    private static CurrentAccount account = null;
+    private static Account account = null;
 
     public CurrentAccount(){
-
-
-        if(account==null) {
-            // TODO: Fetch the account information from elastic search and use it to build an Account object
-            // if this is called without a parameter throw an exception
-            //account = (CurrentAccount) newAccount;
-            //new CurrentAccount();
-        }
+        super("","","");
     }
 
-    public void setAccount(Account newAccount) {
+    public static void setAccount(Account newAccount) {
         if (account == null) {
-            account = (CurrentAccount) newAccount;
+            account = newAccount;
         }
+    }
+    public static Account getAccount(){
+        if (account == null){
+           account = new CurrentAccount();
+        }
+        return account;
     }
 }

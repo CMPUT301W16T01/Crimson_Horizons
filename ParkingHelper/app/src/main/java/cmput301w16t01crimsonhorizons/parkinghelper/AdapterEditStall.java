@@ -29,9 +29,9 @@ public class AdapterEditStall extends ArrayAdapter<Stalls>{
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(Layout,parent,false);
             EditStallViewHolder viewHolder = new EditStallViewHolder();
-            viewHolder.Name=(EditText)convertView.findViewById(R.id.StallNameEditStallV);
-            viewHolder.Description = (EditText)convertView.findViewById(R.id.DescriptionEditStallV);
-            viewHolder.Status = (EditText)convertView.findViewById(R.id.StatusEditStallV);
+            viewHolder.Name=(TextView)convertView.findViewById(R.id.StallNameEditStallV);
+            viewHolder.Description = (TextView)convertView.findViewById(R.id.DescriptionEditStallV);
+            viewHolder.Status = (TextView)convertView.findViewById(R.id.StatusEditStallV);
             convertView.setTag(viewHolder);
         }
         else{
@@ -44,9 +44,9 @@ public class AdapterEditStall extends ArrayAdapter<Stalls>{
     }
 
     public class EditStallViewHolder {
-        EditText Name;
-        EditText Status;
-        EditText Description;
+        TextView Name;
+        TextView Status;
+        TextView Description;
     }
 
 }

@@ -12,16 +12,14 @@ public class Account implements Serializable{
     private String Email;
     private String CellPhone;
     private String WorkPhone;
-    private ArrayList<Stalls> OwnStalls;
 
     @JestId
     protected String id;
 
-    public Account(String email, String cellPhone, String workPhone, ArrayList<Stalls> ownStalls) {
+    public Account(String email, String cellPhone, String workPhone) {
         Email = email;
         CellPhone = cellPhone;
         WorkPhone = workPhone;
-        OwnStalls = ownStalls;
     }
 
     public String getWorkPhone() {
@@ -57,18 +55,10 @@ public class Account implements Serializable{
         this.id = id;
     }
 
-    public ArrayList<Stalls> getOwnStalls() {
-        return OwnStalls;
-    }
-
-    public void setOwnStalls(ArrayList<Stalls> ownStalls) {
-        OwnStalls = ownStalls;
-    }
 
     public String toString(){
         return "{"  + "Email: " + Email + "\n" +
                 "CellPhone: " + CellPhone + "\n" +
-                "WorkPhone" + WorkPhone + "\n" +
-                "OwnStalls: " + OwnStalls.toString() + "}";
+                "WorkPhone" + WorkPhone + "\n" + "}";
     }
 }

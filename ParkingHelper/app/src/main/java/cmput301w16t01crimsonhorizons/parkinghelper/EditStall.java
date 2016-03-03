@@ -3,6 +3,7 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.EditText;
 
 public class EditStall extends AppCompatActivity {
@@ -19,8 +20,12 @@ public class EditStall extends AppCompatActivity {
         //Set all the fields
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
         EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
-        title.setText(stall.getStallID());
+        title.setText(stall.getOwner());
         description.setText(stall.getDescription());
+    }
+
+    public void saveStallInformation(View view){
+
     }
 
 }
