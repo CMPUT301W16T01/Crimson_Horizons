@@ -1,0 +1,40 @@
+package cmput301w16t01crimsonhorizons.parkinghelper;
+
+import android.text.BoringLayout;
+
+import java.util.concurrent.ExecutionException;
+
+/**
+ * Created by Kevin L on 3/2/2016.
+ */
+public class DeleteStall extends Commands {
+    private Stalls stall;
+    public DeleteStall( Stalls stall){
+        this.stall=stall;
+    }
+
+    @Override
+    public Boolean execute() {
+        Boolean check = false;
+        ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
+        deleteStall.execute(stall);
+        try {
+            check = deleteStall.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return check;
+    }
+
+    @Override
+    public void unexecute() {
+
+    }
+
+    @Override
+    public boolean isReversible() {
+        return false;
+    }
+}
