@@ -6,9 +6,11 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 public class CurrentAccount extends Account{
     private static Account account = null;
 
-    public CurrentAccount(){
+    public CurrentAccount() {
         super("","","");
+        account=null;
     }
+
 
     public static void setAccount(Account newAccount) {
         if (account == null) {

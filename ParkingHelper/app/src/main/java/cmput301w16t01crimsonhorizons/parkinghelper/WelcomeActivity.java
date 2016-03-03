@@ -36,7 +36,11 @@ public class WelcomeActivity extends AppCompatActivity {
         AsyncTask<Stalls, Void, Void> s2execute = new ElasticSearchCtr.MakeStall().execute(s2);
         setResult(RESULT_OK);*/
     }
-
+    @Override
+    protected void onStart(){
+        super.onStart();
+        new CurrentAccount();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

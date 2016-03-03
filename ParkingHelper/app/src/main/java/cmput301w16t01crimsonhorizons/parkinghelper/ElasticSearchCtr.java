@@ -246,24 +246,51 @@ public class ElasticSearchCtr {
             return null;
         }
     }
-    public class updateStallES extends AsyncTask<Stalls,Void,Void>{
+    public static class updateStallES extends AsyncTask<Stalls,Void,Boolean>{
 
         @Override
-        protected Void doInBackground(Stalls... stall) {
+        protected Boolean doInBackground(Stalls... stall) {
             verifyClient();
             String status = stall[0].getStatus();
             String Description = stall[0].getDescription();
             String Owner = stall[0].getOwner();
             String doc = "{" +
-                    "\"doc\": { \"Status\": " + status +
-                    " \"Description\": " + Description +
-                    " \"Owner\": " + Owner +"}}";
+                    "\"doc\": { \"Status\": " + "\""+ status + "\", " +
+                    " \"Description\": " + "\""+ Description + "\", " +
+                    " \"Owner\": " + "\""+ Owner + "\"" +"}}";
             try {
-                client.execute(new Update.Builder(doc).index("t01").type("user_database").id(stall[0].getStallID()).build());
+                DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
+                                    type("user_database").id(stall[0].getStallID()).build());
+                if (result.isSucceeded()){
+                    return true;
+                } else {
+                    return false;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return null;
+            return false;
+        }
+    }
+    public static class DeleteStall extends AsyncTask<Stalls,Void,Boolean>{
+        @Override
+        protected Boolean doInBackground(Stalls... stall) {
+            verifyClient();
+
+            try {
+                DocumentResult result = client.execute(new Delete.Builder(stall[0].getStallID())
+                        .index("t01")
+                        .type("user_database")
+                        .build());
+                if (result.isSucceeded()){
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
         }
     }
     //Helper function
