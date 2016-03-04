@@ -74,43 +74,71 @@ public class ElasticSearchCtr {
             return AllStall;
         }
     }
-    //Tries to add user and returns TRUE if one was added
-    //If something goes horribly wrong it returns null
+
+    /**
+     * Adds an Account to the database, An account consists of
+     * three fields, <code>email</code>, <code>work phone number</code>, and
+     * <code>cellphone number</code>.
+     *
+     *.@param Account   the account to be added to the database
+     * @return Boolean TRUE if the account was added and FALSE if it was not. A null is returned
+     * in the event of unforeseeable error.
+     * @see Account#Account()
+     */
     public static class addUser extends AsyncTask<Account, Void, Boolean>  {
         @Override
         protected Boolean doInBackground(Account... newAccount) {
             verifyClient();
-            verifyUserName verifyUserName = new verifyUserName();
-            if(!verifyUserName.doInBackground(newAccount[0].getEmail())) {
+            /*verifyUserName verifyUserName = new verifyUserName();
+            final ElasticSearchCtr.verifyUserName execute = new verifyUserName();
+            try {
+                //noinspection ResourceType
+                if(!execute.execute(newAccount[0].getEmail()).get()) {*/
 
-                Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
-                try {
-                    DocumentResult result = client.execute(index);
-                    if (result.isSucceeded()) {
-                        //Set the ID to newAccount that elasticsearch told me it was
-                        newAccount[0].setId(result.getId());
-                        return Boolean.TRUE;
-                    } else {
-                        return Boolean.FALSE;
+                    Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
+                    try {
+                        DocumentResult result = client.execute(index);
+                        if (result.isSucceeded()) {
+                            //Set the ID to newAccount that elasticsearch told me it was
+                            newAccount[0].setId(result.getId());
+                            return Boolean.TRUE;
+                        } else {
+                            return Boolean.FALSE;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            /*    }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }*/
             return null;
         }
 
 
     }
 
+    /**
+     * Deletes an Account from the database. An account consists of
+     * three fields, <code>email</code>, <code>work phone number</code>, and
+     * <code>cellphone number</code>.
+     *
+     *.@param Account   the account to be deleted.
+     * @return Boolean TRUE if the account was deleted and FALSE if the account could not be found.
+     * In the case of an unforeseeable error an null is returned.
+     * @see Account#Account()
+     *
+     */
     public static class deleteUser extends AsyncTask<Account, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Account... oldAccount) {
             verifyClient();
 
-            verifyUserName verifyUserName = new verifyUserName();
-            if(verifyUserName.doInBackground(oldAccount[0].getEmail())) {
+            /*verifyUserName verifyUserName = new verifyUserName();
+            if(verifyUserName.doInBackground(oldAccount[0].getEmail())) {*/
                 String deleteString = oldAccount[0].getEmail();
 
                 // curl -XDELETE https://path.to.elasticsearch/group/type/$id
@@ -127,12 +155,21 @@ public class ElasticSearchCtr {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
+           // }
             return null;
         }
 
     }
 
+    /**
+     * Updates the values associated to with the account. An account consists of
+     * three fields, <code>email</code>, <code>work phone number</code>, and
+     * <code>cellphone number</code>.
+     *
+     *.@param Account   the account to be updated
+     * @return Boolean  TRUE if the account was updated, FALSE if it was not updated or was found
+     * @see Account#Account()
+     */
     public static class updateUser extends AsyncTask<Account, Void, Boolean>  {
 
 
@@ -140,8 +177,8 @@ public class ElasticSearchCtr {
         protected Boolean doInBackground(Account... newAccount) {
             verifyClient();
 
-            verifyUserName verifyUserName = new verifyUserName();
-            if (verifyUserName.doInBackground(newAccount[0].getEmail())) {
+            /*verifyUserName verifyUserName = new verifyUserName();
+            if (verifyUserName.doInBackground(newAccount[0].getEmail())) {*/
 
                 Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
                 try {
@@ -154,12 +191,21 @@ public class ElasticSearchCtr {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
+            //}
             return Boolean.FALSE;
         }
 
     }
 
+    /**
+     * Searches the database for accounts to see if there exists with the given username. An
+     * account consists of three fields, <code>email</code>, <code>work phone number</code>, and
+     * <code>cellphone number</code>.
+     *
+     *.@param String the username to search for
+     * @return Boolean True if the username is in use FALSE if it is not. In the case of an
+     * unforeseeable error an null is returned.
+     */
     public static class verifyUserName extends AsyncTask<String, Void, Boolean >{
 
 

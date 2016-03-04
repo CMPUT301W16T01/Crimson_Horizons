@@ -1,6 +1,7 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * The sign-in activity is the activity that allows users to create new accounts, which consist
@@ -38,6 +41,8 @@ public class SigninActivity extends AppCompatActivity {
         SigninCellPhonEditTxt = (EditText) findViewById(R.id.SigninCellPhonEditTxt);
         SigninUsernameEditTxt = (EditText) findViewById(R.id.SigninUsernameEditTxt);
         SigninPasswordEditTxt = (EditText) findViewById(R.id.SigninPasswordEditTxt);
+
+        userAccount = new Account();
 
         userAccount.setEmail(SigninEmailEditTxt.toString());
         userAccount.setCellPhone(SigninCellPhonEditTxt.toString());
@@ -77,7 +82,7 @@ public class SigninActivity extends AppCompatActivity {
      * @return null
      */
     public void clickCancel(){
-        Intent intent = new Intent(this,HomepageActivity.class);
+        Intent intent = new Intent(this,WelcomeActivity.class);
         startActivity(intent);
     }
 
@@ -91,17 +96,30 @@ public class SigninActivity extends AppCompatActivity {
     public void clickSignin(){
 
         //Here is assuming that it was able to verify the account
-/*
+
         userAccount.setEmail(SigninEmailEditTxt.toString());
         userAccount.setWorkPhone(SigninWorkPhonEditTxt.toString());
         userAccount.setCellPhone(SigninCellPhonEditTxt.toString());
 
-        if (ElasticSearchCtr.addUser(userAccount)){
-            Intent intent = new Intent(this,HomepageActivity.class);
-            startActivity(intent);
-        } else {
-            //TODO: make it display a pop-up error informing the user that the username already exists
-        }*/
+        final AsyncTask<String, Void, Boolean> executeVerify = new ElasticSearchCtr.verifyUserName();
+        final AsyncTask<Account, Void, Boolean> executeAdd = new ElasticSearchCtr.addUser();
+
+
+        setResult(RESULT_OK);
+
+        try {
+            if (!executeVerify.execute(userAccount.getEmail()).get()){
+                executeAdd.execute(userAccount);
+                Intent intent = new Intent(this,WelcomeActivity.class);
+                startActivity(intent);
+            } else {
+                //TODO: make it display a pop-up error informing the user that the username already exists
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -1,12 +1,22 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 
+import java.util.concurrent.ExecutionException;
+
 /**
- * Created by schuman on 3/2/16.
+ * A simple method that is called within click listener events to see if a username has been
+ * clicked on. If one has been then the user's profile page is displayed. Otherwise the method
+ * just returns.
+ *
+ * <p><code>ListViewWithUserName</code> is designed to change intents to another user's
+ * profile</p>
+ * @author aaron schuman
+ * on 3/2/16.
  */
 public class ListViewWithUserName extends AppCompatActivity{
 
@@ -18,8 +28,15 @@ public class ListViewWithUserName extends AppCompatActivity{
         Intent intent = new Intent(view.getContext(), ViewProfile.class);
         String entry = listView.getItemAtPosition(position).toString();
         if(entry == userName) {
-            ElasticSearchCtr.GetAccount search = new ElasticSearchCtr.GetAccount();
-            Account account = search.doInBackground(entry);
+            final AsyncTask<String, Void, Account> execute = new ElasticSearchCtr.GetAccount();
+            Account account = new Account();
+            try {
+                account = execute.execute(entry).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
             intent.putExtra("Email", entry);
             intent.putExtra("Work", account.getWorkPhone());
             intent.putExtra("Cell", account.getCellPhone());
