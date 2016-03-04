@@ -91,7 +91,7 @@ public class SigninActivity extends AppCompatActivity {
     public void clickSignin(){
 
         //Here is assuming that it was able to verify the account
-
+/*
         userAccount.setEmail(SigninEmailEditTxt.toString());
         userAccount.setWorkPhone(SigninWorkPhonEditTxt.toString());
         userAccount.setCellPhone(SigninCellPhonEditTxt.toString());
@@ -101,7 +101,7 @@ public class SigninActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
             //TODO: make it display a pop-up error informing the user that the username already exists
-        }
+        }*/
     }
 
 }

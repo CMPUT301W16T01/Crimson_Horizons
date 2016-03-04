@@ -56,7 +56,7 @@ public class ElasticSearchCtr {
             //start initial array list empty.
             String query = "{" +
                     "    \"query\": {" +
-                    "        \"match\" :{ \"Owner\":\"" + search_string[0]+ "\""+
+                    "        \"match\" :{ \""+ search_string[1] +"\":" + "\""+search_string[0]+ "\""+
                     "    }" +
                     "}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
@@ -195,36 +195,31 @@ public class ElasticSearchCtr {
 
     }
 
-    public static class CheckAccount extends AsyncTask<String, Void, Boolean>{
-
-
-        @Override
-        protected Boolean doInBackground(String... search_string) {
-            verifyClient();
-            Boolean value = new Boolean(false);
-            String query = "{" +
-                    "    \"query\": {" +
-                    "        \"match\" :{ \"Email\":\"" + search_string[0]+ "\""+
-                    "    }" +
-                    "}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
-            try {
-                SearchResult execute = client.execute(search);
-                if (execute.isSucceeded()){
-                    Account account = execute.getSourceAsObject(Account.class);
-                    String temp = account.getEmail();
-                    value = temp.equals(search_string);
-                    return value;
-                } else{
-                    return value;
-                }
-            } catch (IOException e) {
-                Log.i("TODO", "SEARCH PROBLEMS");
-            } catch (NullPointerException e ){
-                value = false;
+    public static Boolean CheckAccount(String search_string){
+        verifyClient();
+        Boolean value = new Boolean(false);
+        String query = "{" +
+                "    \"query\": {" +
+                "        \"match\" :{ \"Email\":\"" + search_string+ "\""+
+                "    }" +
+                "}}";
+        Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
+        try {
+            SearchResult execute = client.execute(search);
+            if (execute.isSucceeded()){
+                Account account = execute.getSourceAsObject(Account.class);
+                String temp = account.getEmail();
+                value = temp.equals(search_string);
+                return value;
+            } else{
+                return value;
             }
-            return value;
+        } catch (IOException e) {
+            Log.i("TODO", "SEARCH PROBLEMS");
+        } catch (NullPointerException e ){
+            value = false;
         }
+        return value;
     }
 
     public static class MakeAccount extends AsyncTask<Account, Void, Void>{

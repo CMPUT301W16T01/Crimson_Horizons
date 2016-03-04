@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -31,7 +32,10 @@ public class AccountActivity extends AppCompatActivity {
         String email = account.getEmail();
         ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
         try {
-            getStall.execute(email);
+            String[]temp = new String[2];
+            temp[0]=email;
+            temp[1]="Owner";
+            getStall.execute(temp);
             StallAry = getStall.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -39,11 +43,13 @@ public class AccountActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         MyStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            EditText lv = (EditText)findViewById(R.id.EmailET);
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent clickStall = new Intent(view.getContext(), EditStall.class);
                 Stalls entry = (Stalls)MyStalls.getItemAtPosition(position);
-                new ListViewWithUserName(view, position, id, MyStalls, findViewById(R.id.EmailET).toString());
+                new ListViewWithUserName(view, position, id, MyStalls,
+                        lv.getText().toString());
                 clickStall.putExtra("entry", entry);
                 clickStall.putExtra("id", position);
                 startActivity(clickStall);

@@ -1,35 +1,48 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class BidStall extends AppCompatActivity {
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
+public class BidStall extends AppCompatActivity {
+    private Intent intent;
+    private Stalls stall;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bid_stall);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        intent = getIntent();
+        stall = (Stalls)intent.getSerializableExtra("stall");
+        TextView HighestBid = (TextView)findViewById(R.id.BidStallHighestBidDisp);
+        TextView Owner = (TextView)findViewById(R.id.BidStallNameDisp);
+        TextView Descrip = (TextView)findViewById(R.id.BidStallDescriptionDisp);
+        Double temp = Double.valueOf(stall.getBidAmt());
+        if (temp==null){
+            temp = 0.00;
+        }
+        HighestBid.setText(temp.toString());
+        Owner.setText(stall.getOwner().toString());
+        Descrip.setText(stall.getDescription().toString());
     }
 
     public void BidStall(View view){
+        NumberFormat two = new DecimalFormat("0.##");
+        EditText UserBid = (EditText)findViewById(R.id.BidStallAmtET);
+        Double BidAmt = Double.valueOf(two.format(Double.parseDouble(UserBid.getText().toString())));
+        stall.setBidAmt(BidAmt);
         Toast.makeText(BidStall.this, "You have made the bid!", Toast.LENGTH_SHORT).show();
+        //write to ES
+        finish();
     }
 
 }
