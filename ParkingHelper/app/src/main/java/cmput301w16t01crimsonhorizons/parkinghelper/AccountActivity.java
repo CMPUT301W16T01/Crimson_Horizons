@@ -48,8 +48,6 @@ public class AccountActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent clickStall = new Intent(view.getContext(), EditStall.class);
                 Stalls entry = (Stalls)MyStalls.getItemAtPosition(position);
-                new ListViewWithUserName(view, position, id, MyStalls,
-                        lv.getText().toString());
                 clickStall.putExtra("entry", entry);
                 clickStall.putExtra("id", position);
                 startActivity(clickStall);

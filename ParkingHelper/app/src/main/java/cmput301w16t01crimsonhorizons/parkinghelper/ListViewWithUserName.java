@@ -28,10 +28,11 @@ public class ListViewWithUserName extends AppCompatActivity{
         Intent intent = new Intent(view.getContext(), ViewProfile.class);
         String entry = listView.getItemAtPosition(position).toString();
         if(entry == userName) {
-            final AsyncTask<String, Void, Account> execute = new ElasticSearchCtr.GetAccount();
+            ElasticSearchCtr.GetAccount getAccount = new ElasticSearchCtr.GetAccount();
             Account account = new Account();
             try {
-                account = execute.execute(entry).get();
+                getAccount.execute(entry);
+                account = getAccount.get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {

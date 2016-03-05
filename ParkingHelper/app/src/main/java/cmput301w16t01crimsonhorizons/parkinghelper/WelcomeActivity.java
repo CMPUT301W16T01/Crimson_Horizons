@@ -24,7 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
         AsyncTask<Account, Void, Void> execute2 = new ElasticSearchCtr.MakeAccount().execute(a2);
         setResult(RESULT_OK);*/
 
-        Stalls s1 = new Stalls();
+/*        Stalls s1 = new Stalls();
         s1.setOwner("ABC");
         s1.setStatus("Borrowed");
         s1.setDescription("the first stall owned by ABC");
@@ -35,7 +35,7 @@ public class WelcomeActivity extends AppCompatActivity {
         s2.setStatus("Borrowed");
         s2.setDescription("the first stall owned by 123@123");
         AsyncTask<Stalls, Void, Void> s2execute = new ElasticSearchCtr.MakeStall().execute(s2);
-        setResult(RESULT_OK);
+        setResult(RESULT_OK);*/
 
     }
 
