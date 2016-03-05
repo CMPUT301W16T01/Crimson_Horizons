@@ -21,7 +21,7 @@ import io.searchbox.core.Update;
 /**
  * Created by Kevin L on 2/24/2016.
  */
-public class ElasticSearchCtr {
+public class ElasticSearchCtr{
     private static JestDroidClient client;
     public static class GetAccount extends AsyncTask<String, Void,Account>{
         @Override
@@ -324,10 +324,14 @@ public class ElasticSearchCtr {
             String status = stall[0].getStatus();
             String Description = stall[0].getDescription();
             String Owner = stall[0].getOwner();
+            Double BidAmt = stall[0].getBidAmt();
+            String Bidder = stall[0].getBidder();
             String doc = "{" +
                     "\"doc\": { \"Status\": " + "\""+ status + "\", " +
                     " \"Description\": " + "\""+ Description + "\", " +
-                    " \"Owner\": " + "\""+ Owner + "\"" +"}}";
+                    " \"Owner\": " + "\""+ Owner + "\", " +
+                    " \"BidAmt\": " + "\"" + BidAmt + "\", " +
+                    " \"Bidder\": " + "\"" + Bidder + "\"" +"}}";
             try {
                 DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
                                     type("user_database").id(stall[0].getStallID()).build());

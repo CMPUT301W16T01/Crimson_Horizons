@@ -16,7 +16,7 @@ public class EditStall extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_stall);
-        //Retrieve my stall that user clicked
+        //UpdateCommand my stall that user clicked
         intent = getIntent();
         stall = (Stalls)intent.getSerializableExtra("entry");
         int pos = intent.getIntExtra("id",-1);
@@ -35,13 +35,13 @@ public class EditStall extends AppCompatActivity {
         stall = (Stalls)intent.getSerializableExtra("entry");
         int pos = intent.getIntExtra("id",-1);
 
-        //Set all the fields
-        EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
-        EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
-        EditText status = (EditText)findViewById(R.id.StatusEditStallEv);
-        title.setText(stall.getOwner());
-        status.setText(stall.getStatus());
-        description.setText(stall.getDescription());
+        this.update();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        this.update();
     }
 
     public void saveStallInformation(View view){
@@ -51,12 +51,10 @@ public class EditStall extends AppCompatActivity {
         String newTitle = title.getText().toString();
         String newDescription = description.getText().toString();
         String newStatus = status.getText().toString();
-        Stalls nStall = new Stalls();
-        nStall.setDescription(newDescription);
-        nStall.setStatus(newStatus);
-        nStall.setOwner(newTitle);
-        nStall.setStallID(stall.getStallID());
-        Commands command = new EditStallSave(nStall);
+        stall.setDescription(newDescription);
+        stall.setStatus(newStatus);
+        stall.setOwner(newTitle);
+        Commands command = new EditStallSave(stall);
         Boolean check = command.execute();
         if (check){
             finish();
@@ -73,6 +71,19 @@ public class EditStall extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(),"didn't delete",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void update(){
+        stall = (Stalls)intent.getSerializableExtra("entry");
+        int pos = intent.getIntExtra("id",-1);
+
+        //Set all the fields
+        EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
+        EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
+        EditText status = (EditText)findViewById(R.id.StatusEditStallEv);
+        title.setText(stall.getOwner());
+        status.setText(stall.getStatus());
+        description.setText(stall.getDescription());
     }
 
 }

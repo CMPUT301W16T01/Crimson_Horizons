@@ -91,8 +91,6 @@ public class AccountActivity extends AppCompatActivity {
 
     }
 
-<<<<<<< HEAD
-=======
     public void addStall(){
         Intent intent = new Intent(this,AddStall.class);
         startActivity(intent);
@@ -102,6 +100,4 @@ public class AccountActivity extends AppCompatActivity {
         Intent intent = new Intent(this,Profile.class);
         startActivity(intent);
     }
-
->>>>>>> master
 }
