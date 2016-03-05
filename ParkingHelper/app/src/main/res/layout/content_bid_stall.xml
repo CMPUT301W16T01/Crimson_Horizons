@@ -33,8 +33,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView"
+        android:id="@+id/BidStallHighestBidDisp"
         android:layout_below="@+id/BidStallHighest"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
@@ -44,15 +43,14 @@
         android:layout_height="wrap_content"
         android:text="Item Name"
         android:id="@+id/BidStallName"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/BidStallHighestBidDisp"
         android:layout_alignParentStart="true"
         android:layout_marginTop="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView2"
+        android:id="@+id/BidStallNameDisp"
         android:layout_below="@+id/BidStallName"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
@@ -62,15 +60,14 @@
         android:layout_height="wrap_content"
         android:text="Description"
         android:id="@+id/BidStallDescription"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/BidStallNameDisp"
         android:layout_alignParentStart="true"
         android:layout_marginTop="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView3"
+        android:id="@+id/BidStallDescriptionDisp"
         android:layout_below="@+id/BidStallDescription"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
@@ -81,7 +78,7 @@
         android:text="Your Bid ($/hr)"
         android:id="@+id/BidStallBidAmt"
         android:layout_marginTop="85dp"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/BidStallDescriptionDisp"
         android:layout_alignParentStart="true" />
 
     <EditText

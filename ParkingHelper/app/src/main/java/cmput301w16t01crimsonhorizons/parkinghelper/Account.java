@@ -1,7 +1,6 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import io.searchbox.annotations.JestId;
 
@@ -20,6 +19,10 @@ public class Account implements Serializable{
         Email = email;
         CellPhone = cellPhone;
         WorkPhone = workPhone;
+    }
+
+    public Account() {
+        new Account(null, null, null);
     }
 
     public String getWorkPhone() {

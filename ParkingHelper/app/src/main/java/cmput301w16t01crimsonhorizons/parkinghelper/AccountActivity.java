@@ -2,15 +2,11 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.test.suitebuilder.TestMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -55,7 +51,10 @@ public class AccountActivity extends AppCompatActivity {
         String email = account.getEmail();
         ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
         try {
-            getStall.execute(email);
+            String[]temp = new String[2];
+            temp[0]=email;
+            temp[1]="Owner";
+            getStall.execute(temp);
             StallAry = getStall.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -63,6 +62,7 @@ public class AccountActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         MyStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            EditText lv = (EditText)findViewById(R.id.EmailET);
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent clickStall = new Intent(view.getContext(), EditStall.class);
@@ -72,8 +72,36 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(clickStall);
             }
         });
-        MyStalls.setAdapter(new AdapterEditStall(this,R.layout.account_stalls,StallAry));
+        MyStalls.setAdapter(new AdapterEditStall(this, R.layout.account_stalls, StallAry));
+        Button profileButton = (Button) findViewById(R.id.ProfileBtn);
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                profile();
+            }
+        });
+
+        Button addButton = (Button) findViewById(R.id.AddBtn);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addStall();
+            }
+        });
 
     }
 
+<<<<<<< HEAD
+=======
+    public void addStall(){
+        Intent intent = new Intent(this,AddStall.class);
+        startActivity(intent);
+    }
+
+    public void profile(){
+        Intent intent = new Intent(this,Profile.class);
+        startActivity(intent);
+    }
+
+>>>>>>> master
 }

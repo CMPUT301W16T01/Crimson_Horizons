@@ -1,6 +1,7 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * The profile activity is an activity for viewing the user's current profile. Within the the
@@ -100,10 +103,19 @@ public class Profile extends AppCompatActivity {
         userAccount.setWorkPhone(WorkPhoneET.toString());
         userAccount.setCellPhone(CellPhoneET.toString());
 
-        if (ElasticSearchCtr.updateUser(userAccount)){
+        final AsyncTask<String, Void, Boolean> executeVerify = new ElasticSearchCtr.verifyUserName();
+        final AsyncTask<Account, Void, Boolean> executeUpdate = new ElasticSearchCtr.updateUser();
 
-        } else {
-            //TODO: make it display a pop-up error informing the user that the username already exists
+        try {
+            if (executeVerify.execute(userAccount.getEmail()).get()){
+                executeUpdate.execute(userAccount);
+            } else {
+                //TODO: make it display a pop-up error informing the user that the username already exists
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
     }
 
