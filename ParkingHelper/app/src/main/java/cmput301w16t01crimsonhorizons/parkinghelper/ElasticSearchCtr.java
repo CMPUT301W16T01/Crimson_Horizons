@@ -152,6 +152,64 @@ public class ElasticSearchCtr {
             return null;
         }
     }
+
+    public static class SearchDataBaseTask extends AsyncTask<String, Void, ArrayList<Stalls>> {
+
+        @Override
+        protected ArrayList<Stalls> doInBackground(String... params) {
+            verifyClient();
+            //start initial array list empty.
+            ArrayList<Stalls> returnStalls = new ArrayList<Stalls>();
+            String query = "{" +
+                    "    \"query\": {" +
+                    "        \"match\" :{ \"Description\":\"" + params[0]+ "\""+
+                    "                      \"Status\": \"not_borrowed\"" +
+                    "    }" +
+                    "}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
+
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()){
+                   List<Stalls> stalls = execute.getSourceAsObjectList(Stalls.class);
+                   returnStalls.addAll(stalls);
+                }
+            } catch (IOException e) {
+                Log.i("TODO", "SEARCH PROBLEMS");
+            }
+
+            return returnStalls;
+        }
+    }
+
+    public static class GetPendingStalls extends AsyncTask<String, Void, ArrayList<Stalls>>{
+        @Override
+        protected ArrayList<Stalls> doInBackground(String... search_string) {
+            verifyClient();
+            ArrayList<Stalls> returnedStalls = new ArrayList<Stalls>();
+            List<Stalls> stalls;
+            //start initial array list empty.
+            String query = "{" +
+                    "    \"query\": {" +
+                    "        \"match\" :{ \"Email\":\"" + search_string[0]+ "\""+
+                    "                     \"status\": \"bidded\"" +
+                    "    }" +
+                    "}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("stalls_database").build();
+
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()){
+                    stalls = execute.getSourceAsObjectList(Stalls.class);
+                    returnedStalls.addAll(stalls);
+                }
+            } catch (IOException e) {
+                Log.i("TODO", "SEARCH PROBLEMS");
+            }
+
+            return returnedStalls;
+        }
+    }
     //Helper function
     public static void verifyClient(){
         //verify that "client" exists and if it does not make it.
