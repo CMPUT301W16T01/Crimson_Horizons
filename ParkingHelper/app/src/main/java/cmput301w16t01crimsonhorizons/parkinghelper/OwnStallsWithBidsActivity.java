@@ -9,38 +9,54 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class OwnStallsWithBidsActivity extends AppCompatActivity {
     private ListView OwnStalls;
+    private Intent intent;
+    private Account account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_own_stalls_with_bids);
         OwnStalls = (ListView)findViewById(R.id.OwnStalls);
+	intent = getIntent();
     }
     @Override
     protected void onStart(){
         super.onStart();
-        ArrayList<String>TempString = new ArrayList<>();
-        TempString.add("first\n");
-        TempString.add("second\n");
+	this.update();
+    }
+
+    public void update(){
+        account = CurrentAccount.getAccount();
+        ArrayList<Stalls>StallAry = new ArrayList<>();
+        String email = account.getEmail();
+        ElasticSearchCtr.GetStall getBidStall = new ElasticSearchCtr.GetBidStall();
+        try {
+            String[]temp = new String[4];
+            temp[0]=email;
+            temp[1]="Owner";
+	    temp[2]="Bidded";
+	    temp[3]="Status";
+            getBidStall.execute(temp);
+            StallAry = getStall.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         OwnStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            EditText lv = (EditText)findViewById(R.id.EmailET);
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent clickBids = new Intent(view.getContext(), BidsForStall.class);
-                ArrayList<String> TempString = new ArrayList<>();
-                TempString.add("first\n");
-                TempString.add("second\n");
-                String entry;
-                entry = OwnStalls.getItemAtPosition(position).toString();
-                clickBids.putExtra("entry", entry);
-                clickBids.putExtra("id", position);
-                clickBids.putExtra("array", TempString);
-                startActivity(clickBids);
+                Intent clickStall = new Intent(view.getContext(), EditStall.class);
+                Stalls entry = (Stalls)MyStalls.getItemAtPosition(position);
+                clickStall.putExtra("entry", entry);
+                clickStall.putExtra("id", position);
+                startActivity(clickStall);
             }
         });
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.own_stalls_with_bids,
-                                                                TempString);
-        OwnStalls.setAdapter(adapter);
+        OwnStalls.setAdapter(new AdapterEditStall(this, R.layout.account_stalls, StallAry));
     }
 }
