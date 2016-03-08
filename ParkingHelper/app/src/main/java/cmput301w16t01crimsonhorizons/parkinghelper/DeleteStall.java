@@ -6,6 +6,8 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Kevin L on 3/2/2016.
+ *
+ * Command object that is to delete a stall.
  */
 public class DeleteStall extends Commands {
     private Stalls stall;
@@ -14,6 +16,9 @@ public class DeleteStall extends Commands {
     }
 
     @Override
+    /**
+     * on execute, it will use ElasticSearchCtr to delete the stall and will return true/false
+     */
     public Boolean execute() {
         Boolean check = false;
         ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
@@ -28,11 +33,13 @@ public class DeleteStall extends Commands {
         return check;
     }
 
+    /**
+     * Implemented if it is undoable, in this case it is not.
+     */
     @Override
     public void unexecute() {
 
     }
-
     @Override
     public boolean isReversible() {
         return false;

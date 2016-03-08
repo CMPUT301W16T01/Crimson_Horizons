@@ -14,6 +14,9 @@ import java.util.List;
 
 /**
  * Created by Kevin L on 2/29/2016.
+ *
+ * This is the adapter needed to display the list of stalls with the proper format
+ * @see CustomLstAdapter This is similar.
  */
 public class AdapterEditStall extends ArrayAdapter<Stalls>{
     private int Layout;
@@ -43,6 +46,9 @@ public class AdapterEditStall extends ArrayAdapter<Stalls>{
         return convertView;
     }
 
+    /**
+     * Inner class so just to keep a nice place to hold all th eneeded views/buttons
+     */
     public class EditStallViewHolder {
         TextView Name;
         TextView Status;

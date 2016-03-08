@@ -32,7 +32,9 @@ import java.util.List;
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
- * A login screen that offers login via email/password.
+ * A login screen that offers login via email
+ *
+ * This is where the user will enter information and will be checked
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 

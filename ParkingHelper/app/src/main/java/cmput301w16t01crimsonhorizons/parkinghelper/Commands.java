@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 /**
  * Created by Kevin L on 3/2/2016.
+ * This is part of command pattern
+ * So we can manage undo/redo as well as offline behaviour
+ *
+ * This is the supre class. It contains some methods that currently does nothing, and if the
+ * child class needs to use it must override.
+ * Not all child class will use all methods, but all abstract methods must exist.
  */
 public abstract class Commands extends Model<ViewInterface>{
     abstract public Boolean execute();

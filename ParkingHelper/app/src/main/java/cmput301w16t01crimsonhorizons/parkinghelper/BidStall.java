@@ -14,13 +14,21 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+/**
+ * Created by Kevin
+ * This is where user needs to be if user wants to bid on a stall
+ */
 public class BidStall extends AppCompatActivity {
+    //These are variables required for this activity
+    // Stall is the stall it has
+    //Intent contains the stall retrieved from searchActivity.
     private Intent intent;
     private Stalls stall;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bid_stall);
+        //Retrieve stalls and set all information.
         intent = getIntent();
         stall = (Stalls)intent.getSerializableExtra("stall");
         TextView HighestBid = (TextView)findViewById(R.id.BidStallHighestBidDisp);
@@ -35,6 +43,13 @@ public class BidStall extends AppCompatActivity {
         Descrip.setText(stall.getDescription().toString());
     }
 
+    /**
+     * This is when the suer enters all information and wants to bid on it.
+     * It will do a check to make sure the user's bid is higher than highest bid
+     * If so, it will modify.
+     * After each action, there will be a message to display what was done.
+     * @param view
+     */
     public void BidStall(View view){
         Account account = CurrentAccount.getAccount();
         NumberFormat two = new DecimalFormat("0.##");
