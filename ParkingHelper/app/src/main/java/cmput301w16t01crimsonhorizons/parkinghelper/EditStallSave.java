@@ -5,6 +5,11 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Kevin L on 3/2/2016.
+ * This is command object that wants to save a stall after edit.
+ *
+ * It will automatically call notifyViews() to update.
+ * It overrides the search command, so what ever views that call search with this object will return
+ * a list of stalls.
  */
 public class EditStallSave extends Commands {
     private Stalls stall;

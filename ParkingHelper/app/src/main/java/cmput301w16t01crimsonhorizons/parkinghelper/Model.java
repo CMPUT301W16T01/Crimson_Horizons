@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Kevin L on 3/5/2016.
+ * Generic model class.
  */
 public class Model<V extends ViewInterface> {
     private static ArrayList<ViewInterface> views;

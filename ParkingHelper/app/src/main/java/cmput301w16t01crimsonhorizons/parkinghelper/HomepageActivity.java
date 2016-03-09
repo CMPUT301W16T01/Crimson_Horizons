@@ -7,6 +7,17 @@ import android.view.View;
 
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Created By Kevin
+ *
+ * This is where the user is once logined.
+ * Can navigate to other activity
+ * @see AccountActivity
+ * @see Search
+ * @see BidStall
+ * @see YourBids
+ */
+
 public class HomepageActivity extends AppCompatActivity {
     private String email;
 
@@ -30,24 +41,45 @@ public class HomepageActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    /**
+     * This will create intent with the current account and start that intent
+     * Same is done for other button clicks
+     *
+     * @param view
+     */
     public void clickAccount(View view){
         Intent intent = new Intent(this,AccountActivity.class);
         intent.putExtra("account",CurrentAccount.getAccount());
         startActivity(intent);
     }
 
+    /**
+     * @see this.clickAccount()
+     * @param view
+     */
     public void clickSearch(View view){
         Intent intent = new Intent(this, Search.class);
         intent.putExtra("account",CurrentAccount.getAccount());
         startActivity(intent);
     }
+
+    /**
+     * @see this.clickAccount()
+     * @param view
+     */
     public void clickBidsOnStall(View view){
         Intent intent = new Intent(this, OwnStallsWithBidsActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * @see this.clickAccount()
+     * @param view
+     */
     public void clickYourBids(View view){
         Intent intent = new Intent(this,YourBids.class);
+        intent.putExtra("account", ACCOUNT);
         startActivity(intent);
     }
 
