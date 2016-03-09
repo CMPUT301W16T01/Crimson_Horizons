@@ -38,8 +38,8 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
             String[]temp = new String[4];
             temp[0]=email;
             temp[1]="Owner";
-	    temp[2]="Bidded";
-	    temp[3]="Status";
+            temp[2]="Bidded";
+	        temp[3]="Status";
             getBidStall.execute(temp);
             StallAry = getBidStall.get();
         } catch (InterruptedException e) {
