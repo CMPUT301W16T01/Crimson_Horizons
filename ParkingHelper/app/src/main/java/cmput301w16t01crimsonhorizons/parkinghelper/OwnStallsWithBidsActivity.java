@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -32,15 +33,15 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
         account = CurrentAccount.getAccount();
         ArrayList<Stalls>StallAry = new ArrayList<>();
         String email = account.getEmail();
-        ElasticSearchCtr.GetStall getBidStall = new ElasticSearchCtr.GetBidStall();
+        ElasticSearchCtr.GetBidStall getBidStall = new ElasticSearchCtr.GetBidStall();
         try {
             String[]temp = new String[4];
             temp[0]=email;
             temp[1]="Owner";
-	    temp[2]="Bidded";
-	    temp[3]="Status";
+            temp[2]="Bidded";
+	        temp[3]="Status";
             getBidStall.execute(temp);
-            StallAry = getStall.get();
+            StallAry = getBidStall.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -51,7 +52,7 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent clickStall = new Intent(view.getContext(), EditStall.class);
-                Stalls entry = (Stalls)MyStalls.getItemAtPosition(position);
+                Stalls entry = (Stalls)OwnStalls.getItemAtPosition(position);
                 clickStall.putExtra("entry", entry);
                 clickStall.putExtra("id", position);
                 startActivity(clickStall);
