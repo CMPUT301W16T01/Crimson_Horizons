@@ -5,40 +5,50 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
-public class Search extends AppCompatActivity {
+public class Search extends AppCompatActivity implements ViewInterface<Commands> {
     private ListView Result;
+    private ArrayList<Stalls>StallAry = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         Result = (ListView)findViewById(R.id.ResultLv);
+        String[] GetAvailable= new String[2];
+        EditStallSave command = new EditStallSave();
+        command.addView(this);
+        updateView(command);
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-        Intent intent = getIntent();
-        Account account = (Account) intent.getSerializableExtra("account");
-        ArrayList<Stalls>StallAry = new ArrayList<>();
-        String email = account.getEmail();
-        ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
-        try {
-            String[] temp = new String[2];
-            temp[0] = "Available";
-            temp[1] = "Status";
-            getStall.execute(temp);
-            StallAry = getStall.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        EditStallSave command = new EditStallSave();
+        updateView(command);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        EditStallSave command = new EditStallSave();
+        updateView(command);
+
+    }
+    public void clickSearch(View view){
+        // TODO: 2/15/2016 Fill in what happens when search is hit again
+
+    }
+
+
+    @Override
+    public void updateView(Commands model) {
+        String[] GetAvailable= new String[2];
+        GetAvailable[0] = "Available";
+        GetAvailable[1] = "Status";
+        StallAry = model.UpdateStall(GetAvailable);
         Result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -53,9 +63,4 @@ public class Search extends AppCompatActivity {
         });
         Result.setAdapter(new AdapterEditStall(this, R.layout.account_stalls, StallAry));
     }
-    public void clickSearch(View view){
-        // TODO: 2/15/2016 Fill in what happens when search is hit again
-
-    }
-
 }

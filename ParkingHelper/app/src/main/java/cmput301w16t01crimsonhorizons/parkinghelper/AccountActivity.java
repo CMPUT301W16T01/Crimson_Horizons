@@ -14,11 +14,14 @@ import java.util.concurrent.ExecutionException;
 
 public class AccountActivity extends AppCompatActivity {
     private ListView MyStalls;
+    private Intent intent;
+    private Account account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_acitivity);
         MyStalls = (ListView)findViewById(R.id.OwnStalls);
+        intent = getIntent();
     }
     @Override
     protected void onStart(){
@@ -26,8 +29,24 @@ public class AccountActivity extends AppCompatActivity {
         //Retrieve the email from homepage and use elastic search to get the account
         //After it gets the stalls for that account and store it.
         //It will set the adapter with this list of stalls.
-        Intent intent = getIntent();
-        Account account = (Account) intent.getSerializableExtra("account");
+        this.update();
+
+    }
+
+    public void addStall(View view){
+        Intent intent = new Intent(this,AddStall.class);
+        startActivity(intent);
+        this.update();
+    }
+
+    public void profile(View view){
+        Intent intent = new Intent(this,Profile.class);
+        startActivity(intent);
+        this.update();
+    }
+
+    public void update(){
+        account = CurrentAccount.getAccount();
         ArrayList<Stalls>StallAry = new ArrayList<>();
         String email = account.getEmail();
         ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
@@ -48,8 +67,6 @@ public class AccountActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent clickStall = new Intent(view.getContext(), EditStall.class);
                 Stalls entry = (Stalls)MyStalls.getItemAtPosition(position);
-                new ListViewWithUserName(view, position, id, MyStalls,
-                        lv.getText().toString());
                 clickStall.putExtra("entry", entry);
                 clickStall.putExtra("id", position);
                 startActivity(clickStall);
@@ -83,5 +100,4 @@ public class AccountActivity extends AppCompatActivity {
         Intent intent = new Intent(this,Profile.class);
         startActivity(intent);
     }
-
 }

@@ -72,4 +72,30 @@
         android:layout_alignTop="@+id/SaveEdit"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="55dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:id="@+id/EditStallStatusTv"
+        android:layout_below="@+id/DescriptionPrompEditStall"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/DescriptionPrompEditStall" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/StatusEditStallEv"
+        android:layout_below="@+id/EditStallStatusTv"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/EditStallStatusTv" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:id="@+id/EditStallDeleteBtn"
+        android:layout_above="@+id/SaveEdit"
+        android:layout_centerHorizontal="true"
+        android:onClick="deleteStall"/>
 </RelativeLayout>

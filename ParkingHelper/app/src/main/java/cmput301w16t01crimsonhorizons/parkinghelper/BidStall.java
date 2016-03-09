@@ -36,13 +36,25 @@ public class BidStall extends AppCompatActivity {
     }
 
     public void BidStall(View view){
+        Account account = CurrentAccount.getAccount();
         NumberFormat two = new DecimalFormat("0.##");
         EditText UserBid = (EditText)findViewById(R.id.BidStallAmtET);
         Double BidAmt = Double.valueOf(two.format(Double.parseDouble(UserBid.getText().toString())));
-        stall.setBidAmt(BidAmt);
-        Toast.makeText(BidStall.this, "You have made the bid!", Toast.LENGTH_SHORT).show();
-        //write to ES
-        finish();
+
+        if (BidAmt<=stall.getBidAmt()){
+            Toast.makeText(BidStall.this,"Your bid was too low", Toast.LENGTH_SHORT).show();
+        } else {
+            stall.setBidAmt(BidAmt);
+            stall.setBidder(account.getEmail());
+            Commands command = new EditStallSave(stall);
+            Boolean check = command.execute();
+            if (check){
+                Toast.makeText(BidStall.this, "You have made the bid!", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(BidStall.this, "Have not made bid!",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 }

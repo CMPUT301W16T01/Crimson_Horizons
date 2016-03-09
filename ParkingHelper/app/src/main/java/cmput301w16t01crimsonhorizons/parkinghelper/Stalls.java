@@ -14,9 +14,17 @@ public class Stalls implements Serializable{
     private String Description = "";
     private String Status = "";
     private Double BidAmt = 0.00;
-
+    private String Bidder = "";
     @JestId
     private String StallID;
+
+    public String getBidder() {
+        return Bidder;
+    }
+
+    public void setBidder(String bidder) {
+        Bidder = bidder;
+    }
 
     public Double getBidAmt() {
         return BidAmt;

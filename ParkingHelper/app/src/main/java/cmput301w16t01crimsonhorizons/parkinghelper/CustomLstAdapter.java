@@ -56,4 +56,9 @@ public class CustomLstAdapter extends ArrayAdapter<String> {
         }
         return convertView;
     }
+    public class MyViewHolder {
+        TextView eachStallInfo;
+        Button Accept;
+        Button Decline;
+    }
 }
