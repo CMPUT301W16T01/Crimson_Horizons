@@ -31,6 +31,7 @@ public class HomepageActivity extends AppCompatActivity {
         super.onStart();
         Intent intent = getIntent();
         email = intent.getStringExtra("email");
+        //TODO: Get the following lines refactored into login activity
         ElasticSearchCtr.GetAccount getAccount = new ElasticSearchCtr.GetAccount();
         try {
             getAccount.execute(email);
@@ -49,6 +50,7 @@ public class HomepageActivity extends AppCompatActivity {
      * @param view
      */
     public void clickAccount(View view){
+        //Intent intent = new Intent(this, Profile.class);
         Intent intent = new Intent(this,AccountActivity.class);
         intent.putExtra("account",CurrentAccount.getAccount());
         startActivity(intent);
@@ -79,7 +81,7 @@ public class HomepageActivity extends AppCompatActivity {
      */
     public void clickYourBids(View view){
         Intent intent = new Intent(this,YourBids.class);
-        intent.putExtra("account", ACCOUNT);
+        //intent.putExtra("account", ACCOUNT);
         startActivity(intent);
     }
 
