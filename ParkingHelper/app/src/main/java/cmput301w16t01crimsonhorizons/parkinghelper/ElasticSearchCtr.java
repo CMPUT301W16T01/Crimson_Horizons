@@ -438,18 +438,14 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
      */
 
     public static class SearchDataBaseTask extends AsyncTask<String, Void, ArrayList<Stalls>> {
-
         @Override
         protected ArrayList<Stalls> doInBackground(String... params) {
             verifyClient();
             //start initial array list empty.
             ArrayList<Stalls> returnStalls = new ArrayList<Stalls>();
-            String query = "{" +
-                    "    \"query\": {" +
-                    "        \"match\" :{ \"Description\":\"" + params[0]+ "\""+
-                    "                      \"Status\": \"not_borrowed\"" +
-                    "    }" +
-                    "}}";
+            String query = "{" +"\"query\": {\"bool\": {\"must\":     { \"match\": "+
+                    "{ \"Status\": \"Available\" }}," +
+                    "\"must\": { \"match\": { \"Description\": "+"\""+params[0]+"\""+"}}}}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {

@@ -18,20 +18,53 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
     private ArrayList<Stalls>StallAry = new ArrayList<>();
     private Button searchBtn;
     private EditText searchBox;
-    private ArrayList<Stalls> stalls;
-    ArrayAdapter<Stalls> adapter;
+    AdapterEditStall myAdapter;
+    String[] GetAvailable= new String[2];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         Result = (ListView)findViewById(R.id.ResultLv);
-        String[] GetAvailable= new String[2];
-        EditStallSave command = new EditStallSave();
-        command.addView(this);
-        updateView(command);
         searchBtn = (Button)findViewById(R.id.SearchBtn);
         searchBox = (EditText)findViewById(R.id.query);
-        stalls = new ArrayList<Stalls>();
+        EditStallSave command = new EditStallSave();
+        GetAvailable[0] = "Available";
+        GetAvailable[1] = "Status";
+        StallAry = command.UpdateStall(GetAvailable);
+        searchBtn.setOnClickListener( new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                ElasticSearchCtr.SearchDataBaseTask searchTask =
+                        new ElasticSearchCtr.SearchDataBaseTask();
+                String keyWords = searchBox.getText().toString();
+                searchTask.execute(keyWords);
+                try {
+                    ArrayList<Stalls>temp = new ArrayList<Stalls>();
+                    temp = searchTask.get();
+                    if (temp.size()!=0){
+                        StallAry.clear();
+                        StallAry.addAll(temp);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                myAdapter.notifyDataSetChanged();
+            }
+        });
+
+        command.addView(this);
+        myAdapter = new AdapterEditStall(this, R.layout.account_stalls, StallAry);
+        Result.setAdapter(myAdapter);
+        this.updateView(command);
+/*        adapter = new ArrayAdapter<Stalls>(this, R.layout.own_stalls_with_bids,
+                StallAry);
+        Result.setAdapter(adapter);*/
+
+
     }
 
     @Override
@@ -52,14 +85,15 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
         // TODO: 2/15/2016 Fill in what happens when search is hit again
 
     }
-
-
     @Override
     public void updateView(Commands model) {
         String[] GetAvailable= new String[2];
         GetAvailable[0] = "Available";
         GetAvailable[1] = "Status";
-        StallAry = model.UpdateStall(GetAvailable);
+        ArrayList<Stalls>temp=new ArrayList<>();
+        temp = model.UpdateStall(GetAvailable);
+        StallAry.clear();
+        StallAry.addAll(temp);
         Result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -72,30 +106,9 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
 
             }
         });
-        searchBtn.setOnClickListener( new View.OnClickListener(){
 
-            @Override
-            public void onClick(View v) {
-                ElasticSearchCtr.SearchDataBaseTask searchTask =
-                        new ElasticSearchCtr.SearchDataBaseTask();
-                String keyWords = searchBox.getText().toString();
-                searchTask.execute(keyWords);
+        myAdapter.notifyDataSetChanged();
 
-                try {
-                    stalls = searchTask.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        adapter = new ArrayAdapter<Stalls>(this, R.layout.own_stalls_with_bids,
-                stalls);
-        Result.setAdapter(adapter);
     }
 
 }
