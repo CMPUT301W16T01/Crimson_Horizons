@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -41,6 +42,24 @@ public class AccountActivity extends AppCompatActivity {
         //It will set the adapter with this list of stalls.
         this.update();
 
+    }
+
+    public void adapterClickUserName(View view){
+            ElasticSearchCtr.GetAccount executeAccount = new ElasticSearchCtr.GetAccount();
+            Intent intent= null;
+            TextView temp = (TextView)view.findViewById(R.id.StallNameEditStallV);
+            try {
+                Account account = executeAccount.execute(temp.toString()).get();
+                intent = new Intent(this, ViewProfile.class);
+                intent.putExtra("Email", account.getEmail());
+                intent.putExtra("Work", account.getWorkPhone());
+                intent.putExtra("Cell", account.getCellPhone());
+                startActivity(intent);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
     }
 
     /**

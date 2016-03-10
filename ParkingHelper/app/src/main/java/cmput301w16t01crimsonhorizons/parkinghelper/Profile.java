@@ -1,7 +1,6 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -101,8 +100,8 @@ public class Profile extends AppCompatActivity {
      */
     public void save(){
 
-        final AsyncTask<String, Void, Boolean> executeVerify = new ElasticSearchCtr.verifyUserName();
-        final AsyncTask<Account, Void, Boolean> executeUpdate = new ElasticSearchCtr.updateUser();
+        final ElasticSearchCtr.verifyUserName executeVerify = new ElasticSearchCtr.verifyUserName();
+        final ElasticSearchCtr.updateUser executeUpdate = new ElasticSearchCtr.updateUser();
         String Temp = ProfileEmailET.getText().toString();
 
         try {
