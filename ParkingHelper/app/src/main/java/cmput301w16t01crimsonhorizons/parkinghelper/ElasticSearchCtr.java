@@ -151,7 +151,7 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
                 //noinspection ResourceType
                 if(!execute.execute(newAccount[0].getEmail()).get()) {*/
 
-                    Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
+                    Index index = new Index.Builder(newAccount[0]).index("t01").type("user_database").build();
                     try {
                         DocumentResult result = client.execute(index);
                         if (result.isSucceeded()) {
@@ -236,7 +236,7 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
             /*verifyUserName verifyUserName = new verifyUserName();
             if (verifyUserName.doInBackground(newAccount[0].getEmail())) {*/
 
-                Index index = new Index.Builder(newAccount).index("t01").type("user_database").build();
+                Index index = new Index.Builder(newAccount[0]).index("t01").type("user_database").build();
                 try {
                     DocumentResult result = client.execute(index);
                     if (result.isSucceeded()) {
@@ -267,8 +267,12 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
 
         @Override
         protected Boolean doInBackground(String... userAccount) {
-            String query = "{\"fields\":[\"Email\"],\"query\":{\"match\":{\"Email\"," +
-                    userAccount[0] + "}}}";
+            verifyClient();
+            String query = "{" +
+                    "    \"query\": {" +
+                    "        \"match\" :{ \"Email\":\"" + userAccount[0]+ "\""+
+                    "    }" +
+                    "}}";
             //inaccurate search, most likely looks at all properties that contain that username.
             Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
 
@@ -276,8 +280,8 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
                 SearchResult execute = client.execute(search);
                 if(execute.isSucceeded()){
 
-                    List<Account> returned_accounts = execute.getSourceAsObjectList(Account.class);
-                    if(returned_accounts.isEmpty()){
+                    Boolean returned_accounts = execute.getSourceAsObjectList(Account.class).isEmpty();
+                    if(returned_accounts){
                         return Boolean.FALSE;
                     } else{
                         return Boolean.TRUE;
@@ -329,32 +333,6 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
         return value;
     }
 
-    public static class MakeAccount extends AsyncTask<Account, Void, Void>{
-
-        @Override
-        protected Void doInBackground(Account... accounts) {
-            verifyClient();
-            //Since AsyncTasks work on arrays, we need to work with arrays as well
-            for (int i = 0; i < accounts.length; i++){
-                Account account = accounts[i];
-                Index index = new Index.Builder(account).index("t01").type("user_database").build();
-                try {
-                    DocumentResult result = client.execute(index);
-                    if (result.isSucceeded()){
-                        //Set Id for tweet, can find and edit in elastic search
-                        account.setId(result.getId());
-                    }
-                    //Can also use get id,get index,get type
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-            return null;
-        }
-    }
-
-<<<<<<< HEAD
     /**
      * This class creates a stall
      */
@@ -458,7 +436,7 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
     /**
      * Helper function
      */
-=======
+
     public static class SearchDataBaseTask extends AsyncTask<String, Void, ArrayList<Stalls>> {
 
         @Override
@@ -517,7 +495,7 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
         }
     }
     //Helper function
->>>>>>> 46cde72d9fba7af48a9990401fcc725e9376b3f3
+
     public static void verifyClient(){
         //verify that "client" exists and if it does not make it.
         //This had to be done the other functions anyway. Just make a helper function.

@@ -9,15 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-/**
- * This is where the user can search and bid for stalls.
- * On start it automatically populates the list with all stalls that are available
- */
 public class Search extends AppCompatActivity implements ViewInterface<Commands> {
     private ListView Result;
     private ArrayList<Stalls>StallAry = new ArrayList<>();
