@@ -10,6 +10,9 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
+/**
+ * This is where the user can sign up or login.
+ */
 public class WelcomeActivity extends AppCompatActivity {
 
     @Override

@@ -9,10 +9,19 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * Created by Kevin
+ * This is to edit the information of a stall the user owns. Got here from
+ * AccountActivity
+ * Intent retrieved from AccountActivity.
+ */
 public class EditStall extends AppCompatActivity {
-    private Stalls stall;
+    protected Stalls stall;
     private Intent intent;
     @Override
+    /**
+     * Retrieved intent and set all information for that stall
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_stall);
@@ -44,6 +53,11 @@ public class EditStall extends AppCompatActivity {
         this.update();
     }
 
+    /**
+     * Once the user finish entering information and hit save, it will obtain all information
+     * update the information with the stall object then call the command object to update it.
+     * @param view
+     */
     public void saveStallInformation(View view){
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
         EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
@@ -63,6 +77,10 @@ public class EditStall extends AppCompatActivity {
         }
     }
 
+    /**
+     * Call command object to delete this.
+     * @param view
+     */
     public void deleteStall(View view){
         Commands deleteStall = new DeleteStall(stall);
         Boolean check = deleteStall.execute();
@@ -73,6 +91,9 @@ public class EditStall extends AppCompatActivity {
         }
     }
 
+    /**
+     * called by Model classes of when to update this information.
+     */
     public void update(){
         stall = (Stalls)intent.getSerializableExtra("entry");
         int pos = intent.getIntExtra("id",-1);

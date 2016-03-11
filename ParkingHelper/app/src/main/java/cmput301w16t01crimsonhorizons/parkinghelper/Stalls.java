@@ -8,6 +8,9 @@ import io.searchbox.annotations.JestId;
 
 /**
  * Created by schuman on 2/23/16.
+ * Edited Kevin
+ * Class of what each stall would have
+ * Initialize all variables.
  */
 public class Stalls implements Serializable{
     private String Owner = "";

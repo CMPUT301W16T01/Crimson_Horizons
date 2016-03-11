@@ -6,6 +6,9 @@ import io.searchbox.annotations.JestId;
 
 /**
  * Created by schuman on 2/23/16.
+ * Edited:Kevin
+ * This class is just what 1 account would hold. It is serializable so that we can
+ * pass it along with intents.
  */
 public class Account implements Serializable{
     private String Email;

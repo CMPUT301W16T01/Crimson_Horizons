@@ -20,10 +20,22 @@ import io.searchbox.core.Update;
 
 /**
  * Created by Kevin L on 2/24/2016.
+ * This is the main interface that uses JestDroid to access and modify data on elastic search.
+ * The elastic search database we use is http://cmput301.softwareprocess.es:8080/t01/user_database
+ * and http://cmput301.softwareprocess.es:8080/t01/stall_database
  */
 public class ElasticSearchCtr{
     private static JestDroidClient client;
+
+    /**
+     * This is static class searches the user_database to get the user with the appropriate emai
+     */
     public static class GetAccount extends AsyncTask<String, Void,Account>{
+        /**
+         * This is what will be excuted in a different thread
+         * @param search_string
+         * @return Account object will be returned
+         */
         @Override
         protected Account doInBackground(String... search_string) {
             verifyClient();
@@ -48,8 +60,17 @@ public class ElasticSearchCtr{
             return account;
         }
     }
+
+    /**
+     * This class retrieves stalls with the matching field from stall_database
+     */
     public static class GetStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
         @Override
+        /**
+         * @return returns a list of stall and takes in a String[] to search
+         * @param search_string, it is a String[]. String[1] is the field and String[0] is what it
+         *                       wants to match
+         */
         protected ArrayList<Stalls> doInBackground(String... search_string) {
             verifyClient();
             ArrayList<Stalls> AllStall = new ArrayList<>();
@@ -59,7 +80,7 @@ public class ElasticSearchCtr{
                     "        \"match\" :{ \""+ search_string[1] +"\":" + "\""+search_string[0]+ "\""+
                     "    }" +
                     "}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
                 SearchResult execute = client.execute(search);
@@ -74,8 +95,16 @@ public class ElasticSearchCtr{
             return AllStall;
         }
     }
+
+    /**
+     * This search specifically for BidStall
+     */
 public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
         @Override
+        /**
+         * This is similar to GetStall
+         * @see cmput301w16t01crimsonhorizons.parkinghelper.ElasticSearchCtr.GetStall
+         */
         protected ArrayList<Stalls> doInBackground(String... search_string) {
             verifyClient();
             ArrayList<Stalls> AllStall = new ArrayList<>();
@@ -86,7 +115,7 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
                     search_string[3] +"\":" + "\""+search_string[2]+ "\""+
                     "    }" +
                     "}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("user_database").build();
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
                 SearchResult execute = client.execute(search);
@@ -268,6 +297,11 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
 
     }
 
+    /**
+     * This checks if an account is valid
+     * @param search_string this is the email
+     * @return boolean
+     */
     public static Boolean CheckAccount(String search_string){
         verifyClient();
         Boolean value = new Boolean(false);
@@ -319,15 +353,24 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
             return null;
         }
     }
-    public static class MakeStall extends AsyncTask<Stalls, Void, Void>{
 
+
+    /**
+     * This class creates a stall
+     */
+    public static class MakeStall extends AsyncTask<Stalls, Void, Void>{
+        /**
+         *
+         * @param stalls stalls to be stored
+         * @return nothing
+         */
         @Override
         protected Void doInBackground(Stalls... stalls) {
             verifyClient();
             //Since AsyncTasks work on arrays, we need to work with arrays as well
             for (int i = 0; i < stalls.length; i++){
                 Stalls stall = stalls[i];
-                Index index = new Index.Builder(stall).index("t01").type("user_database").build();
+                Index index = new Index.Builder(stall).index("t01").type("stall_database").build();
                 try {
                     DocumentResult result = client.execute(index);
                     if (result.isSucceeded()){
@@ -343,8 +386,16 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
             return null;
         }
     }
-    public static class updateStallES extends AsyncTask<Stalls,Void,Boolean>{
 
+    /**
+     * Updates exisiting stall with all info
+     */
+    public static class updateStallES extends AsyncTask<Stalls,Void,Boolean>{
+        /**
+         *
+         * @param stall stall with the new information
+         * @return boolean depending if it is successful or not.
+         */
         @Override
         protected Boolean doInBackground(Stalls... stall) {
             verifyClient();
@@ -361,7 +412,7 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
                     " \"Bidder\": " + "\"" + Bidder + "\"" +"}}";
             try {
                 DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
-                                    type("user_database").id(stall[0].getStallID()).build());
+                                    type("stall_database").id(stall[0].getStallID()).build());
                 if (result.isSucceeded()){
                     return true;
                 } else {
@@ -373,7 +424,16 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
             return false;
         }
     }
+
+    /**
+     * Delete existing stall
+     */
     public static class DeleteStall extends AsyncTask<Stalls,Void,Boolean>{
+        /**
+         *
+         * @param stall stall to be deleted
+         * @return boolean depending on success
+         */
         @Override
         protected Boolean doInBackground(Stalls... stall) {
             verifyClient();
@@ -381,7 +441,7 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
             try {
                 DocumentResult result = client.execute(new Delete.Builder(stall[0].getStallID())
                         .index("t01")
-                        .type("user_database")
+                        .type("stall_database")
                         .build());
                 if (result.isSucceeded()){
                     return true;
@@ -392,6 +452,67 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
                 e.printStackTrace();
             }
             return false;
+        }
+    }
+
+    /**
+     * Helper function
+     */
+    public static class SearchDataBaseTask extends AsyncTask<String, Void, ArrayList<Stalls>> {
+
+        @Override
+        protected ArrayList<Stalls> doInBackground(String... params) {
+            verifyClient();
+            //start initial array list empty.
+            ArrayList<Stalls> returnStalls = new ArrayList<Stalls>();
+            String query = "{" +
+                    "    \"query\": {" +
+                    "        \"match\" :{ \"Description\":\"" + params[0]+ "\""+
+                    "                      \"Status\": \"not_borrowed\"" +
+                    "    }" +
+                    "}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
+
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()){
+                   List<Stalls> stalls = execute.getSourceAsObjectList(Stalls.class);
+                   returnStalls.addAll(stalls);
+                }
+            } catch (IOException e) {
+                Log.i("TODO", "SEARCH PROBLEMS");
+            }
+
+            return returnStalls;
+        }
+    }
+
+    public static class GetPendingStalls extends AsyncTask<String, Void, ArrayList<Stalls>>{
+        @Override
+        protected ArrayList<Stalls> doInBackground(String... search_string) {
+            verifyClient();
+            ArrayList<Stalls> returnedStalls = new ArrayList<Stalls>();
+            List<Stalls> stalls;
+            //start initial array list empty.
+            String query = "{" +
+                    "    \"query\": {" +
+                    "        \"match\" :{ \"Email\":\"" + search_string[0]+ "\""+
+                    "                     \"status\": \"bidded\"" +
+                    "    }" +
+                    "}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("stalls_database").build();
+
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()){
+                    stalls = execute.getSourceAsObjectList(Stalls.class);
+                    returnedStalls.addAll(stalls);
+                }
+            } catch (IOException e) {
+                Log.i("TODO", "SEARCH PROBLEMS");
+            }
+
+            return returnedStalls;
         }
     }
     //Helper function
