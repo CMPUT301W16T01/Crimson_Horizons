@@ -59,19 +59,18 @@
         android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/SaveEdit"
+        android:layout_marginBottom="71dp"
+        android:onClick="saveStallInformation"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="124dp"
-        android:onClick="saveStallInformation"/>
+        android:layout_toEndOf="@+id/EditStallDeleteBtn" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cancel"
         android:id="@+id/CancelEdit"
-        android:layout_alignTop="@+id/SaveEdit"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp" />
+        android:layout_above="@+id/SaveEdit"
+        android:layout_toStartOf="@+id/SaveEdit" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -95,7 +94,26 @@
         android:layout_height="wrap_content"
         android:text="Delete"
         android:id="@+id/EditStallDeleteBtn"
+        android:onClick="deleteStall"
+        android:layout_alignTop="@+id/SaveEdit"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ImageEditStall"
         android:layout_above="@+id/SaveEdit"
         android:layout_centerHorizontal="true"
-        android:onClick="deleteStall"/>
+        android:layout_marginBottom="42dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Picture"
+        android:id="@+id/PictureEditStallBtn"
+        android:layout_alignTop="@+id/CancelEdit"
+        android:layout_alignEnd="@+id/ImageEditStall"
+        android:onClick="takePicture"/>
+
+
 </RelativeLayout>

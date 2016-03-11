@@ -286,8 +286,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            Boolean UserName = new Boolean(false);
-            UserName = ElasticSearchCtr.CheckAccount(mEmail);
+            Boolean UserName = Boolean.valueOf(false);
+            LoginCommands command = new LoginCommands(mEmail);
+            UserName = command.CheckCommand();
             return UserName;
         }
 

@@ -18,6 +18,7 @@ import io.searchbox.core.*;
  */
 public class ElasticSearchForTest{
     private static JestDroidClient client;
+
     public static class updateStallES extends AsyncTask<Stalls,Void,Boolean> {
 
         @Override

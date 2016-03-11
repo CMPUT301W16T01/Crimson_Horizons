@@ -1,6 +1,6 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
-import android.os.Parcelable;
+import android.media.Image;
 
 import java.io.Serializable;
 
@@ -18,6 +18,17 @@ public class Stalls implements Serializable{
     private String Status = "";
     private Double BidAmt = 0.00;
     private String Bidder = "";
+    //// TODO: 3/10/2016 MAKE THE IMAGE STORE PROPERLY
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @JestId
     private String StallID;
 

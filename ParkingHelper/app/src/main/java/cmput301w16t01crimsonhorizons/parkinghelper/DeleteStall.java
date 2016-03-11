@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutionException;
  * Command object that is to delete a stall.
  */
 public class DeleteStall extends Commands {
-    private Stalls stall;
+    protected Stalls stall;
     public DeleteStall( Stalls stall){
         this.stall=stall;
     }

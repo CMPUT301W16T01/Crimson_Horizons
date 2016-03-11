@@ -91,6 +91,9 @@ public class EditStall extends AppCompatActivity {
         }
     }
 
+    public void takePicture(View view){
+        Intent intent = new Intent();
+    }
     /**
      * called by Model classes of when to update this information.
      */
