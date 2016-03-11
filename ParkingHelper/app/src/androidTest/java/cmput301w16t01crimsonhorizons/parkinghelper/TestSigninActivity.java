@@ -2,39 +2,68 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.concurrent.ExecutionException;
+
 /**
- * Created by schuman on 3/8/16.
+ * Created by schuman on 3/10/16.
  */
-public class TestSigninActivity extends ActivityInstrumentationTestCase2<SigninActivity>{
+public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
     public TestSigninActivity() {
         super(SigninActivity.class);
     }
 
-
-    public void testModifyAccount(){
-        ElasticSearchCtr.addUser executeAdd = new ElasticSearchCtr.addUser();
+    public void testSignup() {
+        ElasticSearchCtr.verifyUserName executeVerify = new ElasticSearchCtr.verifyUserName();
+        ElasticSearchCtr.GetAccount executeGet = new ElasticSearchCtr.GetAccount();
         ElasticSearchCtr.deleteUser executeDelete = new ElasticSearchCtr.deleteUser();
-
-        Account account1 = new Account();
-        account1.setEmail("__test1");
-        account1.setWorkPhone("1.1");
-        account1.setCellPhone("1.2");
-
-        Account account2 = new Account();
-        account2.setEmail("__test2");
-        account2.setWorkPhone("2.1");
-        account2.setCellPhone("2.2");
+        ElasticSearchCtr.deleteUser executeDelete2 = new ElasticSearchCtr.deleteUser();
 
         Intent intent = new Intent();
         setActivityIntent(intent);
+        SigninActivity signinActivity = (SigninActivity) getActivity();
 
-        EditText newEmail;
-        //change its values via the profile activity
-        //test
-        //try to change it to a pre-existing account
-        //test
+        EditText EmailText = (EditText) signinActivity.findViewById(R.id.EmailEditTxt);
+        EditText WorkText = (EditText) signinActivity.findViewById(R.id.WorkPhoneText);
+        EditText CellText = (EditText) signinActivity.findViewById(R.id.CellPhonEditTxt);
 
+        EmailText.setText("__test1");
+        WorkText.setText("test1.1");
+        CellText.setText("test1.2");
+
+        Button createButton = (Button) signinActivity.findViewById(R.id.CreateAccountBtn);
+
+        createButton.performClick();
+
+        try {
+            assertTrue(executeVerify.execute("__test1").get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        intent = new Intent();
+        setActivityIntent(intent);
+        signinActivity = (SigninActivity) getActivity();
+
+        EmailText = (EditText) signinActivity.findViewById(R.id.EmailEditTxt);
+        WorkText = (EditText) signinActivity.findViewById(R.id.WorkPhoneText);
+        CellText = (EditText) signinActivity.findViewById(R.id.CellPhonEditTxt);
+
+        EmailText.setText("__test1");
+        WorkText.setText("test2.1");
+        CellText.setText("test2.2");
+
+        try {
+            assertFalse(executeGet.execute("__test1").get().getCellPhone() == "test2.2");
+            executeDelete.execute(executeGet.execute("__test1").get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 }

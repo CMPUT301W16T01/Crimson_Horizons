@@ -12,19 +12,17 @@ import java.util.concurrent.ExecutionException;
 public class ClickUserName extends AppCompatActivity {
     public <activityType extends AppCompatActivity> Intent clickUserName (activityType currentActivity, TextView view){
         ElasticSearchCtr.GetAccount executeAccount = new ElasticSearchCtr.GetAccount();
-        Intent intent= null;
+        Intent newIntent= null;
         try {
-            Account account = executeAccount.execute(view.getText().toString()).get();
-            intent = new Intent(currentActivity, ViewProfile.class);
-            intent.putExtra("Email", account.getEmail());
-            intent.putExtra("Work", account.getWorkPhone());
-            //intent.putExtra("Cell", account.getCellPhone());
-            return intent;
+            Account newAccount = executeAccount.execute(view.getText().toString()).get();
+            newIntent = new Intent(currentActivity, ViewProfile.class);
+            newIntent.putExtra("account", newAccount);
+            return newIntent;
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        return intent;
+        return newIntent;
     }
 }
