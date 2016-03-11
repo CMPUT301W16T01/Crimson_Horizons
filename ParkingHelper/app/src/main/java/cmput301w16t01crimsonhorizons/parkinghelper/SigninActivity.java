@@ -32,14 +32,14 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signin);
+        setContentView(R.layout.content_signin);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        SigninEmailEditTxt = (EditText) findViewById(R.id.SigninEmailEditTxt);
-        SigninWorkPhonEditTxt = (EditText) findViewById(R.id.SigninHomePhonEditTxt);
-        SigninCellPhonEditTxt = (EditText) findViewById(R.id.SigninCellPhonEditTxt);
-        SigninUsernameEditTxt = (EditText) findViewById(R.id.SigninUsernameEditTxt);
+        SigninEmailEditTxt = (EditText) findViewById(R.id.EmailEditTxt);
+        SigninWorkPhonEditTxt = (EditText) findViewById(R.id.HomePhonEditTxt);
+        SigninCellPhonEditTxt = (EditText) findViewById(R.id.CellPhonEditTxt);
+        SigninUsernameEditTxt = (EditText) findViewById(R.id.UsernameEditTxt);
         SigninPasswordEditTxt = (EditText) findViewById(R.id.SigninPasswordEditTxt);
 
         userAccount = new Account();
@@ -97,9 +97,9 @@ public class SigninActivity extends AppCompatActivity {
 
         //Here is assuming that it was able to verify the account
 
-        userAccount.setEmail(SigninEmailEditTxt.toString());
-        userAccount.setWorkPhone(SigninWorkPhonEditTxt.toString());
-        userAccount.setCellPhone(SigninCellPhonEditTxt.toString());
+        userAccount.setEmail(SigninEmailEditTxt.getText().toString());
+        userAccount.setWorkPhone(SigninWorkPhonEditTxt.getText().toString());
+        userAccount.setCellPhone(SigninCellPhonEditTxt.getText().toString());
 
         final AsyncTask<String, Void, Boolean> executeVerify = new ElasticSearchCtr.verifyUserName();
         final AsyncTask<Account, Void, Boolean> executeAdd = new ElasticSearchCtr.addUser();

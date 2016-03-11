@@ -1,13 +1,13 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -26,35 +26,35 @@ import java.util.concurrent.ExecutionException;
  * @author Aaron Schuman
  */
 public class Profile extends AppCompatActivity {
-    private EditText OriginalEmailET;
-    private EditText EmailET;
-    private EditText CellPhoneET;
-    private EditText WorkPhoneET;
-    private CurrentAccount  userAccount;
+    private String ProfileOriginalEmail;
+    private EditText ProfileEmailET;
+    private EditText ProfileCellPhoneET;
+    private EditText ProfileWorkPhoneET;
+    private Account  userAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.content_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //needs to display the user's current data
 
-        userAccount = new CurrentAccount();
+        userAccount = CurrentAccount.getAccount();
+        ProfileOriginalEmail = CurrentAccount.getAccount().getEmail();
 
-        EmailET = (EditText) findViewById(R.id.EmailET);
-        EmailET.setText(userAccount.getEmail());
-        OriginalEmailET.setText(userAccount.getEmail());
-        CellPhoneET = (EditText) findViewById(R.id.CellPhoneET);
-        CellPhoneET.setText(userAccount.getCellPhone());
-        WorkPhoneET = (EditText) findViewById(R.id.WorkPhoneET);
-        WorkPhoneET.setText(userAccount.getWorkPhone());
+        ProfileEmailET = (EditText) findViewById(R.id.EmailET);
+        ProfileEmailET.setText(CurrentAccount.getAccount().getEmail());
+        ProfileCellPhoneET = (EditText) findViewById(R.id.CellPhoneET);
+        ProfileCellPhoneET.setText(CurrentAccount.getAccount().getCellPhone());
+        ProfileWorkPhoneET = (EditText) findViewById(R.id.WorkPhoneET);
+        ProfileWorkPhoneET.setText(CurrentAccount.getAccount().getWorkPhone());
 
 
 
         Button notificationButton = (Button) findViewById(R.id.NotificationBtn);
-        notificationButton.setOnClickListener(new View.OnClickListener() {
+        notificationButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 notifications();
@@ -96,19 +96,28 @@ public class Profile extends AppCompatActivity {
      * Sets the user's profile info to the editText typed into the various fields
      * @param ()
      * @return null
-     * if the elastic search finds that <code>EmailET</code> already exists in the database
+     * if the elastic search finds that <code>ProfileEmailET</code> already exists in the database
      */
     public void save(){
-        userAccount.setEmail(EmailET.toString());
-        userAccount.setWorkPhone(WorkPhoneET.toString());
-        userAccount.setCellPhone(CellPhoneET.toString());
 
-        final AsyncTask<String, Void, Boolean> executeVerify = new ElasticSearchCtr.verifyUserName();
-        final AsyncTask<Account, Void, Boolean> executeUpdate = new ElasticSearchCtr.updateUser();
+        final ElasticSearchCtr.verifyUserName executeVerify = new ElasticSearchCtr.verifyUserName();
+        final ElasticSearchCtr.updateUser executeUpdate = new ElasticSearchCtr.updateUser();
+        String Temp = ProfileEmailET.getText().toString();
 
         try {
-            if (executeVerify.execute(userAccount.getEmail()).get()){
+            Boolean result = executeVerify.execute(ProfileEmailET.getText().toString()).get();
+            if (!result || ProfileEmailET.getText().toString() == ProfileOriginalEmail){
+                //with current method ALL of the stalls will need to get updated too
+                /*if(executeDelete.execute(userAccount).get()) {
+                    System.out.print("DELETED\n");
+                }*/
+                userAccount.setEmail(ProfileEmailET.getText().toString());
+                userAccount.setWorkPhone(ProfileWorkPhoneET.getText().toString());
+                userAccount.setCellPhone(ProfileCellPhoneET.getText().toString());
                 executeUpdate.execute(userAccount);
+                ProfileOriginalEmail = userAccount.getEmail().toString();
+
+
             } else {
                 //TODO: make it display a pop-up error informing the user that the username already exists
             }
@@ -117,6 +126,8 @@ public class Profile extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+        Intent intent = new Intent(this, Profile.class);
+        startActivity(intent);
     }
 
 }

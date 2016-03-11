@@ -10,7 +10,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/StatusEditStallV"
-        android:layout_toStartOf="@+id/StatusEditStallV" />
+        android:layout_toStartOf="@+id/StatusEditStallV"
+        android:onClick="adapterClickUserName" />
 
     <TextView
         android:layout_width="wrap_content"

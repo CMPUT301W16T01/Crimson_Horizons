@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/SigninUsername"
         android:layout_marginTop="37dp"
-        android:id="@+id/SigninUsernameEditTxt"
+        android:id="@+id/UsernameEditTxt"
         android:layout_below="@+id/SigninTitle"
         android:layout_centerHorizontal="true" />
 
@@ -36,7 +36,7 @@
         android:hint="@string/SigninPassword"
         android:inputType="textPassword"
         android:id="@+id/SigninPasswordEditTxt"
-        android:layout_below="@+id/SigninUsernameEditTxt"
+        android:layout_below="@+id/UsernameEditTxt"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/SigninEmail"
         android:inputType="textEmailAddress"
-        android:id="@+id/SigninEmailEditTxt"
+        android:id="@+id/EmailEditTxt"
         android:layout_below="@+id/SigninPasswordEditTxt"
         android:layout_alignParentStart="true" />
 
@@ -53,8 +53,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/SigninCellPhone"
         android:inputType="phone"
-        android:id="@+id/SigninCellPhonEditTxt"
-        android:layout_below="@+id/SigninEmailEditTxt"
+        android:id="@+id/CellPhonEditTxt"
+        android:layout_below="@+id/EmailEditTxt"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -62,8 +62,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/SigninHomePhone"
         android:inputType="phone"
-        android:id="@+id/SigninHomePhonEditTxt"
-        android:layout_below="@+id/SigninCellPhonEditTxt"
+        android:id="@+id/HomePhonEditTxt"
+        android:layout_below="@+id/CellPhonEditTxt"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -72,7 +72,7 @@
         android:text="Create Account"
         android:id="@+id/CreateAccountBtn"
         android:layout_marginTop="47dp"
-        android:layout_below="@+id/SigninHomePhonEditTxt"
+        android:layout_below="@+id/HomePhonEditTxt"
         android:layout_alignStart="@+id/SigninTitle"
         android:onClick="clickSignin"/>
 

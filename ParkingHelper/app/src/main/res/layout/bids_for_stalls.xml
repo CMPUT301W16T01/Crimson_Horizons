@@ -30,4 +30,14 @@
         android:layout_toStartOf="@+id/AcceptBtn"
         android:layout_alignParentTop="true"
         android:layout_alignBottom="@+id/DeclineBtn" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/UserNameText"
+        android:layout_alignBaseline="@+id/DeclineBtn"
+        android:layout_alignBottom="@+id/DeclineBtn"
+        android:layout_toStartOf="@+id/DeclineBtn"
+        android:onClick="ClickUserName.clickUserName(UserNameText)" />
 </RelativeLayout>
