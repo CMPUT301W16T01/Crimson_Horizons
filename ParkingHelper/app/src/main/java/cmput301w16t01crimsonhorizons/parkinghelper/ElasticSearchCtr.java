@@ -111,9 +111,11 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
             //start initial array list empty.
             String query = "{" +
                     "    \"query\": {" +
-                    "        \"match\" :{ \""+ search_string[1] +"\":" + "\""+search_string[0]+ "\""+
-                    search_string[3] +"\":" + "\""+search_string[2]+ "\""+
-                    "    }" +
+		    "      \"bool\": {" +
+		    "        \"must\": [" +
+                    "      {  \"match\" :{ \""+ search_string[1] +"\":" + "\""+search_string[0]+ "\" }},"+
+                    "      {  \"\" :{ \""+ search_string[3] +"\":" + "\"gt\": " + "\""+search_string[2]+ "\" }}"+
+                    "    ]" +
                     "}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
