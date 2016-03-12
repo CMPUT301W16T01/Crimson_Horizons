@@ -33,7 +33,7 @@ public class ElasticSearchCtr{
     public static class GetAccount extends AsyncTask<String, Void,Account>{
         /**
          * This is what will be excuted in a different thread
-         * @param search_string
+         * .@param search_string
          * @return Account object will be returned
          */
         @Override
@@ -68,7 +68,7 @@ public class ElasticSearchCtr{
         @Override
         /**
          * @return returns a list of stall and takes in a String[] to search
-         * @param search_string, it is a String[]. String[1] is the field and String[0] is what it
+         * .@param search_string, it is a String[]. String[1] is the field and String[0] is what it
          *                       wants to match
          */
         protected ArrayList<Stalls> doInBackground(String... search_string) {
@@ -299,7 +299,7 @@ public class ElasticSearchCtr{
 
     /**
      * This checks if an account is valid
-     * @param search_string this is the email
+     * .@param search_string this is the email
      * @return boolean
      */
     public static Boolean CheckAccount(String search_string){
@@ -360,7 +360,7 @@ public class ElasticSearchCtr{
     public static class MakeStall extends AsyncTask<Stalls, Void, Void>{
         /**
          *
-         * @param stalls stalls to be stored
+         * .@param stalls stalls to be stored
          * @return nothing
          */
         @Override
@@ -392,7 +392,7 @@ public class ElasticSearchCtr{
     public static class updateStallES extends AsyncTask<Stalls,Void,Boolean>{
         /**
          *
-         * @param stall stall with the new information
+         * .@param stall stall with the new information
          * @return boolean depending if it is successful or not.
          */
         @Override
@@ -430,7 +430,7 @@ public class ElasticSearchCtr{
     public static class DeleteStall extends AsyncTask<Stalls,Void,Boolean>{
         /**
          *
-         * @param stall stall to be deleted
+         * .@param stall stall to be deleted
          * @return boolean depending on success
          */
         @Override

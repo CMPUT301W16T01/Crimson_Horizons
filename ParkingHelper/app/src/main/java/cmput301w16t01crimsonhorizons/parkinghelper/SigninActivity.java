@@ -78,7 +78,7 @@ public class SigninActivity extends AppCompatActivity {
 
     /**
      * Changes the current activity to the HomepageActivity activity
-     * @param ()
+     * .@param ()
      * @return null
      */
     public void clickCancel(){
@@ -90,7 +90,7 @@ public class SigninActivity extends AppCompatActivity {
      * Assigns the values currently in the edit text to the account and then uses elastic search
      * to see if the email exists in the database. If there was no email then the activity changes
      * to the HomepageActivity activity, otherwise a pop-up error is displayed.
-     * @param ()
+     * .@param ()
      * @return null
      */
     public void clickSignin(){

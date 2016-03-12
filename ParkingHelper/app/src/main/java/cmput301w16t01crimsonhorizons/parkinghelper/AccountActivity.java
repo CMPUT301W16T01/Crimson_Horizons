@@ -30,11 +30,43 @@ public class AccountActivity extends AppCompatActivity {
     ArrayList<Stalls>StallAry = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        account = CurrentAccount.getAccount();
         super.onCreate(savedInstanceState);
         account = CurrentAccount.getAccount();
         setContentView(R.layout.activity_account_acitivity);
         MyStalls = (ListView)findViewById(R.id.OwnStalls);
+        String email = account.getEmail();
+        ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
+        String[]temp = new String[2];
+        temp[0]=email;
+        temp[1]="Owner";
+        try {
+            //Here it sets up the String[] needed for searching
+            ArrayList<Stalls>tempAry = new ArrayList<>();
+            getStall.execute(temp);
+            tempAry = getStall.get();
+            StallAry.clear();
+            StallAry.addAll(tempAry);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        MyStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            EditText lv = (EditText) findViewById(R.id.EmailET);
 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent clickStall = new Intent(view.getContext(), EditStall.class);
+                Stalls entry = (Stalls) MyStalls.getItemAtPosition(position);
+                clickStall.putExtra("entry", entry);
+                clickStall.putExtra("id", position);
+                startActivity(clickStall);
+                myAdapter.notifyDataSetChanged();
+            }
+        });
+        myAdapter = new AdapterEditStall(this, R.layout.account_stalls, StallAry);
+        MyStalls.setAdapter(myAdapter);
     }
     @Override
     protected void onStart(){
@@ -66,7 +98,7 @@ public class AccountActivity extends AppCompatActivity {
 
     /**
      * If the user hits the add button
-     * @param view
+     * .@param view
      */
     public void addStall(View view){
         Intent intent = new Intent(this,AddStall.class);
@@ -76,7 +108,7 @@ public class AccountActivity extends AppCompatActivity {
 
     /**
      * If the user hits the profile button
-     * @param view
+     * .@param view
      */
     public void profile(View view){
         Intent intent = new Intent(this,Profile.class);

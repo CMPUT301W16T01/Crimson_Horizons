@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutionException;
  *
  * @author Aaron Schuman
  */
-public class Profile extends AppCompatActivity {
+public class    Profile extends AppCompatActivity {
     private String ProfileOriginalEmail;
     private EditText ProfileEmailET;
     private EditText ProfileCellPhoneET;
@@ -84,7 +84,7 @@ public class Profile extends AppCompatActivity {
 
     /**
      * Changes the current activity to the notification activity
-     * @param ()
+     * .@param ()
      * @return null
      */
     public void notifications(){
@@ -94,7 +94,7 @@ public class Profile extends AppCompatActivity {
 
     /**
      * Sets the user's profile info to the editText typed into the various fields
-     * @param ()
+     * .@param ()
      * @return null
      * if the elastic search finds that <code>ProfileEmailET</code> already exists in the database
      */

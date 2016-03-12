@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.concurrent.ExecutionException;
 
 /**
  * Created by schuman on 3/10/16.
+ *
  */
 public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
     public TestSigninActivity() {
@@ -26,7 +28,7 @@ public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
         SigninActivity signinActivity = (SigninActivity) getActivity();
 
         EditText EmailText = (EditText) signinActivity.findViewById(R.id.EmailEditTxt);
-        EditText WorkText = (EditText) signinActivity.findViewById(R.id.WorkPhoneText);
+        TextView WorkText = (TextView) signinActivity.findViewById(R.id.WorkPhoneText);
         EditText CellText = (EditText) signinActivity.findViewById(R.id.CellPhonEditTxt);
 
         EmailText.setText("__test1");

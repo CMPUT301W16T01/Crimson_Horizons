@@ -13,34 +13,29 @@ import java.util.concurrent.ExecutionException;
 
 public class OwnStallsWithBidsActivity extends AppCompatActivity {
     private ListView OwnStalls;
-    private Intent intent;
     private Account account;
+    AdapterEditStall myAdapter;
+    ArrayList<Stalls>StallAry = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_own_stalls_with_bids);
-        OwnStalls = (ListView)findViewById(R.id.OwnStalls);
-	intent = getIntent();
-    }
-    @Override
-    protected void onStart(){
-        super.onStart();
-	this.update();
-    }
-
-    public void update(){
         account = CurrentAccount.getAccount();
-        ArrayList<Stalls>StallAry = new ArrayList<>();
+        OwnStalls = (ListView)findViewById(R.id.OwnStalls);
         String email = account.getEmail();
         ElasticSearchCtr.GetBidStall getBidStall = new ElasticSearchCtr.GetBidStall();
+        String[]temp = new String[4];
+        temp[0]=email;
+        temp[1]="Owner";
+        temp[2]="0.0";
+        temp[3]="BidAmt";
         try {
-            String[]temp = new String[4];
-            temp[0]=email;
-            temp[1]="Owner";
-            temp[2]="0.0";
-	        temp[3]="BidAmt";
+            ArrayList<Stalls>tempAry = new ArrayList<>();
             getBidStall.execute(temp);
-            StallAry = getBidStall.get();
+            tempAry = getBidStall.get();
+            StallAry.clear();
+            StallAry.addAll(tempAry);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -55,8 +50,50 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
                 clickStall.putExtra("entry", entry);
                 clickStall.putExtra("id", position);
                 startActivity(clickStall);
+                myAdapter.notifyDataSetChanged();
             }
         });
-        OwnStalls.setAdapter(new AdapterEditStall(this, R.layout.account_stalls, StallAry));
+        myAdapter = new AdapterEditStall(this, R.layout.account_stalls, StallAry);
+        OwnStalls.setAdapter(myAdapter);
+    }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        this.update();
+    }
+
+    public void update(){
+        account = CurrentAccount.getAccount();
+        String email = account.getEmail();
+        ElasticSearchCtr.GetBidStall getBidStall = new ElasticSearchCtr.GetBidStall();
+        String[]temp = new String[4];
+        temp[0]=email;
+        temp[1]="Owner";
+        temp[2]="0.0";
+        temp[3]="BidAmt";
+        try {
+            ArrayList<Stalls>tempAry = new ArrayList<>();
+            getBidStall.execute(temp);
+            tempAry = getBidStall.get();
+            StallAry.clear();
+            StallAry.addAll(tempAry);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        OwnStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            EditText lv = (EditText) findViewById(R.id.EmailET);
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent clickStall = new Intent(view.getContext(), EditStall.class);
+                Stalls entry = (Stalls) OwnStalls.getItemAtPosition(position);
+                clickStall.putExtra("entry", entry);
+                clickStall.putExtra("id", position);
+                startActivity(clickStall);
+            }
+        });
+        myAdapter.notifyDataSetChanged();
     }
 }

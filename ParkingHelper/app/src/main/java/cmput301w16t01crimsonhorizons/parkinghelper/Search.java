@@ -35,7 +35,6 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
         GetAvailable[1] = "Status";
         StallAry = command.UpdateStall(GetAvailable);
         searchBtn.setOnClickListener( new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
                 ElasticSearchCtr.SearchDataBaseTask searchTask =
