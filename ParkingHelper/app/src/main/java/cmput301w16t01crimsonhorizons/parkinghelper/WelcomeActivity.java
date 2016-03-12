@@ -1,14 +1,11 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.util.ArrayList;
+import android.view.View;
 
 /**
  * This is where the user can sign up or login.
@@ -39,7 +36,6 @@ public class WelcomeActivity extends AppCompatActivity {
         s2.setDescription("the first stall owned by 123@123");
         AsyncTask<Stalls, Void, Void> s2execute = new ElasticSearchCtr.MakeStall().execute(s2);
         setResult(RESULT_OK);
-
         Stalls s3 = new Stalls();
         s3.setOwner("ABC");
         s3.setStatus("Available");
