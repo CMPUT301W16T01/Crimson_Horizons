@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -30,7 +29,7 @@ public class AccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_acitivity);
+        setContentView(R.layout.content_account_acitivity);
         MyStalls = (ListView)findViewById(R.id.OwnStalls);
         intent = getIntent();
     }
@@ -45,21 +44,20 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     public void adapterClickUserName(View view){
-            ElasticSearchCtr.GetAccount executeAccount = new ElasticSearchCtr.GetAccount();
-            Intent newIntent= null;
+            /*ElasticSearchCtr.GetAccount executeAccount = new ElasticSearchCtr.GetAccount();
             Account newAccount = null;
             TextView temp = (TextView)view.findViewById(R.id.StallNameEditStallV);
-            try {
-                newAccount = executeAccount.execute(temp.getText().toString()).get();
+           try {
+               newAccount = executeAccount.execute(temp.getText().toString()).get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
-            }finally {
-                newIntent = new Intent(this, ViewProfile.class);
-                newIntent.putExtra("account", newAccount);
+            }finally {*/
+                Intent newIntent = new Intent(this, ViewProfile.class);
+                //newIntent.putExtra("account", newAccount);
                 startActivity(newIntent);
-            }
+            //}
     }
 
     /**

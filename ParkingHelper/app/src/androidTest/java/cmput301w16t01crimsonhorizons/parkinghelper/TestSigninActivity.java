@@ -2,6 +2,7 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -15,6 +16,7 @@ public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
         super(SigninActivity.class);
     }
 
+    @UiThreadTest
     public void testSignup() {
         ElasticSearchCtr.verifyUserName executeVerify = new ElasticSearchCtr.verifyUserName();
         ElasticSearchCtr.GetAccount executeGet = new ElasticSearchCtr.GetAccount();
