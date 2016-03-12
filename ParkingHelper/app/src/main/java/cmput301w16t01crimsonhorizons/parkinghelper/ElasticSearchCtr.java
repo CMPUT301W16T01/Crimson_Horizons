@@ -111,10 +111,12 @@ public class ElasticSearchCtr{
             //start initial array list empty.
             String query = "{" +
                     "    \"query\": {" +
-                    "        \"match\" :{ \""+ search_string[1] +"\":" + "\""+search_string[0]+ "\""+
-                    search_string[3] +"\":" + "\""+search_string[2]+ "\""+
-                    "    }" +
-                    "}}";
+		    "      \"bool\": {" +
+		    "        \"must\": " +
+                    "      {  \"match\" :{ \""+ search_string[1] +"\":" + "\""+search_string[0]+ "\" }},"+
+                    "        \"must\": " +
+                    "      { \"range\": { \""+ search_string[3] +"\": " + "{\"gt\": " + "\""+search_string[2]+ "\" }}}"+
+                    "}}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
@@ -325,6 +327,31 @@ public class ElasticSearchCtr{
             value = false;
         }
         return value;
+    }
+
+    public static class MakeAccount extends AsyncTask<Account, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Account... accounts) {
+            verifyClient();
+            //Since AsyncTasks work on arrays, we need to work with arrays as well
+            for (int i = 0; i < accounts.length; i++){
+                Account account = accounts[i];
+                Index index = new Index.Builder(account).index("t01").type("user_database").build();
+                try {
+                    DocumentResult result = client.execute(index);
+                    if (result.isSucceeded()){
+                        //Set Id for tweet, can find and edit in elastic search
+                        account.setId(result.getId());
+                    }
+                    //Can also use get id,get index,get type
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            return null;
+        }
     }
 
     /**

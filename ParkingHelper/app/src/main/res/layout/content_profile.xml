@@ -43,8 +43,8 @@
         android:id="@+id/CellPhoneET"
         android:text="Cell Phone"
         android:layout_below="@+id/textView2"
-        android:layout_x="70dp"
-        android:layout_y="213dp" />
+        android:layout_x="81dp"
+        android:layout_y="329dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -77,8 +77,8 @@
         android:id="@+id/textView2"
         android:layout_below="@+id/EmailET"
         android:layout_centerHorizontal="true"
-        android:layout_x="91dp"
-        android:layout_y="188dp" />
+        android:layout_x="90dp"
+        android:layout_y="310dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -102,8 +102,8 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal|top"
-        android:layout_x="89dp"
-        android:layout_y="302dp" />
+        android:layout_x="74dp"
+        android:layout_y="201dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -115,7 +115,7 @@
         android:layout_below="@+id/textView"
         android:layout_alignStart="@+id/EmailET"
         android:layout_gravity="center_horizontal|top"
-        android:layout_x="76dp"
-        android:layout_y="327dp" />
+        android:layout_x="71dp"
+        android:layout_y="220dp" />
 
 </AbsoluteLayout>

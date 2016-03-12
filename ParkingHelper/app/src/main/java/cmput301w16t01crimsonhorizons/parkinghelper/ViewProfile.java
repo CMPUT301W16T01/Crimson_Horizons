@@ -19,9 +19,8 @@ public class ViewProfile extends AppCompatActivity {
         setContentView(R.layout.content_view_profile);
 
         Intent intent = getIntent();
-        account.setEmail((String)intent.getSerializableExtra("Email"));
-        account.setWorkPhone((String)intent.getSerializableExtra("Work"));
-        account.setCellPhone((String)intent.getSerializableExtra("Cell"));
+
+        account = ((Account)intent.getSerializableExtra("account"));
 
         emailAddress = (TextView)findViewById(R.id.emailAddress);
         workNumber = (TextView)findViewById(R.id.workNumber);

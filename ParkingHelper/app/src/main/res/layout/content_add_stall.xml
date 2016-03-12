@@ -65,7 +65,8 @@
         android:text="Add"
         android:id="@+id/AddInAddBtn"
         android:layout_above="@+id/CancelInAddBtn"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="saveStallInformation"/>
 
     <Button
         android:layout_width="wrap_content"

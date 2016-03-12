@@ -31,4 +31,13 @@
         android:layout_below="@+id/returnButton"
         android:layout_alignEnd="@+id/returnButton"
         android:textSize="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/UserNameText"
+        android:layout_marginEnd="30dp"
+        android:layout_alignBottom="@+id/returnButton"
+        android:layout_toStartOf="@+id/returnButton" />
 </RelativeLayout>
