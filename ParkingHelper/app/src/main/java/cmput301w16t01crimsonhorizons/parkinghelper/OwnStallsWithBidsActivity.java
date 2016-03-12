@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -38,8 +37,8 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
             String[]temp = new String[4];
             temp[0]=email;
             temp[1]="Owner";
-            temp[2]="Bidded";
-	        temp[3]="Status";
+            temp[2]="0.0";
+	        temp[3]="BidAmt";
             getBidStall.execute(temp);
             StallAry = getBidStall.get();
         } catch (InterruptedException e) {
