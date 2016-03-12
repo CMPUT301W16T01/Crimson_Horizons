@@ -30,18 +30,18 @@ public class WelcomeActivity extends AppCompatActivity {
 */
 
 /*        Stalls s1 = new Stalls();
-        s1.setOwner("ABC");
-        s1.setStatus("Borrowed");
-        s1.setDescription("the first stall owned by ABC");
+        s1.setOwner("123@123");
+        s1.setStatus("Available");
+        s1.setDescription("the first stall owned by 123@123");
         AsyncTask<Stalls, Void, Void> s1execute = new ElasticSearchCtr.MakeStall().execute(s1);
         setResult(RESULT_OK);
         Stalls s2 = new Stalls();
         s2.setOwner("123@123");
-        s2.setStatus("Borrowed");
-        s2.setDescription("the first stall owned by 123@123");
+        s2.setStatus("Available");
+        s2.setDescription("the second stall owned by 123@123");
         AsyncTask<Stalls, Void, Void> s2execute = new ElasticSearchCtr.MakeStall().execute(s2);
-        setResult(RESULT_OK);
-
+        setResult(RESULT_OK);*/
+/*
         Stalls s3 = new Stalls();
         s3.setOwner("ABC");
         s3.setStatus("Available");

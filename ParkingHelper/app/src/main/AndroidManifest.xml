@@ -141,10 +141,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cmput301w16t01crimsonhorizons.parkinghelper.Search" />
         </activity>
-        <activity
-            android:name=".EditStallForTesting"
-            android:label="@string/title_activity_edit_stall_for_testing"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
