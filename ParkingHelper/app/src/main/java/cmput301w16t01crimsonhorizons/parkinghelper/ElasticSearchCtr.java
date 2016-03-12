@@ -335,6 +335,35 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
         return value;
     }
 
+<<<<<<< HEAD
+    public static class MakeAccount extends AsyncTask<Account, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Account... accounts) {
+            verifyClient();
+            //Since AsyncTasks work on arrays, we need to work with arrays as well
+            for (int i = 0; i < accounts.length; i++){
+                Account account = accounts[i];
+                Index index = new Index.Builder(account).index("t01").type("user_database").build();
+                try {
+                    DocumentResult result = client.execute(index);
+                    if (result.isSucceeded()){
+                        //Set Id for tweet, can find and edit in elastic search
+                        account.setId(result.getId());
+                    }
+                    //Can also use get id,get index,get type
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            return null;
+        }
+    }
+
+
+=======
+>>>>>>> 69f2c19e79ee5af8fca40193f5d7aa4b3a22789e
     /**
      * This class creates a stall
      */
@@ -438,6 +467,10 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
     /**
      * Helper function
      */
+<<<<<<< HEAD
+    public static class SearchDataBaseTask extends AsyncTask<String, Void, ArrayList<Stalls>> {
+=======
+>>>>>>> 69f2c19e79ee5af8fca40193f5d7aa4b3a22789e
 
     public static class SearchDataBaseTask extends AsyncTask<String, Void, ArrayList<Stalls>> {
         @Override
