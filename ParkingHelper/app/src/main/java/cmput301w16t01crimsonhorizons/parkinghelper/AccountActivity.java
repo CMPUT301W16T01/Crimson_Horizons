@@ -24,14 +24,16 @@ public class AccountActivity extends AppCompatActivity {
      * Account is the current account for user.
      */
     private ListView MyStalls;
-    private Intent intent;
     private Account account;
+    AdapterEditStall myAdapter;
+    ArrayList<Stalls>StallAry = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_account_acitivity);
+        account = CurrentAccount.getAccount();
         MyStalls = (ListView)findViewById(R.id.OwnStalls);
-        intent = getIntent();
+
     }
     @Override
     protected void onStart(){
@@ -85,16 +87,18 @@ public class AccountActivity extends AppCompatActivity {
      */
     public void update(){
         account = CurrentAccount.getAccount();
-        ArrayList<Stalls>StallAry = new ArrayList<>();
         String email = account.getEmail();
         ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
+        String[]temp = new String[2];
+        temp[0]=email;
+        temp[1]="Owner";
         try {
             //Here it sets up the String[] needed for searching
-            String[]temp = new String[2];
-            temp[0]=email;
-            temp[1]="Owner";
+            ArrayList<Stalls>tempAry = new ArrayList<>();
             getStall.execute(temp);
-            StallAry = getStall.get();
+            tempAry = getStall.get();
+            StallAry.clear();
+            StallAry.addAll(tempAry);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -111,7 +115,7 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(clickStall);
             }
         });
-        MyStalls.setAdapter(new AdapterEditStall(this, R.layout.account_stalls, StallAry));
+        myAdapter.notifyDataSetChanged();
         Button profileButton = (Button) findViewById(R.id.ProfileBtn);
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override

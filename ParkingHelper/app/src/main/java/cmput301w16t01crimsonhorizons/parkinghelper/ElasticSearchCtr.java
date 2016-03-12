@@ -99,7 +99,7 @@ public class ElasticSearchCtr{
     /**
      * This search specifically for BidStall
      */
-public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
+    public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
         @Override
         /**
          * This is similar to GetStall
@@ -147,25 +147,19 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
         @Override
         protected Boolean doInBackground(Account... newAccount) {
             verifyClient();
-            /*verifyUserName verifyUserName = new verifyUserName();
-            final ElasticSearchCtr.verifyUserName execute = new verifyUserName();
+            Index index = new Index.Builder(newAccount[0]).index("t01").type("user_database").build();
             try {
-                //noinspection ResourceType
-                if(!execute.execute(newAccount[0].getEmail()).get()) {*/
-
-                    Index index = new Index.Builder(newAccount[0]).index("t01").type("user_database").build();
-                    try {
-                        DocumentResult result = client.execute(index);
-                        if (result.isSucceeded()) {
-                            //Set the ID to newAccount that elasticsearch told me it was
-                            newAccount[0].setId(result.getId());
-                            return Boolean.TRUE;
-                        } else {
-                            return Boolean.FALSE;
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                DocumentResult result = client.execute(index);
+                if (result.isSucceeded()) {
+                    //Set the ID to newAccount that elasticsearch told me it was
+                    newAccount[0].setId(result.getId());
+                    return Boolean.TRUE;
+                } else {
+                    return Boolean.FALSE;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             /*    }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -518,7 +512,6 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
         }
     }
     //Helper function
-
     public static void verifyClient(){
         //verify that "client" exists and if it does not make it.
         //This had to be done the other functions anyway. Just make a helper function.
