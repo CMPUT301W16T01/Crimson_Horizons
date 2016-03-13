@@ -27,7 +27,6 @@ public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
         Intent intent = new Intent();
         setActivityIntent(intent);
         SigninActivity signinActivity = (SigninActivity) getActivity();
-
         EditText EmailText = (EditText) signinActivity.findViewById(R.id.EmailEditTxt);
         TextView WorkText = (TextView) signinActivity.findViewById(R.id.WorkPhoneText);
         EditText CellText = (EditText) signinActivity.findViewById(R.id.CellPhonEditTxt);
@@ -53,7 +52,7 @@ public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
         signinActivity = (SigninActivity) getActivity();
 
         EmailText = (EditText) signinActivity.findViewById(R.id.EmailEditTxt);
-        WorkText = (EditText) signinActivity.findViewById(R.id.WorkPhoneText);
+        WorkText = (TextView) signinActivity.findViewById(R.id.WorkPhoneText);
         CellText = (EditText) signinActivity.findViewById(R.id.CellPhonEditTxt);
 
         EmailText.setText("__test1");

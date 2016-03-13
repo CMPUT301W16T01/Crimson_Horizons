@@ -271,7 +271,6 @@ public class ElasticSearchCtr{
         return value;
     }
 
-
     /**
      * This class creates a stall
      */

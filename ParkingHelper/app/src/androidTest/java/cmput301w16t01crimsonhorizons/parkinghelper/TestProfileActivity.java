@@ -17,7 +17,6 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
     public TestProfileActivity() {
         super(Profile.class);
     }
-
     @UiThreadTest
     public void testModifyAccount(){
         ElasticSearchForTest.addUser executeAdd = new ElasticSearchForTest.addUser();
@@ -28,6 +27,7 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
         ElasticSearchCtr.GetAccount executeGet = new ElasticSearchCtr.GetAccount();
 
         Account account1 = new Account();
+
         account1.setEmail("__test1_");
         account1.setWorkPhone("1.1");
         account1.setCellPhone("1.2");
