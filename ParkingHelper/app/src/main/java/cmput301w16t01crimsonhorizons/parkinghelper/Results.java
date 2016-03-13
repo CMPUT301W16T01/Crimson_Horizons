@@ -36,25 +36,22 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
         GetAvailable[0] = email;
         GetAvailable[1] = "Bidder";
 
-
-        myAdapter = new AdapterEditStall(this, R.layout.account_stalls, userBids);
-        YourBids.setAdapter(myAdapter);
-        this.updateView(command);
-
-
         ElasticSearchCtr.GetPendingStalls getPendingStalls =
                 new ElasticSearchCtr.GetPendingStalls();
         getPendingStalls.execute(email);
         try {
-            userBids = getPendingStalls.get();
+            ArrayList<Stalls> tempAry = new ArrayList<>();
+            tempAry = getPendingStalls.get();
             userBids.clear();
-            userBids = command.UpdateStall(GetAvailable);;
+            userBids.addAll(tempAry);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
+        myAdapter = new AdapterEditStall(this, R.layout.account_stalls, userBids);
+        YourBids.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
     }
 

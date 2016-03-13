@@ -44,7 +44,7 @@ public class TestPendingBidActivity extends ActivityInstrumentationTestCase2<Hom
         HomepageActivity activity = (HomepageActivity)getActivity();
         Button YourBids = (Button)activity.findViewById(R.id.YourBidsBtn);
         YourBids.performClick();
-        YourBids yourBids = new YourBids();
+        Results yourBids = new Results();
         ListView lv=(ListView)yourBids.findViewById(R.id.YourBidsLv);
         ViewAsserts.assertOnScreen(yourBids.getWindow().getDecorView(), lv);
     }

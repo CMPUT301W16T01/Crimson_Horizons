@@ -34,7 +34,6 @@ public class SigninActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_signin);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         SigninEmailEditTxt = (EditText) findViewById(R.id.EmailEditTxt);
         SigninWorkPhonEditTxt = (EditText) findViewById(R.id.HomePhonEditTxt);
@@ -65,30 +64,20 @@ public class SigninActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-<<<<<<< Updated upstream
+
     /**
      * Changes the current activity to the HomepageActivity activity
      * .@param ()
      * @return null
      */
-=======
->>>>>>> Stashed changes
+
     public void clickCancel(){
         Intent intent = new Intent(this,WelcomeActivity.class);
         startActivity(intent);
     }
-<<<<<<< Updated upstream
+
     /**
      * Assigns the values currently in the edit text to the account and then uses elastic search
      * to see if the email exists in the database. If there was no email then the activity changes
@@ -96,9 +85,7 @@ public class SigninActivity extends AppCompatActivity {
      * .@param ()
      * @return null
      */
-=======
 
->>>>>>> Stashed changes
     public void clickSignin(){
 
         //Here is assuming that it was able to verify the account

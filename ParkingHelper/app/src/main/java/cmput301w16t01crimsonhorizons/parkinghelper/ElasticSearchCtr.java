@@ -71,7 +71,37 @@ public class ElasticSearchCtr{
             //start initial array list empty.
             String query = "{" +"\"query\": {\"bool\": {\"should\":     { \"match\": "+
                     "{ \"Status\": \"Available\" }}," +
-                    "\"should\" : {\"match\":{\"Status\": \"Bidded\" }}"+ "}}}";
+                    "\"should\" : {\"match\":{\"Status\": \"Bidded\" }},"+
+                    "\"must\" : {\"match\":{\""+search_string[1]+"\": "+"\""+search_string[0]+"\""+"}}}}}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
+
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()){
+                    List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
+                    AllStall.addAll(returned_stalls);
+                }
+            } catch (IOException e) {
+                Log.i("TODO", "SEARCH PROBLEMS");
+            }
+
+            return AllStall;
+        }
+    }
+    public static class GetAvailableStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
+        @Override
+        /**
+         * @return returns a list of stall and takes in a String[] to search
+         * .@param search_string, it is a String[]. String[1] is the field and String[0] is what it
+         *                       wants to match
+         */
+        protected ArrayList<Stalls> doInBackground(String... search_string) {
+            verifyClient();
+            ArrayList<Stalls> AllStall = new ArrayList<>();
+            //start initial array list empty.
+            String query = "{" +"\"query\": {\"bool\": {\"should\":     { \"match\": "+
+                    "{ \""+search_string[0]+"\": \""+search_string[1]+"\" }}," +
+                    "\"should\" : {\"match\":{\""+search_string[0]+"\": \""+search_string[2]+"\" }}"+ "}}}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
@@ -96,7 +126,7 @@ public class ElasticSearchCtr{
             //start initial array list empty.
             String query = "{" +"\"query\": {\"bool\": {\"must\":     { \"match\": "+
                     "{ \"Status\": \"Bidded\" }}," +
-                    "\"must\": { \"match\": { \"Owner\": "+"\""+search_string[0]+"\""+"}}}}}";
+                    "\"must\": { \"match\": { \""+search_string[1]+"\": "+"\""+search_string[0]+"\""+"}}}}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
@@ -216,7 +246,7 @@ public class ElasticSearchCtr{
 
             try {
                 SearchResult execute = client.execute(search);
-                if(execute.isSucceeded()){  
+                if(execute.isSucceeded()){
 
                     Boolean returned_accounts = execute.getSourceAsObjectList(Account.class).isEmpty();
                     if(returned_accounts){

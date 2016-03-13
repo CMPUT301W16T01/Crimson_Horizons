@@ -40,7 +40,6 @@ public class BidStall extends AppCompatActivity {
         Descrip.setText(stall.getDescription().toString());
     }
 
-<<<<<<< Updated upstream
     /**
      * This is when the suer enters all information and wants to bid on it.
      * It will do a check to make sure the user's bid is higher than highest bid
@@ -48,8 +47,7 @@ public class BidStall extends AppCompatActivity {
      * After each action, there will be a message to display what was done.
      * .@param view
      */
-=======
->>>>>>> Stashed changes
+
     public void BidStall(View view){
         Account account = CurrentAccount.getAccount();
         NumberFormat two = new DecimalFormat("0.##");

@@ -50,15 +50,14 @@ public class EditStall extends AppCompatActivity {
         this.update();
     }
 
-<<<<<<< Updated upstream
+
 
     /**
      * Once the user finish entering information and hit save, it will obtain all information
      * update the information with the stall object then call the command object to update it.
      * .@param view
      */
-=======
->>>>>>> Stashed changes
+
     public void saveStallInformation(View view){
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
         EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);

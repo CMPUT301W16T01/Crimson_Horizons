@@ -76,25 +76,18 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     public void adapterClickUserName(View view){
-<<<<<<< Updated upstream
+
             /*ElasticSearchCtr.GetAccount executeAccount = new ElasticSearchCtr.GetAccount();
             Account newAccount = null;
             TextView temp = (TextView)view.findViewById(R.id.StallNameEditStallV);
            try {
                newAccount = executeAccount.execute(temp.getText().toString()).get();
-=======
-            ElasticSearchCtr.GetAccount executeAccount = new ElasticSearchCtr.GetAccount();
-            Intent newIntent= null;
-            Account newAccount = null;
-            TextView temp = (TextView)view.findViewById(R.id.StallNameEditStallV);
-            try {
-                newAccount = executeAccount.execute(temp.getText().toString()).get();
->>>>>>> Stashed changes
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
-<<<<<<< Updated upstream
+
             }finally {*/
                 Intent newIntent = new Intent(this, ViewProfile.class);
                 //newIntent.putExtra("account", newAccount);
@@ -106,28 +99,19 @@ public class AccountActivity extends AppCompatActivity {
      * If the user hits the add button
      * .@param view
      */
-=======
-            }finally {
-                newIntent = new Intent(this, ViewProfile.class);
-                newIntent.putExtra("account", newAccount);
-                startActivity(newIntent);
-            }
-    }
 
->>>>>>> Stashed changes
     public void addStall(View view){
         Intent intent = new Intent(this,AddStall.class);
         startActivity(intent);
         this.update();
     }
 
-<<<<<<< Updated upstream
+
     /**
      * If the user hits the profile button
      * .@param view
      */
-=======
->>>>>>> Stashed changes
+
     public void profile(View view){
         Intent intent = new Intent(this,Profile.class);
         startActivity(intent);

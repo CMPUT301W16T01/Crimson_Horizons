@@ -19,13 +19,10 @@ public class Stalls implements Serializable{
     private String Status = "";
     private Double BidAmt = 0.00;
     private String Bidder = "";
-<<<<<<< Updated upstream
+
     private String Borrower = "";
     ArrayList<String>LstBidders = new ArrayList<>();
-=======
-    private ArrayList<String> LstBidders = new ArrayList<>();
 
->>>>>>> Stashed changes
     //// TODO: 3/10/2016 MAKE THE IMAGE STORE PROPERLY
     private String image;
 

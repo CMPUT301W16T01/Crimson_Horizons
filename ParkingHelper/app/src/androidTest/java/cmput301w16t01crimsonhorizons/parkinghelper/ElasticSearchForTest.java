@@ -18,7 +18,6 @@ import io.searchbox.core.*;
  */
 public class ElasticSearchForTest{
 
-
     /**
      * Created by Kevin L on 2/24/2016.
      * This is the main interface that uses JestDroid to access and modify data on elastic search.
@@ -470,8 +469,9 @@ public class ElasticSearchForTest{
                 verifyClient();
                 //start initial array list empty.
                 ArrayList<Stalls> returnStalls = new ArrayList<Stalls>();
-                String query = "{" +"\"query\": {\"bool\": {\"must\":     { \"match\": "+
+                String query = "{" +"\"query\": {\"bool\": {\"should\":     { \"match\": "+
                         "{ \"Status\": \"Available\" }}," +
+                        "{ \"Status\": \"Bidded\" }}," +
                         "\"must\": { \"match\": { \"Description\": "+"\""+params[0]+"\""+"}}}}}";
                 io.searchbox.core.Search search = new io.searchbox.core.Search.Builder(query).addIndex("t01").addType("stall_database").build();
 

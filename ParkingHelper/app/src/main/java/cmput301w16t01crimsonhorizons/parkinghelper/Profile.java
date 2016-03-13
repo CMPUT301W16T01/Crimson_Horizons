@@ -1,6 +1,7 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,14 +34,10 @@ public class    Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_profile);
-<<<<<<< Updated upstream
+
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
 
-=======
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
->>>>>>> Stashed changes
 
         //needs to display the user's current data
 
@@ -111,17 +108,13 @@ public class    Profile extends AppCompatActivity {
      */
     public <elasticVerify extends AsyncTask<String, Void, Boolean>, elasticUpdate extends AsyncTask<Account, Void, Boolean>> void save(elasticVerify typeA, elasticUpdate typeB){
 
-<<<<<<< Updated upstream
         userAccount = CurrentAccount.getAccount();
 
         final elasticVerify executeVerify = typeA;// = new elasticVerify();
         final elasticUpdate executeUpdate = typeB;
         //final ElasticSearchCtr.verifyUserName executeVerify = new ElasticSearchCtr.verifyUserName();
         //final ElasticSearchCtr.updateUser executeUpdate = new ElasticSearchCtr.updateUser();
-=======
-        final ElasticSearchCtr.verifyUserName executeVerify = new ElasticSearchCtr.verifyUserName();
-        final ElasticSearchCtr.updateUser executeUpdate = new ElasticSearchCtr.updateUser();
->>>>>>> Stashed changes
+
         String Temp = ProfileEmailET.getText().toString();
 
         try {
