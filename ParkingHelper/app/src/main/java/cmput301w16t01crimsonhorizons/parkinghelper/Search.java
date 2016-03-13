@@ -13,6 +13,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import io.searchbox.core.Get;
+
 public class Search extends AppCompatActivity implements ViewInterface<Commands> {
     private ListView Result;
     private ArrayList<Stalls>StallAry = new ArrayList<>();
@@ -27,36 +29,41 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
         Result = (ListView)findViewById(R.id.ResultLv);
         searchBtn = (Button)findViewById(R.id.SearchBtn);
         searchBox = (EditText)findViewById(R.id.query);
-        EditStallSave command = new EditStallSave();
+        final EditStallSave command = new EditStallSave();
+        command.addView(this);
         GetAvailable[0] = "Available";
         GetAvailable[1] = "Status";
         StallAry = command.UpdateStall(GetAvailable);
         searchBtn.setOnClickListener( new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
                 ElasticSearchCtr.SearchDataBaseTask searchTask =
                         new ElasticSearchCtr.SearchDataBaseTask();
                 String keyWords = searchBox.getText().toString();
-                searchTask.execute(keyWords);
+                ArrayList<Stalls> temp = new ArrayList<Stalls>();
                 try {
-                    ArrayList<Stalls>temp = new ArrayList<Stalls>();
-                    temp = searchTask.get();
-                    if (temp.size()!=0){
+                    if (keyWords.equals("")==false) {
+                        searchTask.execute(keyWords);
+                        temp = searchTask.get();
+                        if (temp.size()!=0){
+                            StallAry.clear();
+                            StallAry.addAll(temp);
+                        }
+                    } else {
                         StallAry.clear();
+                        temp = command.UpdateStall(GetAvailable);
                         StallAry.addAll(temp);
                     }
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-
                 myAdapter.notifyDataSetChanged();
             }
         });
 
-        command.addView(this);
         myAdapter = new AdapterEditStall(this, R.layout.account_stalls, StallAry);
         Result.setAdapter(myAdapter);
         this.updateView(command);
@@ -112,37 +119,3 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
     }
 
 }
-/*=======
-
-        searchBtn.setOnClickListener( new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                ElasticSearchCtr.SearchDataBaseTask searchTask =
-                        new ElasticSearchCtr.SearchDataBaseTask();
-                String keyWords = searchBox.getText().toString();
-                searchTask.execute(keyWords);
-
-                try {
-                    stalls = searchTask.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        adapter = new ArrayAdapter<Stalls>(this, R.layout.own_stalls_with_bids,
-                stalls);
-        Result.setAdapter(adapter);
-    }
-    public void clickSearch(View view){
-        // TODO: 2/15/2016 Fill in what happens when search is hit again
-
-    }
-
-}
->>>>>>> 46cde72d9fba7af48a9990401fcc725e9376b3f3*/

@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -25,14 +24,48 @@ public class AccountActivity extends AppCompatActivity {
      * Account is the current account for user.
      */
     private ListView MyStalls;
-    private Intent intent;
     private Account account;
+    AdapterEditStall myAdapter;
+    ArrayList<Stalls>StallAry = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        account = CurrentAccount.getAccount();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_acitivity);
+        setContentView(R.layout.content_account_acitivity);
+        account = CurrentAccount.getAccount();
         MyStalls = (ListView)findViewById(R.id.OwnStalls);
-        intent = getIntent();
+        String email = account.getEmail();
+        ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
+        String[]temp = new String[2];
+        temp[0]=email;
+        temp[1]="Owner";
+        try {
+            //Here it sets up the String[] needed for searching
+            ArrayList<Stalls>tempAry = new ArrayList<>();
+            getStall.execute(temp);
+            tempAry = getStall.get();
+            StallAry.clear();
+            StallAry.addAll(tempAry);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        MyStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            EditText lv = (EditText) findViewById(R.id.EmailET);
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent clickStall = new Intent(view.getContext(), EditStall.class);
+                Stalls entry = (Stalls) MyStalls.getItemAtPosition(position);
+                clickStall.putExtra("entry", entry);
+                clickStall.putExtra("id", position);
+                startActivity(clickStall);
+                myAdapter.notifyDataSetChanged();
+            }
+        });
+        myAdapter = new AdapterEditStall(this, R.layout.account_stalls, StallAry);
+        MyStalls.setAdapter(myAdapter);
     }
     @Override
     protected void onStart(){
@@ -45,26 +78,25 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     public void adapterClickUserName(View view){
-            ElasticSearchCtr.GetAccount executeAccount = new ElasticSearchCtr.GetAccount();
-            Intent newIntent= null;
+            /*ElasticSearchCtr.GetAccount executeAccount = new ElasticSearchCtr.GetAccount();
             Account newAccount = null;
             TextView temp = (TextView)view.findViewById(R.id.StallNameEditStallV);
-            try {
-                newAccount = executeAccount.execute(temp.getText().toString()).get();
+           try {
+               newAccount = executeAccount.execute(temp.getText().toString()).get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
-            }finally {
-                newIntent = new Intent(this, ViewProfile.class);
-                newIntent.putExtra("account", newAccount);
+            }finally {*/
+                Intent newIntent = new Intent(this, ViewProfile.class);
+                //newIntent.putExtra("account", newAccount);
                 startActivity(newIntent);
-            }
+            //}
     }
 
     /**
      * If the user hits the add button
-     * @param view
+     * .@param view
      */
     public void addStall(View view){
         Intent intent = new Intent(this,AddStall.class);
@@ -74,7 +106,7 @@ public class AccountActivity extends AppCompatActivity {
 
     /**
      * If the user hits the profile button
-     * @param view
+     * .@param view
      */
     public void profile(View view){
         Intent intent = new Intent(this,Profile.class);
@@ -87,16 +119,18 @@ public class AccountActivity extends AppCompatActivity {
      */
     public void update(){
         account = CurrentAccount.getAccount();
-        ArrayList<Stalls>StallAry = new ArrayList<>();
         String email = account.getEmail();
         ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
+        String[]temp = new String[2];
+        temp[0]=email;
+        temp[1]="Owner";
         try {
             //Here it sets up the String[] needed for searching
-            String[]temp = new String[2];
-            temp[0]=email;
-            temp[1]="Owner";
+            ArrayList<Stalls>tempAry = new ArrayList<>();
             getStall.execute(temp);
-            StallAry = getStall.get();
+            tempAry = getStall.get();
+            StallAry.clear();
+            StallAry.addAll(tempAry);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -113,7 +147,7 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(clickStall);
             }
         });
-        MyStalls.setAdapter(new AdapterEditStall(this, R.layout.account_stalls, StallAry));
+        myAdapter.notifyDataSetChanged();
         Button profileButton = (Button) findViewById(R.id.ProfileBtn);
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override

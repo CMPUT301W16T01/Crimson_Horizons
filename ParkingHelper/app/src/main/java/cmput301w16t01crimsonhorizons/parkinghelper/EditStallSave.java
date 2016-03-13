@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
  * a list of stalls.
  */
 public class EditStallSave extends Commands {
-    private Stalls stall;
+    protected Stalls stall;
     public EditStallSave(){};
     public EditStallSave( Stalls stall){
         this.stall=stall;

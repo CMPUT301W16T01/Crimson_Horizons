@@ -25,4 +25,8 @@ public class BidsForStall extends AppCompatActivity {
                 all));
     }
 
+    public void declineBid(View view){
+
+    }
+
 }

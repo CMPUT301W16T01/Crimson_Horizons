@@ -1,6 +1,7 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import io.searchbox.annotations.JestId;
 
@@ -14,9 +15,18 @@ public class Account implements Serializable{
     private String Email;
     private String CellPhone;
     private String WorkPhone;
+    private ArrayList<String> notifications;
 
     @JestId
     protected String id;
+
+    public ArrayList<String> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(ArrayList<String> notifications) {
+        this.notifications = notifications;
+    }
 
     public Account(String email, String cellPhone, String workPhone) {
         Email = email;

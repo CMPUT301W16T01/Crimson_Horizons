@@ -45,7 +45,7 @@ public class BidStall extends AppCompatActivity {
      * It will do a check to make sure the user's bid is higher than highest bid
      * If so, it will modify.
      * After each action, there will be a message to display what was done.
-     * @param view
+     * .@param view
      */
     public void BidStall(View view){
         Account account = CurrentAccount.getAccount();

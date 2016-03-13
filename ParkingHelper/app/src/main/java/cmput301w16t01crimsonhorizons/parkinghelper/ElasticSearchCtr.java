@@ -33,7 +33,7 @@ public class ElasticSearchCtr{
     public static class GetAccount extends AsyncTask<String, Void,Account>{
         /**
          * This is what will be excuted in a different thread
-         * @param search_string
+         * .@param search_string
          * @return Account object will be returned
          */
         @Override
@@ -68,7 +68,7 @@ public class ElasticSearchCtr{
         @Override
         /**
          * @return returns a list of stall and takes in a String[] to search
-         * @param search_string, it is a String[]. String[1] is the field and String[0] is what it
+         * .@param search_string, it is a String[]. String[1] is the field and String[0] is what it
          *                       wants to match
          */
         protected ArrayList<Stalls> doInBackground(String... search_string) {
@@ -99,7 +99,7 @@ public class ElasticSearchCtr{
     /**
      * This search specifically for BidStall
      */
-public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
+    public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
         @Override
         /**
          * This is similar to GetStall
@@ -111,10 +111,12 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
             //start initial array list empty.
             String query = "{" +
                     "    \"query\": {" +
-                    "        \"match\" :{ \""+ search_string[1] +"\":" + "\""+search_string[0]+ "\""+
-                    search_string[3] +"\":" + "\""+search_string[2]+ "\""+
-                    "    }" +
-                    "}}";
+		    "      \"bool\": {" +
+		    "        \"must\": " +
+                    "      {  \"match\" :{ \""+ search_string[1] +"\":" + "\""+search_string[0]+ "\" }},"+
+                    "        \"must\": " +
+                    "      { \"range\": { \""+ search_string[3] +"\": " + "{\"gt\": " + "\""+search_string[2]+ "\" }}}"+
+                    "}}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
@@ -145,25 +147,19 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
         @Override
         protected Boolean doInBackground(Account... newAccount) {
             verifyClient();
-            /*verifyUserName verifyUserName = new verifyUserName();
-            final ElasticSearchCtr.verifyUserName execute = new verifyUserName();
+            Index index = new Index.Builder(newAccount[0]).index("t01").type("user_database").build();
             try {
-                //noinspection ResourceType
-                if(!execute.execute(newAccount[0].getEmail()).get()) {*/
-
-                    Index index = new Index.Builder(newAccount[0]).index("t01").type("user_database").build();
-                    try {
-                        DocumentResult result = client.execute(index);
-                        if (result.isSucceeded()) {
-                            //Set the ID to newAccount that elasticsearch told me it was
-                            newAccount[0].setId(result.getId());
-                            return Boolean.TRUE;
-                        } else {
-                            return Boolean.FALSE;
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                DocumentResult result = client.execute(index);
+                if (result.isSucceeded()) {
+                    //Set the ID to newAccount that elasticsearch told me it was
+                    newAccount[0].setId(result.getId());
+                    return Boolean.TRUE;
+                } else {
+                    return Boolean.FALSE;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             /*    }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -303,7 +299,7 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
 
     /**
      * This checks if an account is valid
-     * @param search_string this is the email
+     * .@param search_string this is the email
      * @return boolean
      */
     public static Boolean CheckAccount(String search_string){
@@ -358,15 +354,18 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
         }
     }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 4b4e88112a600f2aa051d21f960fafb856823308
     /**
      * This class creates a stall
      */
     public static class MakeStall extends AsyncTask<Stalls, Void, Void>{
         /**
          *
-         * @param stalls stalls to be stored
+         * .@param stalls stalls to be stored
          * @return nothing
          */
         @Override
@@ -398,7 +397,7 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
     public static class updateStallES extends AsyncTask<Stalls,Void,Boolean>{
         /**
          *
-         * @param stall stall with the new information
+         * .@param stall stall with the new information
          * @return boolean depending if it is successful or not.
          */
         @Override
@@ -436,7 +435,7 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
     public static class DeleteStall extends AsyncTask<Stalls,Void,Boolean>{
         /**
          *
-         * @param stall stall to be deleted
+         * .@param stall stall to be deleted
          * @return boolean depending on success
          */
         @Override
@@ -517,7 +516,6 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
         }
     }
     //Helper function
-
     public static void verifyClient(){
         //verify that "client" exists and if it does not make it.
         //This had to be done the other functions anyway. Just make a helper function.

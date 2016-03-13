@@ -1,14 +1,11 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.util.ArrayList;
+import android.view.View;
 
 /**
  * This is where the user can sign up or login.
@@ -20,26 +17,28 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         //Here is to create database with one thing.
-/*        Account a1 = new Account("ABC","123456","workphone");
-        AsyncTask<Account, Void, Void> execute = new ElasticSearchCtr.MakeAccount().execute(a1);
+/*
+        Account a1 = new Account("ABC","123456","workphone");
+        AsyncTask<Account, Void, Boolean> execute = new ElasticSearchCtr.addUser().execute(a1);
         setResult(RESULT_OK);
         Account a2 = new Account("123@123","123456","workphone");
-        AsyncTask<Account, Void, Void> execute2 = new ElasticSearchCtr.MakeAccount().execute(a2);
+        AsyncTask<Account, Void, Boolean> execute2 = new ElasticSearchCtr.addUser().execute(a2);
         setResult(RESULT_OK);
+*/
 
-        Stalls s1 = new Stalls();
-        s1.setOwner("ABC");
-        s1.setStatus("Borrowed");
-        s1.setDescription("the first stall owned by ABC");
+/*        Stalls s1 = new Stalls();
+        s1.setOwner("123@123");
+        s1.setStatus("Available");
+        s1.setDescription("the first stall owned by 123@123");
         AsyncTask<Stalls, Void, Void> s1execute = new ElasticSearchCtr.MakeStall().execute(s1);
         setResult(RESULT_OK);
         Stalls s2 = new Stalls();
         s2.setOwner("123@123");
-        s2.setStatus("Borrowed");
-        s2.setDescription("the first stall owned by 123@123");
+        s2.setStatus("Available");
+        s2.setDescription("the second stall owned by 123@123");
         AsyncTask<Stalls, Void, Void> s2execute = new ElasticSearchCtr.MakeStall().execute(s2);
-        setResult(RESULT_OK);
-
+        setResult(RESULT_OK);*/
+/*
         Stalls s3 = new Stalls();
         s3.setOwner("ABC");
         s3.setStatus("Available");

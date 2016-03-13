@@ -1,8 +1,9 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
-import android.os.Parcelable;
+import android.media.Image;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import io.searchbox.annotations.JestId;
 
@@ -18,6 +19,26 @@ public class Stalls implements Serializable{
     private String Status = "";
     private Double BidAmt = 0.00;
     private String Bidder = "";
+    //// TODO: 3/10/2016 MAKE THE IMAGE STORE PROPERLY
+    private String image;
+    ArrayList<Stalls>LstBidders = new ArrayList<>();
+
+    public ArrayList<Stalls> getLstBidders() {
+        return LstBidders;
+    }
+
+    public void setLstBidders(ArrayList<Stalls> lstBidders) {
+        LstBidders = lstBidders;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @JestId
     private String StallID;
 

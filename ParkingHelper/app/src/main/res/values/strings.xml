@@ -36,4 +36,5 @@
     <string name="title_activity_bid_stall">BidStall</string>
     <string name="title_activity_edit_stall_for_test">EditStallForTest</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_edit_stall_for_testing">EditStallForTesting</string>
 </resources>

@@ -56,7 +56,7 @@ public class EditStall extends AppCompatActivity {
     /**
      * Once the user finish entering information and hit save, it will obtain all information
      * update the information with the stall object then call the command object to update it.
-     * @param view
+     * .@param view
      */
     public void saveStallInformation(View view){
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
@@ -91,6 +91,9 @@ public class EditStall extends AppCompatActivity {
         }
     }
 
+    public void takePicture(View view){
+        Intent intent = new Intent();
+    }
     /**
      * called by Model classes of when to update this information.
      */

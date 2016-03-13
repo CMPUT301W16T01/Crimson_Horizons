@@ -47,7 +47,7 @@ public class HomepageActivity extends AppCompatActivity {
      * This will create intent with the current account and start that intent
      * Same is done for other button clicks
      *
-     * @param view
+     * .@param view
      */
     public void clickAccount(View view){
         //Intent intent = new Intent(this, Profile.class);
@@ -58,7 +58,7 @@ public class HomepageActivity extends AppCompatActivity {
 
     /**
      * @see this.clickAccount()
-     * @param view
+     * .@param view
      */
     public void clickSearch(View view){
         Intent intent = new Intent(this, Search.class);
@@ -68,7 +68,7 @@ public class HomepageActivity extends AppCompatActivity {
 
     /**
      * @see this.clickAccount()
-     * @param view
+     * .@param view
      */
     public void clickBidsOnStall(View view){
         Intent intent = new Intent(this, OwnStallsWithBidsActivity.class);
@@ -77,7 +77,7 @@ public class HomepageActivity extends AppCompatActivity {
 
     /**
      * @see this.clickAccount()
-     * @param view
+     * .@param view
      */
     public void clickYourBids(View view){
         Intent intent = new Intent(this,Results.class);

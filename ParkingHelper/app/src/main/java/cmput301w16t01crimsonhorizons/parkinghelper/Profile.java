@@ -1,11 +1,9 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -25,7 +23,7 @@ import java.util.concurrent.ExecutionException;
  *
  * @author Aaron Schuman
  */
-public class Profile extends AppCompatActivity {
+public class    Profile extends AppCompatActivity {
     private String ProfileOriginalEmail;
     private EditText ProfileEmailET;
     private EditText ProfileCellPhoneET;
@@ -36,8 +34,8 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_profile);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
 
         //needs to display the user's current data
 
@@ -61,15 +59,23 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        //<updateUserClass, verifyUserNameClass>
         Button saveButton = (Button) findViewById(R.id.SaveInProfileBtn);
+        final Class<ElasticSearchCtr.updateUser> updateUserClass = ElasticSearchCtr.updateUser.class;
+        final Class<ElasticSearchCtr.verifyUserName> verifyUserNameClass = ElasticSearchCtr.verifyUserName.class;
         saveButton.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
-                save();
+                ElasticSearchCtr.updateUser typeB =new ElasticSearchCtr.updateUser();
+                ElasticSearchCtr.verifyUserName typeA = new ElasticSearchCtr.verifyUserName();
+                save(typeA, typeB);
             }
         });
 
 
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,13 +84,13 @@ public class Profile extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
     }
 
 
     /**
      * Changes the current activity to the notification activity
-     * @param ()
+     * .@param ()
      * @return null
      */
     public void notifications(){
@@ -94,14 +100,18 @@ public class Profile extends AppCompatActivity {
 
     /**
      * Sets the user's profile info to the editText typed into the various fields
-     * @param ()
+     * .@param ()
      * @return null
      * if the elastic search finds that <code>ProfileEmailET</code> already exists in the database
      */
-    public void save(){
+    public <elasticVerify extends AsyncTask<String, Void, Boolean>, elasticUpdate extends AsyncTask<Account, Void, Boolean>> void save(elasticVerify typeA, elasticUpdate typeB){
 
-        final ElasticSearchCtr.verifyUserName executeVerify = new ElasticSearchCtr.verifyUserName();
-        final ElasticSearchCtr.updateUser executeUpdate = new ElasticSearchCtr.updateUser();
+        userAccount = CurrentAccount.getAccount();
+
+        final elasticVerify executeVerify = typeA;// = new elasticVerify();
+        final elasticUpdate executeUpdate = typeB;
+        //final ElasticSearchCtr.verifyUserName executeVerify = new ElasticSearchCtr.verifyUserName();
+        //final ElasticSearchCtr.updateUser executeUpdate = new ElasticSearchCtr.updateUser();
         String Temp = ProfileEmailET.getText().toString();
 
         try {
@@ -126,8 +136,7 @@ public class Profile extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent(this, Profile.class);
-        startActivity(intent);
+
     }
 
 }
