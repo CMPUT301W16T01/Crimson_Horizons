@@ -63,8 +63,6 @@ public class    Profile extends AppCompatActivity {
 
         //<updateUserClass, verifyUserNameClass>
         Button saveButton = (Button) findViewById(R.id.SaveInProfileBtn);
-        final Class<ElasticSearchCtr.updateUser> updateUserClass = ElasticSearchCtr.updateUser.class;
-        final Class<ElasticSearchCtr.verifyUserName> verifyUserNameClass = ElasticSearchCtr.verifyUserName.class;
         saveButton.setOnClickListener(new View.OnClickListener() {
 
 

@@ -25,7 +25,7 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.content_search);
         Result = (ListView)findViewById(R.id.ResultLv);
         searchBtn = (Button)findViewById(R.id.SearchBtn);
         searchBox = (EditText)findViewById(R.id.query);
@@ -99,6 +99,13 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
         updateView(new EditStallSave());
 
     }
+
+    public void adapterClickUserName(View view){
+        ClickUserName clickUserName = new ClickUserName();
+        Intent newIntent = clickUserName.clickUserName(this, view);
+        startActivity(newIntent);
+    }
+
     @Override
     public void updateView(Commands model) {
         ArrayList<Stalls>temp=new ArrayList<>();

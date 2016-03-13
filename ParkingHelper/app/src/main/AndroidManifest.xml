@@ -61,6 +61,15 @@
                 android:value="cmput301w16t01crimsonhorizons.parkinghelper.HomepageActivity" />
         </activity>
         <activity
+            android:name=".ViewProfile"
+            android:label="@string/title_activity_view_profile"
+            android:parentActivityName=".AccountActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cmput301w16t01crimsonhorizons.parkinghelper.AccountActivity" />
+        </activity>
+        <activity
             android:name=".Search"
             android:label="@string/title_activity_search"
             android:parentActivityName=".HomepageActivity"

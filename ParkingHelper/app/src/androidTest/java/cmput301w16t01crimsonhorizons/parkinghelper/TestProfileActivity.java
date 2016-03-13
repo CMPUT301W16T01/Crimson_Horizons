@@ -24,11 +24,12 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
     public void testModifyAccount(){
         ElasticSearchForTest.addUser executeAdd = new ElasticSearchForTest.addUser();
 
-        ElasticSearchCtr.addUser executeAdd2 = new ElasticSearchCtr.addUser();
-        ElasticSearchCtr.deleteUser executeDelete = new ElasticSearchCtr.deleteUser();
-        ElasticSearchCtr.deleteUser executeDelete2 = new ElasticSearchCtr.deleteUser();
-        ElasticSearchCtr.verifyUserName executeVerify = new ElasticSearchCtr.verifyUserName();
-        ElasticSearchCtr.GetAccount executeGet = new ElasticSearchCtr.GetAccount();
+        ElasticSearchForTest.addUser executeAdd2 = new ElasticSearchForTest.addUser();
+        ElasticSearchForTest.deleteUser executeDelete = new ElasticSearchForTest.deleteUser();
+        ElasticSearchForTest.deleteUser executeDelete2 = new ElasticSearchForTest.deleteUser();
+        ElasticSearchForTest.verifyUserName executeVerify = new ElasticSearchForTest.verifyUserName();
+        ElasticSearchForTest.verifyUserName executeVerify2 = new ElasticSearchForTest.verifyUserName();
+        ElasticSearchForTest.GetAccount executeGet = new ElasticSearchForTest.GetAccount();
 
         Account account1 = new Account();
 
@@ -62,11 +63,13 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
         newEmail.setText("__test1.1");
 
 
-        profile.findViewById(R.id.SaveInProfileBtn).performClick();
+        profile.save(new ElasticSearchForTest.verifyUserName(), new ElasticSearchForTest.updateUser());
+        String temp = account1.getEmail();
+        Boolean status;
 
-        while(account1.getEmail() != "__test1.1"){ }
+        while(!account1.getEmail().matches("__test1.1")){}
         assertFalse(executeVerify.execute("__test1_").get());
-        assertTrue(executeVerify.execute("__test1.1").get());
+        assertTrue(executeVerify2.execute("__test1.1").get());
 
        newEmail.setText("__test2");
 

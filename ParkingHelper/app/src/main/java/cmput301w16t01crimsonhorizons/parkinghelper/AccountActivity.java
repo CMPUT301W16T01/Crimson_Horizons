@@ -76,23 +76,9 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     public void adapterClickUserName(View view){
-
-            /*ElasticSearchCtr.GetAccount executeAccount = new ElasticSearchCtr.GetAccount();
-            Account newAccount = null;
-            TextView temp = (TextView)view.findViewById(R.id.StallNameEditStallV);
-           try {
-               newAccount = executeAccount.execute(temp.getText().toString()).get();
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-
-            }finally {*/
-                Intent newIntent = new Intent(this, ViewProfile.class);
-                //newIntent.putExtra("account", newAccount);
-                startActivity(newIntent);
-            //}
+        ClickUserName clickUserName = new ClickUserName();
+        Intent newIntent = clickUserName.clickUserName(this, view);
+        startActivity(newIntent);
     }
 
     /**
