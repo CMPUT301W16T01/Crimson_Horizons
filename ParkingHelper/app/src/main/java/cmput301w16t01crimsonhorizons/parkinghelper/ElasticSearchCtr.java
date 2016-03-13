@@ -27,9 +27,6 @@ import io.searchbox.core.Update;
 public class ElasticSearchCtr{
     private static JestDroidClient client;
 
-    /**
-     * This is static class searches the user_database to get the user with the appropriate emai
-     */
     public static class GetAccount extends AsyncTask<String, Void,Account>{
         /**
          * This is what will be excuted in a different thread
@@ -61,9 +58,6 @@ public class ElasticSearchCtr{
         }
     }
 
-    /**
-     * This class retrieves stalls with the matching field from stall_database
-     */
     public static class GetStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
         @Override
         /**
@@ -94,15 +88,8 @@ public class ElasticSearchCtr{
         }
     }
 
-    /**
-     * This search specifically for BidStall
-     */
     public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
         @Override
-        /**
-         * This is similar to GetStall
-         * @see cmput301w16t01crimsonhorizons.parkinghelper.ElasticSearchCtr.GetStall
-         */
         protected ArrayList<Stalls> doInBackground(String... search_string) {
             verifyClient();
             ArrayList<Stalls> AllStall = new ArrayList<>();
@@ -126,16 +113,6 @@ public class ElasticSearchCtr{
         }
     }
 
-    /**
-     * Adds an Account to the database, An account consists of
-     * three fields, <code>email</code>, <code>work phone number</code>, and
-     * <code>cellphone number</code>.
-     *
-     *.@param Account   the account to be added to the database
-     * @return Boolean TRUE if the account was added and FALSE if it was not. A null is returned
-     * in the event of unforeseeable error.
-     * @see Account#Account()
-     */
     public static class addUser extends AsyncTask<Account, Void, Boolean>  {
         @Override
         protected Boolean doInBackground(Account... newAccount) {
@@ -165,17 +142,6 @@ public class ElasticSearchCtr{
 
     }
 
-    /**
-     * Deletes an Account from the database. An account consists of
-     * three fields, <code>email</code>, <code>work phone number</code>, and
-     * <code>cellphone number</code>.
-     *
-     *.@param Account   the account to be deleted.
-     * @return Boolean TRUE if the account was deleted and FALSE if the account could not be found.
-     * In the case of an unforeseeable error an null is returned.
-     * @see Account#Account()
-     *
-     */
     public static class deleteUser extends AsyncTask<Account, Void, Boolean> {
 
         @Override
@@ -206,15 +172,6 @@ public class ElasticSearchCtr{
 
     }
 
-    /**
-     * Updates the values associated to with the account. An account consists of
-     * three fields, <code>email</code>, <code>work phone number</code>, and
-     * <code>cellphone number</code>.
-     *
-     *.@param Account   the account to be updated
-     * @return Boolean  TRUE if the account was updated, FALSE if it was not updated or was found
-     * @see Account#Account()
-     */
     public static class updateUser extends AsyncTask<Account, Void, Boolean>  {
 
 
@@ -242,15 +199,7 @@ public class ElasticSearchCtr{
 
     }
 
-    /**
-     * Searches the database for accounts to see if there exists with the given username. An
-     * account consists of three fields, <code>email</code>, <code>work phone number</code>, and
-     * <code>cellphone number</code>.
-     *
-     *.@param String the username to search for
-     * @return Boolean True if the username is in use FALSE if it is not. In the case of an
-     * unforeseeable error an null is returned.
-     */
+
     public static class verifyUserName extends AsyncTask<String, Void, Boolean >{
 
 
@@ -322,30 +271,6 @@ public class ElasticSearchCtr{
         return value;
     }
 
-    public static class MakeAccount extends AsyncTask<Account, Void, Void>{
-
-        @Override
-        protected Void doInBackground(Account... accounts) {
-            verifyClient();
-            //Since AsyncTasks work on arrays, we need to work with arrays as well
-            for (int i = 0; i < accounts.length; i++){
-                Account account = accounts[i];
-                Index index = new Index.Builder(account).index("t01").type("user_database").build();
-                try {
-                    DocumentResult result = client.execute(index);
-                    if (result.isSucceeded()){
-                        //Set Id for tweet, can find and edit in elastic search
-                        account.setId(result.getId());
-                    }
-                    //Can also use get id,get index,get type
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-            return null;
-        }
-    }
 
     /**
      * This class creates a stall
@@ -379,9 +304,7 @@ public class ElasticSearchCtr{
         }
     }
 
-    /**
-     * Updates exisiting stall with all info
-     */
+
     public static class updateStallES extends AsyncTask<Stalls,Void,Boolean>{
         /**
          *
@@ -417,9 +340,7 @@ public class ElasticSearchCtr{
         }
     }
 
-    /**
-     * Delete existing stall
-     */
+
     public static class DeleteStall extends AsyncTask<Stalls,Void,Boolean>{
         /**
          *
@@ -447,9 +368,6 @@ public class ElasticSearchCtr{
         }
     }
 
-    /**
-     * Helper function
-     */
 
     public static class SearchDataBaseTask extends AsyncTask<String, Void, ArrayList<Stalls>> {
         @Override

@@ -20,6 +20,7 @@ public class Stalls implements Serializable{
     private Double BidAmt = 0.00;
     private String Bidder = "";
     private String Borrower = "";
+    ArrayList<String>LstBidders = new ArrayList<>();
     //// TODO: 3/10/2016 MAKE THE IMAGE STORE PROPERLY
     private String image;
 
@@ -30,7 +31,6 @@ public class Stalls implements Serializable{
         Borrower = borrower;
     }
 
-    ArrayList<String>LstBidders = new ArrayList<>();
 
     public ArrayList<String > getLstBidders() {
         return LstBidders;

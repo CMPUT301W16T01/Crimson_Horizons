@@ -43,9 +43,6 @@ public class AdapterEditStall extends ArrayAdapter<Stalls>{
         return convertView;
     }
 
-    /**
-     * Inner class so just to keep a nice place to hold all th eneeded views/buttons
-     */
     public class EditStallViewHolder {
         TextView Name;
         TextView Status;

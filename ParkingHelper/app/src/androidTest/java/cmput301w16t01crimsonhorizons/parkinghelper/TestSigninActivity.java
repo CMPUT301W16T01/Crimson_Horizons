@@ -11,7 +11,6 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by schuman on 3/10/16.
- *
  */
 public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
     public TestSigninActivity() {

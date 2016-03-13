@@ -88,10 +88,6 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
         updateView(command);
 
     }
-    public void clickSearch(View view){
-        // TODO: 2/15/2016 Fill in what happens when search is hit again
-
-    }
     @Override
     public void updateView(Commands model) {
         String[] GetAvailable= new String[2];

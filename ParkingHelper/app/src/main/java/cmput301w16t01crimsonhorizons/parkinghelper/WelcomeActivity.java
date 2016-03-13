@@ -31,8 +31,8 @@ public class WelcomeActivity extends AppCompatActivity {
         s1.setStatus("Available");
         s1.setDescription("the first stall owned by 123@123");
         AsyncTask<Stalls, Void, Void> s1execute = new ElasticSearchCtr.MakeStall().execute(s1);
-        setResult(RESULT_OK);
-        Stalls s2 = new Stalls();
+        setResult(RESULT_OK);*/
+/*        Stalls s2 = new Stalls();
         s2.setOwner("123@123");
         s2.setStatus("Available");
         s2.setDescription("the second stall owned by 123@123");

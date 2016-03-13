@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -17,12 +18,6 @@ import java.util.concurrent.ExecutionException;
  * This is where it will display all the stalls the user owns.
  */
 public class AccountActivity extends AppCompatActivity {
-    /**
-     * This are the variables that exists in this activity
-     * MyStall is the listview for all stalls
-     * Intent contains the email
-     * Account is the current account for user.
-     */
     private ListView MyStalls;
     private Account account;
     AdapterEditStall myAdapter;
@@ -117,9 +112,6 @@ public class AccountActivity extends AppCompatActivity {
         this.update();
     }
 
-    /**
-     * This is to conform with MVC. It will be called when it needs to update it self.
-     */
     public void update(){
         account = CurrentAccount.getAccount();
         String email = account.getEmail();

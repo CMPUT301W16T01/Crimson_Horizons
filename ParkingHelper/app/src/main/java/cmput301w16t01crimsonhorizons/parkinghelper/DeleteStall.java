@@ -16,9 +16,6 @@ public class DeleteStall extends Commands {
     }
 
     @Override
-    /**
-     * on execute, it will use ElasticSearchCtr to delete the stall and will return true/false
-     */
     public Boolean execute() {
         Boolean check = false;
         ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
@@ -33,9 +30,6 @@ public class DeleteStall extends Commands {
         return check;
     }
 
-    /**
-     * Implemented if it is undoable, in this case it is not.
-     */
     @Override
     public void unexecute() {
 

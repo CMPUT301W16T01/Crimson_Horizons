@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * This is part of command pattern
  * So we can manage undo/redo as well as offline behaviour
  *
- * This is the supre class. It contains some methods that currently does nothing, and if the
+ * This is the super class. It contains some methods that currently does nothing, and if the
  * child class needs to use it must override.
  * Not all child class will use all methods, but all abstract methods must exist.
  */
