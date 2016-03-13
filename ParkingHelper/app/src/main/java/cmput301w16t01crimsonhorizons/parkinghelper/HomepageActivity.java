@@ -85,4 +85,10 @@ public class HomepageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void clickBorrowing(View view){
+        Intent intent = new Intent(this,BorrowedStalls.class);
+        intent.putExtra("email",email);
+        startActivity(intent);
+    }
+
 }

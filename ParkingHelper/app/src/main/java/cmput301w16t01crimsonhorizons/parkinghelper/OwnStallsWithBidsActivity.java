@@ -27,6 +27,7 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
         ElasticSearchCtr.GetBidStall getBidStall = new ElasticSearchCtr.GetBidStall();
         String[]temp = new String[4];
         temp[0]=email;
+        temp[1]="Owner";
         try {
             ArrayList<Stalls>tempAry = new ArrayList<>();
             getBidStall.execute(temp);

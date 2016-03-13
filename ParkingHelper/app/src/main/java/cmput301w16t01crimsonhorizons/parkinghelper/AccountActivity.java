@@ -31,13 +31,20 @@ public class AccountActivity extends AppCompatActivity {
         account = CurrentAccount.getAccount();
         MyStalls = (ListView)findViewById(R.id.OwnStalls);
         String email = account.getEmail();
+
+        myAdapter = new AdapterEditStall(this, R.layout.account_stalls, StallAry);
+        MyStalls.setAdapter(myAdapter);
+
         ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
         temp[0]=email;
         temp[1]="Owner";
         try {
             //Here it sets up the String[] needed for searching
             getStall.execute(temp);
-            StallAry = getStall.get();
+            ArrayList tmp = getStall.get();
+            StallAry.clear();
+            StallAry.addAll(tmp);
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -57,13 +64,7 @@ public class AccountActivity extends AppCompatActivity {
                 myAdapter.notifyDataSetChanged();
             }
         });
-        myAdapter = new AdapterEditStall(this, R.layout.account_stalls, StallAry);
-        MyStalls.setAdapter(myAdapter);
-        int i =2;
-        while (i>0) {
-            this.update();
-            i = i - 1;
-        }
+        myAdapter.notifyDataSetChanged();
     }
     @Override
     protected void onStart(){

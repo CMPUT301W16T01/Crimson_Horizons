@@ -7,17 +7,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Kevin L on 2/29/2016.
- *
- * This is the adapter needed to display the list of stalls with the proper format
- * @see CustomLstAdapter This is similar.
+ * Created by Kevin L on 3/12/2016.
  */
-public class AdapterEditStall extends ArrayAdapter<Stalls>{
+public class BorrowedStallAdapter extends ArrayAdapter<Stalls> {
     private int Layout;
-    public AdapterEditStall(Context context, int resource, List<Stalls> objects) {
+    public BorrowedStallAdapter(Context context, int resource, List<Stalls> objects) {
         super(context, resource, objects);
         Layout=resource;
     }
@@ -29,26 +27,20 @@ public class AdapterEditStall extends ArrayAdapter<Stalls>{
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(Layout,parent,false);
             EditStallViewHolder viewHolder = new EditStallViewHolder();
-            viewHolder.Name=(TextView)convertView.findViewById(R.id.StallNameEditStallV);
-            viewHolder.Description = (TextView)convertView.findViewById(R.id.DescriptionEditStallV);
-            viewHolder.Status = (TextView)convertView.findViewById(R.id.StatusEditStallV);
-            viewHolder.Name.setText(stall.getOwner());
-            viewHolder.Status.setText(stall.getStatus());
-            viewHolder.Description.setText(stall.getDescription());
+            viewHolder.Owner=(TextView)convertView.findViewById(R.id.OwnerBorrowedStall);
+            viewHolder.Description = (TextView)convertView.findViewById(R.id.DescriptionBorrowedStall);
             convertView.setTag(viewHolder);
         }
         else{
             mainHolder = (EditStallViewHolder)convertView.getTag();
-            mainHolder.Name.setText(stall.getOwner());
-            mainHolder.Status.setText(stall.getStatus());
+            mainHolder.Owner.setText(stall.getOwner());
             mainHolder.Description.setText(stall.getDescription());
         }
         return convertView;
     }
 
     public class EditStallViewHolder {
-        TextView Name;
-        TextView Status;
+        TextView Owner;
         TextView Description;
     }
 

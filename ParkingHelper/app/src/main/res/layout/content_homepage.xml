@@ -73,5 +73,6 @@
         android:text="Stalls Borrowing"
         android:id="@+id/BorrowingBtn"
         android:layout_below="@+id/LendingBtn"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="clickBorrowing"/>
 </RelativeLayout>
