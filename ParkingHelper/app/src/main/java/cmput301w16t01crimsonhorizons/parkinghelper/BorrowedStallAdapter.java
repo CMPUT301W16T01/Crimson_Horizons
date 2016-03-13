@@ -29,6 +29,8 @@ public class BorrowedStallAdapter extends ArrayAdapter<Stalls> {
             EditStallViewHolder viewHolder = new EditStallViewHolder();
             viewHolder.Owner=(TextView)convertView.findViewById(R.id.OwnerBorrowedStall);
             viewHolder.Description = (TextView)convertView.findViewById(R.id.DescriptionBorrowedStall);
+            viewHolder.Owner.setText(stall.getOwner());
+            viewHolder.Description.setText(stall.getDescription());
             convertView.setTag(viewHolder);
         }
         else{

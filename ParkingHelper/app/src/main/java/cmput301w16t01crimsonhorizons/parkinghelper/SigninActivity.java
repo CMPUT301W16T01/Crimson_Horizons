@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
@@ -107,6 +108,7 @@ public class SigninActivity extends AppCompatActivity {
                 startActivity(intent);
             } else {
                 //TODO: make it display a pop-up error informing the user that the username already exists
+                Toast.makeText(this, "The email was already taken, I think you can sign in with it", Toast.LENGTH_SHORT).show();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

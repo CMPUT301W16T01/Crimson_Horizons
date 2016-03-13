@@ -71,6 +71,7 @@ public class    Profile extends AppCompatActivity {
                 ElasticSearchCtr.updateUser typeB =new ElasticSearchCtr.updateUser();
                 ElasticSearchCtr.verifyUserName typeA = new ElasticSearchCtr.verifyUserName();
                 save(typeA, typeB);
+                finish();
             }
         });
 
@@ -117,7 +118,7 @@ public class    Profile extends AppCompatActivity {
 
         try {
             Boolean result = executeVerify.execute(ProfileEmailET.getText().toString()).get();
-            if (!result || ProfileEmailET.getText().toString() == ProfileOriginalEmail){
+            if (!result || ProfileEmailET.getText().toString().equals(ProfileOriginalEmail)){
                 //with current method ALL of the stalls will need to get updated too
                 /*if(executeDelete.execute(userAccount).get()) {
                     System.out.print("DELETED\n");
