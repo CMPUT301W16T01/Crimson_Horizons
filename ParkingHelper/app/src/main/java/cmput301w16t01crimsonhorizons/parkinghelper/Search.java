@@ -21,7 +21,7 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
     private Button searchBtn;
     private EditText searchBox;
     AdapterEditStall myAdapter;
-    String[] GetAvailable= new String[2];
+    String[] GetAvailable = new String[2];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,11 +29,13 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
         Result = (ListView)findViewById(R.id.ResultLv);
         searchBtn = (Button)findViewById(R.id.SearchBtn);
         searchBox = (EditText)findViewById(R.id.query);
+
         final EditStallSave command = new EditStallSave();
         command.addView(this);
         GetAvailable[0] = "Available";
         GetAvailable[1] = "Status";
         StallAry = command.UpdateStall(GetAvailable);
+
         searchBtn.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v) {

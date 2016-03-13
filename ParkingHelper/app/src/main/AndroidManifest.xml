@@ -115,7 +115,7 @@
                 android:value="cmput301w16t01crimsonhorizons.parkinghelper.AccountActivity" />
         </activity>
         <activity
-            android:name=".YourBids"
+            android:name=".Results"
             android:label="@string/title_activity_your_bids"
             android:parentActivityName=".HomepageActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -126,11 +126,11 @@
         <activity
             android:name=".EditBids"
             android:label="@string/title_activity_edit_bids"
-            android:parentActivityName=".YourBids"
+            android:parentActivityName=".Results"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="cmput301w16t01crimsonhorizons.parkinghelper.YourBids" />
+                android:value=".Results" />
         </activity>
         <activity
             android:name=".BidStall"

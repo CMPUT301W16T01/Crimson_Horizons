@@ -14,10 +14,11 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class YourBids extends AppCompatActivity {
+public class Results extends AppCompatActivity implements ViewInterface<Commands> {
     private ListView YourBids;
     private ArrayList<Stalls> userBids = new ArrayList<Stalls>();
-
+    private String[] GetAvailable = new String[2];
+    private AdapterEditStall myAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,34 +27,44 @@ public class YourBids extends AppCompatActivity {
         setContentView(R.layout.activity_your_bids);
         YourBids = (ListView)findViewById(R.id.YourBidsLv);
 
+        final EditStallSave command = new EditStallSave();
+        command.addView(this);
+
         Intent intent = getIntent();
-        email = intent.getStringExtra("account");
+        email = intent.getStringExtra("email");
+
+        GetAvailable[0] = email;
+        GetAvailable[1] = "Bidder";
+
+
+        myAdapter = new AdapterEditStall(this, R.layout.account_stalls, userBids);
+        YourBids.setAdapter(myAdapter);
+        this.updateView(command);
+
+
         ElasticSearchCtr.GetPendingStalls getPendingStalls =
                 new ElasticSearchCtr.GetPendingStalls();
         getPendingStalls.execute(email);
-
         try {
             userBids = getPendingStalls.get();
+            userBids.clear();
+            userBids = command.UpdateStall(GetAvailable);;
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
+        myAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onStart(){
         super.onStart();
-        //ArrayList<String> TempString = new ArrayList<>();
-        //TempString.add("first\n");
-        //TempString.add("second\n");
         YourBids.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent clickBids = new Intent(view.getContext(), EditBids.class);
-                //ArrayList<String> TempString = new ArrayList<>();
-                //TempString.add("first\n");
-                //TempString.add("second\n");
                 String entry;
                 entry = YourBids.getItemAtPosition(position).toString();
                 clickBids.putExtra("entry", entry);
@@ -62,10 +73,11 @@ public class YourBids extends AppCompatActivity {
                 startActivity(clickBids);
             }
         });
-        ArrayAdapter<Stalls> adapter = new ArrayAdapter<Stalls>(this,R.layout.own_stalls_with_bids,
-                userBids);
-        YourBids.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+
     }
 
+    @Override
+    public void updateView(Commands model) {
+
+    }
 }

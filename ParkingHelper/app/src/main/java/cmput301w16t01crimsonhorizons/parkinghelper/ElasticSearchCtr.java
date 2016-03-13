@@ -404,11 +404,10 @@ public class ElasticSearchCtr{
             //start initial array list empty.
             String query = "{" +
                     "    \"query\": {" +
-                    "        \"match\" :{ \"Email\":\"" + search_string[0]+ "\""+
-                    "                     \"status\": \"bidded\"" +
+                    "        \"match\" :{ \"Bidder\":\"" + search_string[0] + "\""+
                     "    }" +
                     "}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("stalls_database").build();
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
                 SearchResult execute = client.execute(search);
