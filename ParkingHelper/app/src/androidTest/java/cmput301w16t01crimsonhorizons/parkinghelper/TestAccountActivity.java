@@ -19,7 +19,6 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
 
 
     @UiThreadTest
-
     public void testClickUsername(){
         //TODO:create test users and test stalls. Delete after use.
         Account account1 = new Account();
@@ -27,18 +26,16 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         account1.setWorkPhone("1.1");
         account1.setCellPhone("1.2");
 
+        CurrentAccount.setAccount(account1);
+
         Intent intent = new Intent();
         setActivityIntent(intent);
         AccountActivity accountActivity = (AccountActivity) getActivity();
-
         ListView activities = (ListView) accountActivity.findViewById(R.id.OwnStalls);
 
-        //TODO: Figure out the alternative to this. Can't click on another view outside of the
-        //TODO: main view
-
-        View stallElement = activities.getChildAt(0);
-        View nameElement = stallElement.findViewById(R.id.StallNameEditStallV);
-        nameElement.performClick();
+        View stallElement = activities.findViewById(R.id.StallNameEditStallV);
+        //CHANGE
+        stallElement.performClick();
 
         View view = accountActivity.getWindow().getDecorView();
 

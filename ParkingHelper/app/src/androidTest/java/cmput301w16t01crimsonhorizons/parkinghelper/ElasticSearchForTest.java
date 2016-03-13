@@ -21,13 +21,13 @@ public class ElasticSearchForTest{
     /**
      * Created by Kevin L on 2/24/2016.
      * This is the main interface that uses JestDroid to access and modify data on elastic search.
-     * The elastic search database we use is http://cmput301.softwareprocess.es:8080/t01/schuman_database
+     * The elastic search database we use is http://cmput301.softwareprocess.es:8080/t01/crimson_database
      * and http://cmput301.softwareprocess.es:8080/t01/stall_database
      */
         private static JestDroidClient client;
 
         /**
-         * This is static class searches the schuman_database to get the user with the appropriate emai
+         * This is static class searches the crimson_database to get the user with the appropriate emai
          */
         public static class GetAccount extends AsyncTask<String, Void,Account> {
             /**
@@ -45,7 +45,7 @@ public class ElasticSearchForTest{
                         "        \"match\" :{ \"Email\":\"" + search_string[0]+ "\""+
                         "    }" +
                         "}}";
-                io.searchbox.core.Search search = new io.searchbox.core.Search.Builder(query).addIndex("t01").addType("schuman_database").build();
+                io.searchbox.core.Search search = new io.searchbox.core.Search.Builder(query).addIndex("t01").addType("crimson_database").build();
 
                 try {
                     SearchResult execute = client.execute(search);
@@ -152,7 +152,7 @@ public class ElasticSearchForTest{
                 //noinspection ResourceType
                 if(!execute.execute(newAccount[0].getEmail()).get()) {*/
 
-                Index index = new Index.Builder(newAccount[0]).index("t01").type("schuman_database").build();
+                Index index = new Index.Builder(newAccount[0]).index("t01").type("crimson_database").build();
                 try {
                     DocumentResult result = client.execute(index);
                     if (result.isSucceeded()) {
@@ -199,9 +199,9 @@ public class ElasticSearchForTest{
                 String deleteString = oldAccount[0].getEmail();
 
                 // curl -XDELETE https://path.to.elasticsearch/group/type/$id
-                // https://softwareprocess.es:9999/t01/schuman_database/my_schuman_id
+                // https://softwareprocess.es:9999/t01/crimson_database/my_crimson_id
                 //I am not quite sure how deletion works using android notation
-                Delete delete = new Delete.Builder(oldAccount[0].getId()).index("t01").type("schuman_database").build();
+                Delete delete = new Delete.Builder(oldAccount[0].getId()).index("t01").type("crimson_database").build();
                 try {
                     DocumentResult result = client.execute(delete);
                     if (result.isSucceeded()) {
@@ -237,7 +237,7 @@ public class ElasticSearchForTest{
             /*verifyUserName verifyUserName = new verifyUserName();
             if (verifyUserName.doInBackground(newAccount[0].getEmail())) {*/
 
-                Index index = new Index.Builder(newAccount[0]).index("t01").type("schuman_database").build();
+                Index index = new Index.Builder(newAccount[0]).index("t01").type("crimson_database").build();
                 try {
                     DocumentResult result = client.execute(index);
                     if (result.isSucceeded()) {
@@ -275,7 +275,7 @@ public class ElasticSearchForTest{
                         "    }" +
                         "}}";
                 //inaccurate search, most likely looks at all properties that contain that username.
-                io.searchbox.core.Search search = new io.searchbox.core.Search.Builder(query).addIndex("t01").addType("schuman_database").build();
+                io.searchbox.core.Search search = new io.searchbox.core.Search.Builder(query).addIndex("t01").addType("crimson_database").build();
 
                 try {
                     SearchResult execute = client.execute(search);
@@ -315,7 +315,7 @@ public class ElasticSearchForTest{
                     "        \"match\" :{ \"Email\":\"" + search_string+ "\""+
                     "    }" +
                     "}}";
-            io.searchbox.core.Search search = new io.searchbox.core.Search.Builder(query).addIndex("t01").addType("schuman_database").build();
+            io.searchbox.core.Search search = new io.searchbox.core.Search.Builder(query).addIndex("t01").addType("crimson_database").build();
             try {
                 SearchResult execute = client.execute(search);
                 if (execute.isSucceeded()){
@@ -342,7 +342,7 @@ public class ElasticSearchForTest{
                 //Since AsyncTasks work on arrays, we need to work with arrays as well
                 for (int i = 0; i < accounts.length; i++){
                     Account account = accounts[i];
-                    Index index = new Index.Builder(account).index("t01").type("schuman_database").build();
+                    Index index = new Index.Builder(account).index("t01").type("crimson_database").build();
                     try {
                         DocumentResult result = client.execute(index);
                         if (result.isSucceeded()){

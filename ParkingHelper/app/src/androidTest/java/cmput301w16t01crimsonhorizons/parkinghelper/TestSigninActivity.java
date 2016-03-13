@@ -35,7 +35,7 @@ public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
         SigninActivity signinActivity = (SigninActivity) getActivity();
 
         EditText EmailText = (EditText) signinActivity.findViewById(R.id.EmailEditTxt);
-        TextView WorkText = (TextView) signinActivity.findViewById(R.id.WorkPhoneText);
+        TextView WorkText = (TextView) signinActivity.findViewById(R.id.HomePhonEditTxt);
 
         EditText CellText = (EditText) signinActivity.findViewById(R.id.CellPhonEditTxt);
 
