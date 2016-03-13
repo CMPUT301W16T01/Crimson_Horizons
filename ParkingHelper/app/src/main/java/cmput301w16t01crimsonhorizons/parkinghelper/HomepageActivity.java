@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
  * @see AccountActivity
  * @see Search
  * @see BidStall
- * @see YourBids
+ * @see Results
  */
 
 public class HomepageActivity extends AppCompatActivity {
@@ -80,7 +80,7 @@ public class HomepageActivity extends AppCompatActivity {
      * @param view
      */
     public void clickYourBids(View view){
-        Intent intent = new Intent(this,YourBids.class);
+        Intent intent = new Intent(this,Results.class);
         //intent.putExtra("account", ACCOUNT);
         startActivity(intent);
     }

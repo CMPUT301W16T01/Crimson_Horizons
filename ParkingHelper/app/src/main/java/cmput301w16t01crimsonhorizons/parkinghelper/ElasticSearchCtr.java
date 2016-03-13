@@ -333,7 +333,6 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
         return value;
     }
 
-<<<<<<< HEAD
     public static class MakeAccount extends AsyncTask<Account, Void, Void>{
 
         @Override
@@ -360,8 +359,7 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
     }
 
 
-=======
->>>>>>> 69f2c19e79ee5af8fca40193f5d7aa4b3a22789e
+
     /**
      * This class creates a stall
      */
@@ -465,10 +463,6 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
     /**
      * Helper function
      */
-<<<<<<< HEAD
-    public static class SearchDataBaseTask extends AsyncTask<String, Void, ArrayList<Stalls>> {
-=======
->>>>>>> 69f2c19e79ee5af8fca40193f5d7aa4b3a22789e
 
     public static class SearchDataBaseTask extends AsyncTask<String, Void, ArrayList<Stalls>> {
         @Override
@@ -504,11 +498,10 @@ public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>
             //start initial array list empty.
             String query = "{" +
                     "    \"query\": {" +
-                    "        \"match\" :{ \"Email\":\"" + search_string[0]+ "\""+
-                    "                     \"status\": \"bidded\"" +
+                    "        \"match\" :{ \"Bidder\":\"" + "123@123"+ "\""+
                     "    }" +
                     "}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("stalls_database").build();
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
                 SearchResult execute = client.execute(search);
