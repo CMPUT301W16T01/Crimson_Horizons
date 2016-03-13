@@ -3,7 +3,10 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import android.test.UiThreadTest;
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 import android.test.ViewAsserts;
@@ -19,7 +22,10 @@ public class TestSearch extends ActivityInstrumentationTestCase2 {
     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     @UiThreadTest
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     public void testClickUsername(){

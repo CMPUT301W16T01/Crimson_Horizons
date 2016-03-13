@@ -1,8 +1,11 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Context;
+<<<<<<< Updated upstream
 import android.content.Intent;
 import android.os.Bundle;
+=======
+>>>>>>> Stashed changes
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

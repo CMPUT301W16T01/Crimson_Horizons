@@ -34,12 +34,21 @@ public class WelcomeActivity extends AppCompatActivity {
         setResult(RESULT_OK);*/
 /*        Stalls s2 = new Stalls();
         s2.setOwner("123@123");
+<<<<<<< Updated upstream
         s2.setStatus("Available");
         s2.setDescription("the second stall owned by 123@123");
         AsyncTask<Stalls, Void, Void> s2execute = new ElasticSearchCtr.MakeStall().execute(s2);
         setResult(RESULT_OK);*/
 /*
         Stalls s3 = new Stalls();
+=======
+        s2.setStatus("Borrowed");
+        s2.setDescription("the second stall owned by 123@123");
+        AsyncTask<Stalls, Void, Void> s2execute = new ElasticSearchCtr.MakeStall().execute(s2);
+        setResult(RESULT_OK);*/
+
+ /*       Stalls s3 = new Stalls();
+>>>>>>> Stashed changes
         s3.setOwner("ABC");
         s3.setStatus("Available");
         s3.setDescription("the seccond stall owned by ABC");

@@ -216,7 +216,7 @@ public class ElasticSearchCtr{
 
             try {
                 SearchResult execute = client.execute(search);
-                if(execute.isSucceeded()){
+                if(execute.isSucceeded()){  
 
                     Boolean returned_accounts = execute.getSourceAsObjectList(Account.class).isEmpty();
                     if(returned_accounts){

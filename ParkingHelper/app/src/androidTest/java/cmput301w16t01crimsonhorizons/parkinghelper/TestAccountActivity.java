@@ -2,7 +2,10 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+<<<<<<< Updated upstream
 import android.test.UiThreadTest;
+=======
+>>>>>>> Stashed changes
 import android.test.ViewAsserts;
 import android.view.View;
 import android.widget.ListView;
@@ -15,7 +18,10 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         super(AccountActivity.class);
     }
 
+<<<<<<< Updated upstream
     @UiThreadTest
+=======
+>>>>>>> Stashed changes
     public void testClickUsername(){
         //TODO:create test users and test stalls. Delete after use.
         Account account1 = new Account();
