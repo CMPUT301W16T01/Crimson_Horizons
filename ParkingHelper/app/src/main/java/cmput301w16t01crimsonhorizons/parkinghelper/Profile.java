@@ -37,6 +37,7 @@ public class    Profile extends AppCompatActivity {
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
 
+
         //needs to display the user's current data
 
         userAccount = CurrentAccount.getAccount();

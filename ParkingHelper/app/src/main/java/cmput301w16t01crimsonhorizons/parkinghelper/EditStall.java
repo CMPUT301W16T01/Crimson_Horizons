@@ -50,6 +50,7 @@ public class EditStall extends AppCompatActivity {
         this.update();
     }
 
+
     /**
      * Once the user finish entering information and hit save, it will obtain all information
      * update the information with the stall object then call the command object to update it.

@@ -280,6 +280,7 @@ public class ElasticSearchCtr{
          * .@param stalls stalls to be stored
          * @return nothing
          */
+
         @Override
         protected Void doInBackground(Stalls... stalls) {
             verifyClient();

@@ -2,6 +2,7 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+
 import android.test.UiThreadTest;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +18,9 @@ public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
         super(SigninActivity.class);
     }
 
+
     @UiThreadTest
+
     public void testSignup() {
         ElasticSearchCtr.verifyUserName executeVerify = new ElasticSearchCtr.verifyUserName();
         ElasticSearchCtr.GetAccount executeGet = new ElasticSearchCtr.GetAccount();
@@ -27,8 +30,10 @@ public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
         Intent intent = new Intent();
         setActivityIntent(intent);
         SigninActivity signinActivity = (SigninActivity) getActivity();
+
         EditText EmailText = (EditText) signinActivity.findViewById(R.id.EmailEditTxt);
         TextView WorkText = (TextView) signinActivity.findViewById(R.id.WorkPhoneText);
+
         EditText CellText = (EditText) signinActivity.findViewById(R.id.CellPhonEditTxt);
 
         EmailText.setText("__test1");
@@ -52,7 +57,9 @@ public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
         signinActivity = (SigninActivity) getActivity();
 
         EmailText = (EditText) signinActivity.findViewById(R.id.EmailEditTxt);
-        WorkText = (TextView) signinActivity.findViewById(R.id.WorkPhoneText);
+
+        WorkText = (EditText) signinActivity.findViewById(R.id.WorkPhoneText);
+
         CellText = (EditText) signinActivity.findViewById(R.id.CellPhonEditTxt);
 
         EmailText.setText("__test1");

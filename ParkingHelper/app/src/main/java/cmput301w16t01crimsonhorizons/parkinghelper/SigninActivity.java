@@ -85,7 +85,6 @@ public class SigninActivity extends AppCompatActivity {
         Intent intent = new Intent(this,WelcomeActivity.class);
         startActivity(intent);
     }
-
     /**
      * Assigns the values currently in the edit text to the account and then uses elastic search
      * to see if the email exists in the database. If there was no email then the activity changes
