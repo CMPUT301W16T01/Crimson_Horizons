@@ -1,6 +1,8 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import java.util.List;
  */
 public class CustomLstAdapter extends ArrayAdapter<String> {
     private int layout;
+    //Todo set what it takes in.
     public CustomLstAdapter(Context context, int resource, List<String> objects) {
         super(context, resource, objects);
         layout = resource;
@@ -32,33 +35,44 @@ public class CustomLstAdapter extends ArrayAdapter<String> {
         if (convertView == null){
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layout,parent,false);
-            MyViewHolder viewHolder = new MyViewHolder();
-            viewHolder.eachStallInfo=(TextView)convertView.findViewById(R.id.EachStallWithBids);
+            final MyViewHolder viewHolder = new MyViewHolder();
+            viewHolder.Bidder =(TextView)convertView.findViewById(R.id.BidderBFS);
+            viewHolder.BidAmt = (TextView)convertView.findViewById(R.id.BidAmtBFS);
             viewHolder.Accept = (Button)convertView.findViewById(R.id.AcceptBtn);
+            viewHolder.Accept.setTag(position);
             // TODO: 2/15/2016 Make the button do its job
             viewHolder.Accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String both = viewHolder.Bidder + " " + viewHolder.BidAmt.toString();
+                    BidsForStall bfs = new BidsForStall();
+                    bfs.acceptBid(both);
                     Toast.makeText(getContext(), "Accepted!!",Toast.LENGTH_SHORT).show();
                 }
             });
             viewHolder.Decline = (Button)convertView.findViewById(R.id.DeclineBtn);
+            viewHolder.Decline.setTag(position);
             viewHolder.Decline.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(),"Declined!!",Toast.LENGTH_SHORT).show();
+                    String both = viewHolder.Bidder + " " + viewHolder.BidAmt.toString();
+                    BidsForStall bfs = new BidsForStall();
+                    bfs.declineBid(both);
+                    Toast.makeText(getContext(), "Declined!!", Toast.LENGTH_SHORT).show();
                 }
             });
             convertView.setTag(viewHolder);
         }
         else{
+            //TODO SET THE STUFF FOR RIGHT DISPLAY
             mainHolder = (MyViewHolder)convertView.getTag();
-            mainHolder.eachStallInfo.setText(getItem(position));
+            mainHolder.Bidder.setText(getItem(position));
         }
         return convertView;
     }
     public class MyViewHolder {
-        TextView eachStallInfo;
+        TextView Bidder;
+        TextView BidAmt;
         Button Accept;
         Button Decline;
     }

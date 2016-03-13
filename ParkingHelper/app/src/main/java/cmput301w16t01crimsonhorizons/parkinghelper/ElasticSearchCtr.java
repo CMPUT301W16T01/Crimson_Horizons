@@ -75,11 +75,9 @@ public class ElasticSearchCtr{
             verifyClient();
             ArrayList<Stalls> AllStall = new ArrayList<>();
             //start initial array list empty.
-            String query = "{" +
-                    "    \"query\": {" +
-                    "        \"match\" :{ \""+ search_string[1] +"\":" + "\""+search_string[0]+ "\""+
-                    "    }" +
-                    "}}";
+            String query = "{" +"\"query\": {\"bool\": {\"should\":     { \"match\": "+
+                    "{ \"Status\": \"Available\" }}," +
+                    "\"should\" : {\"match\":{\"Status\": \"Bidded\" }}"+ "}}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
@@ -109,14 +107,9 @@ public class ElasticSearchCtr{
             verifyClient();
             ArrayList<Stalls> AllStall = new ArrayList<>();
             //start initial array list empty.
-            String query = "{" +
-                    "    \"query\": {" +
-		    "      \"bool\": {" +
-		    "        \"must\": " +
-                    "      {  \"match\" :{ \""+ search_string[1] +"\":" + "\""+search_string[0]+ "\" }},"+
-                    "        \"must\": " +
-                    "      { \"range\": { \""+ search_string[3] +"\": " + "{\"gt\": " + "\""+search_string[2]+ "\" }}}"+
-                    "}}}";
+            String query = "{" +"\"query\": {\"bool\": {\"must\":     { \"match\": "+
+                    "{ \"Status\": \"Bidded\" }}," +
+                    "\"must\": { \"match\": { \"Owner\": "+"\""+search_string[0]+"\""+"}}}}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
@@ -464,8 +457,9 @@ public class ElasticSearchCtr{
             verifyClient();
             //start initial array list empty.
             ArrayList<Stalls> returnStalls = new ArrayList<Stalls>();
-            String query = "{" +"\"query\": {\"bool\": {\"must\":     { \"match\": "+
+            String query = "{" +"\"query\": {\"bool\": {\"should\":     { \"match\": "+
                     "{ \"Status\": \"Available\" }}," +
+                    "\"should\" : {\"match\":{\"Status\": \"Bidded\" }},"+
                     "\"must\": { \"match\": { \"Description\": "+"\""+params[0]+"\""+"}}}}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 

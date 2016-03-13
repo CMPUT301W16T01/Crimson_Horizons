@@ -46,6 +46,5 @@
         android:hint="Enter Keywords"
         android:textAlignment="center"
         android:layout_above="@+id/SearchBtn"
-        android:layout_alignEnd="@+id/listView"
         android:layout_alignParentStart="true" />
 </RelativeLayout>

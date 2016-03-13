@@ -6,7 +6,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email Address:"
-        android:id="@+id/UserNameText"
+        android:id="@+id/BidAmtBFS"
         android:textColor="#000000"
         android:textSize="30dp"
         android:layout_above="@+id/emailAddress"
@@ -51,7 +51,7 @@
         android:textColor="#000000"
         android:textSize="30dp"
         android:layout_below="@+id/textView9"
-        android:layout_alignEnd="@+id/UserNameText" />
+        android:layout_alignEnd="@+id/BidAmtBFS" />
 
     <TextView
         android:layout_width="wrap_content"

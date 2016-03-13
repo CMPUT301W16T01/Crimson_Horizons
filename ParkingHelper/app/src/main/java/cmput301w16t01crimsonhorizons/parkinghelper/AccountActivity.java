@@ -26,6 +26,7 @@ public class AccountActivity extends AppCompatActivity {
     private ListView MyStalls;
     private Account account;
     AdapterEditStall myAdapter;
+    String[]temp = new String[2];
     ArrayList<Stalls>StallAry = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,21 +37,18 @@ public class AccountActivity extends AppCompatActivity {
         MyStalls = (ListView)findViewById(R.id.OwnStalls);
         String email = account.getEmail();
         ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
-        String[]temp = new String[2];
         temp[0]=email;
         temp[1]="Owner";
         try {
             //Here it sets up the String[] needed for searching
-            ArrayList<Stalls>tempAry = new ArrayList<>();
             getStall.execute(temp);
-            tempAry = getStall.get();
-            StallAry.clear();
-            StallAry.addAll(tempAry);
+            StallAry = getStall.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
         MyStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             EditText lv = (EditText) findViewById(R.id.EmailET);
 
@@ -66,6 +64,11 @@ public class AccountActivity extends AppCompatActivity {
         });
         myAdapter = new AdapterEditStall(this, R.layout.account_stalls, StallAry);
         MyStalls.setAdapter(myAdapter);
+        int i =2;
+        while (i>0) {
+            this.update();
+            i = i - 1;
+        }
     }
     @Override
     protected void onStart(){
@@ -121,7 +124,7 @@ public class AccountActivity extends AppCompatActivity {
         account = CurrentAccount.getAccount();
         String email = account.getEmail();
         ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
-        String[]temp = new String[2];
+
         temp[0]=email;
         temp[1]="Owner";
         try {

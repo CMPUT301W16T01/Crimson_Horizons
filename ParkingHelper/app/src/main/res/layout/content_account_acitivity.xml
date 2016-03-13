@@ -27,7 +27,7 @@
         android:id="@+id/OwnStalls"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/AccountTitle"
-        android:layout_above="@+id/AddBtn">
+        android:layout_above="@+id/AddBtn"  >
 
     </ListView>
 

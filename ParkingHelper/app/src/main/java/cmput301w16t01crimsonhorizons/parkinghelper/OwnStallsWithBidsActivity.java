@@ -27,9 +27,6 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
         ElasticSearchCtr.GetBidStall getBidStall = new ElasticSearchCtr.GetBidStall();
         String[]temp = new String[4];
         temp[0]=email;
-        temp[1]="Owner";
-        temp[2]="0.0";
-        temp[3]="BidAmt";
         try {
             ArrayList<Stalls>tempAry = new ArrayList<>();
             getBidStall.execute(temp);
@@ -45,12 +42,10 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
             EditText lv = (EditText)findViewById(R.id.EmailET);
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent clickStall = new Intent(view.getContext(), EditStall.class);
+                Intent clickStall = new Intent(view.getContext(), BidsForStall.class);
                 Stalls entry = (Stalls)OwnStalls.getItemAtPosition(position);
                 clickStall.putExtra("entry", entry);
-                clickStall.putExtra("id", position);
-                startActivity(clickStall);
-                myAdapter.notifyDataSetChanged();
+                startActivityForResult(clickStall,1);
             }
         });
         myAdapter = new AdapterEditStall(this, R.layout.account_stalls, StallAry);

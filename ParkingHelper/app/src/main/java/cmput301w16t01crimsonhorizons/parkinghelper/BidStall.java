@@ -56,7 +56,9 @@ public class BidStall extends AppCompatActivity {
         if (BidAmt<=stall.getBidAmt()){
             Toast.makeText(BidStall.this,"Your bid was too low", Toast.LENGTH_SHORT).show();
         } else {
+            stall.setStatus("Bidded");
             stall.setBidAmt(BidAmt);
+            stall.getLstBidders().add(CurrentAccount.getAccount().getEmail()+" "+BidAmt.toString());
             stall.setBidder(account.getEmail());
             Commands command = new EditStallSave(stall);
             Boolean check = command.execute();

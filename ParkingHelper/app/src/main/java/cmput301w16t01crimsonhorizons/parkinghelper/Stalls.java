@@ -19,15 +19,24 @@ public class Stalls implements Serializable{
     private String Status = "";
     private Double BidAmt = 0.00;
     private String Bidder = "";
+    private String Borrower = "";
     //// TODO: 3/10/2016 MAKE THE IMAGE STORE PROPERLY
     private String image;
-    ArrayList<Stalls>LstBidders = new ArrayList<>();
 
-    public ArrayList<Stalls> getLstBidders() {
+    public String getBorrower() {
+        return Borrower;
+    }
+    public void setBorrower(String borrower) {
+        Borrower = borrower;
+    }
+
+    ArrayList<String>LstBidders = new ArrayList<>();
+
+    public ArrayList<String > getLstBidders() {
         return LstBidders;
     }
 
-    public void setLstBidders(ArrayList<Stalls> lstBidders) {
+    public void setLstBidders(ArrayList<String > lstBidders) {
         LstBidders = lstBidders;
     }
 
