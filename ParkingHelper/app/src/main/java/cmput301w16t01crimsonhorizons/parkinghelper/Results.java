@@ -19,10 +19,11 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
     private ArrayList<Stalls> userBids = new ArrayList<Stalls>();
     private String[] GetAvailable = new String[2];
     private AdapterEditStall myAdapter;
+    String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String email;
+
 
         setContentView(R.layout.activity_your_bids);
         YourBids = (ListView)findViewById(R.id.YourBidsLv);
@@ -68,6 +69,7 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
                 clickBids.putExtra("id", position);
                 clickBids.putExtra("array", userBids);
                 startActivity(clickBids);
+                myAdapter.notifyDataSetChanged();
             }
         });
 
@@ -75,6 +77,21 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
 
     @Override
     public void updateView(Commands model) {
+        ElasticSearchCtr.GetPendingStalls getPendingStalls =
+                new ElasticSearchCtr.GetPendingStalls();
+        getPendingStalls.execute(email);
+        try {
+            ArrayList<Stalls> tempAry = new ArrayList<>();
+            tempAry = getPendingStalls.get();
+            userBids.clear();
+            userBids.addAll(tempAry);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        myAdapter.notifyDataSetChanged();
 
     }
 }
