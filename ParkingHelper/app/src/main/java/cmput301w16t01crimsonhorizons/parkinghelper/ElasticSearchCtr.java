@@ -354,11 +354,6 @@ public class ElasticSearchCtr{
         }
     }
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 4b4e88112a600f2aa051d21f960fafb856823308
     /**
      * This class creates a stall
      */
@@ -497,7 +492,7 @@ public class ElasticSearchCtr{
             //start initial array list empty.
             String query = "{" +
                     "    \"query\": {" +
-                    "        \"match\" :{ \"Bidder\":\"" + "123@123"+ "\""+
+                    "        \"match\" :{ \"Bidder\":\"" + search_string[0] + "\""+
                     "    }" +
                     "}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();

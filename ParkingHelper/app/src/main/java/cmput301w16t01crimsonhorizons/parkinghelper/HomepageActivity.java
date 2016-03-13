@@ -81,7 +81,7 @@ public class HomepageActivity extends AppCompatActivity {
      */
     public void clickYourBids(View view){
         Intent intent = new Intent(this,Results.class);
-        //intent.putExtra("account", ACCOUNT);
+        intent.putExtra("email", email);
         startActivity(intent);
     }
 
