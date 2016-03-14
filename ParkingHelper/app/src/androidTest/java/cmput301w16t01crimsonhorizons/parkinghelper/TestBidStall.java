@@ -1,16 +1,22 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
+import android.test.ViewAsserts;
+import android.view.View;
+import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Kevin L on 3/10/2016.
  */
-public class TestBidStall extends ActivityInstrumentationTestCase2<AccountActivity> {
+public class TestBidStall extends ActivityInstrumentationTestCase2<Results> {
     public TestBidStall() {
-        super(AccountActivity.class);
+        super(Results.class);
     }
     public void createStall(Stalls s1){
         ElasticSearchForTest.MakeStall makeStall = new ElasticSearchForTest.MakeStall();
@@ -93,8 +99,51 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<AccountActivi
         }
         this.resetDatabase(stall);
 
+    }
+
+    /**
+     * US 05.02.01
+     * Test to see if list view appears and that stalls
+     */
+    @UiThreadTest
+    public void testListView() {
+        Results pendingStalls = (Results)getActivity();
+
+        ViewAsserts.assertOnScreen(pendingStalls.getWindow().getDecorView(),
+                pendingStalls.findViewById(R.id.YourBidsLv));
+
+        for(Stalls ubid: pendingStalls.getUserBids()) {
+            assertNotNull(ubid);
+        }
 
 
     }
 
+    /**
+     * US 05.02.01
+     */
+    public void testOpenNextActivity() {
+        // register next activity that need to be monitored.
+        Instrumentation.ActivityMonitor activityMonitor = getInstrumentation().addMonitor(EditBids.class.getName(), null, false);  // open current activity.
+        final Results myActivity = getActivity();
+        final ListView listView = (ListView) myActivity.findViewById(R.id.YourBidsLv);
+        Stalls stall = new Stalls();
+        stall.setStatus("Bidded");
+        stall.setDescription("whatever");
+        stall.setOwner("whatever");
+
+        myActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // click button and open next activity.
+                while (myActivity.getUserBids().isEmpty());
+                listView.getChildAt(0).performClick();
+            }
+        });  //Watch for the timeout
+        //example values 5000 if in ms, or 5 if it's in seconds.
+        EditBids nextActivity = (EditBids)getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 10000);
+        // next activity is opened and captured.
+        assertNotNull(nextActivity);
+        nextActivity .finish();
+    }
 }

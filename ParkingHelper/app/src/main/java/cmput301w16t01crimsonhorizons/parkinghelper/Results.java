@@ -14,6 +14,13 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Created by Kevin Lang and Lee Ingram
+ *
+ * This class is responsible for displaying the results from the GetPendngStalls
+ * task @see "ElasticSearchCtr"
+ */
+
 public class Results extends AppCompatActivity implements ViewInterface<Commands> {
     private ListView YourBids;
     private ArrayList<Stalls> userBids = new ArrayList<Stalls>();
@@ -93,5 +100,9 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
 
         myAdapter.notifyDataSetChanged();
 
+    }
+
+    ArrayList<Stalls> getUserBids(){
+        return userBids;
     }
 }

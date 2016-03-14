@@ -429,6 +429,13 @@ public class ElasticSearchCtr{
 
 
     public static class SearchDataBaseTask extends AsyncTask<String, Void, ArrayList<Stalls>> {
+        /**
+         *
+         * .@param params a string of keywords found in the description of the parking stall the
+         *               user is looking for
+         * @return returnStalls a list of stall objects with at least one of the words, form
+         *          the params argument in their description
+         */
         @Override
         protected ArrayList<Stalls> doInBackground(String... params) {
             verifyClient();
@@ -455,6 +462,12 @@ public class ElasticSearchCtr{
     }
 
     public static class GetPendingStalls extends AsyncTask<String, Void, ArrayList<Stalls>>{
+        /**
+         *
+         * .@param search_string contains the email of the relevent user
+         * @return returnedStalls, an array list of stalls that the user with the email specified
+         *  if search_string has bidded successfully on
+         */
         @Override
         protected ArrayList<Stalls> doInBackground(String... search_string) {
             verifyClient();
