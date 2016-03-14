@@ -85,7 +85,7 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent clickStall = new Intent(view.getContext(), EditStall.class);
+                Intent clickStall = new Intent(view.getContext(), BidsForStall.class);
                 Stalls entry = (Stalls) OwnStalls.getItemAtPosition(position);
                 clickStall.putExtra("entry", entry);
                 clickStall.putExtra("id", position);
