@@ -70,17 +70,16 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         View addButton = addStall.findViewById(R.id.AddInAddBtn);
         addButton.performClick();
 
-        ElasticSearchCtr.GetBidStall getBidStall = new ElasticSearchCtr.GetBidStall();
+        ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
         String[]temp = new String[4];
         temp[0]="__test1";
         temp[1]="Owner";
-        temp[2]="Test.";
-        temp[3]="Description";
+
 
         tempAry = new ArrayList<>();
         try {
-            getBidStall.execute(temp);
-            tempAry = getBidStall.get();
+            getStall.execute(temp);
+            tempAry = getStall.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
