@@ -2,13 +2,8 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-
 import android.test.UiThreadTest;
-import android.test.ViewAsserts;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-
 
 import java.util.concurrent.ExecutionException;
 
@@ -118,7 +113,7 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
     }
 
 
-    @UiThreadTest
+   /* @UiThreadTest
 
     public void testNotificationsButton(){
         Intent intent = new Intent();
@@ -133,5 +128,5 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
 
         ViewAsserts.assertOnScreen(view, profile.findViewById(R.id.NotificationsListView));
 
-    }
+    }*/
 }
