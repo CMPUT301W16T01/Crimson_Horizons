@@ -17,14 +17,45 @@ public class TestSearch extends ActivityInstrumentationTestCase2 {
         super(Search.class);
     }
 
-    @UiThreadTest
 
-    public void testClickUsername(){
-        //TODO:create test users and test stalls. Delete after use.
+    protected void setUp(){
+        ElasticSearchForTest.addUser executeAdd = new ElasticSearchForTest.addUser();
+
         Account account1 = new Account();
         account1.setEmail("__test1");
         account1.setWorkPhone("1.1");
         account1.setCellPhone("1.2");
+
+        Account account2 = new Account();
+        account2.setEmail("__test2");
+        account2.setWorkPhone("2.1");
+        account2.setCellPhone("2.2");
+
+        Stalls stalls = new Stalls();
+        stalls.setOwner(account1.getEmail());
+        stalls.setStallID("available");
+        stalls.setDescription("A test stall");
+
+        CurrentAccount.setAccount(account2);
+    }
+
+    protected void tearDown(){
+        ElasticSearchForTest.deleteUser executeDelete = new ElasticSearchForTest.deleteUser();
+        ElasticSearchForTest.deleteUser executeDelete2 = new ElasticSearchForTest.deleteUser();
+        ElasticSearchForTest.DeleteStall executeDelete3 = new ElasticSearchForTest.DeleteStall();
+        ElasticSearchForTest.GetAccount executeGet = new ElasticSearchForTest.GetAccount();
+        ElasticSearchForTest.GetAccount executeGet2 = new ElasticSearchForTest.GetAccount();
+
+
+        executeDelete.execute();
+    }
+
+    @UiThreadTest
+
+    public void testClickUsername(){
+        //TODO:create test users and test stalls. Delete after use.
+
+        Account account1 = CurrentAccount.getAccount();
 
         Intent intent = new Intent();
         setActivityIntent(intent);
@@ -35,9 +66,9 @@ public class TestSearch extends ActivityInstrumentationTestCase2 {
         //TODO: Figure out the alternative to this. Can't click on another view outside of the
         //TODO: main view
 
-        View stallElement = stallListView.getChildAt(0);
-        View nameElement = stallElement.findViewById(R.id.StallNameEditStallV);
-        nameElement.performClick();
+        View stallElement = search.findViewById(R.id.StallNameEditStallV);
+        //CHANGE
+        stallElement.performClick();
 
         View view = search.getWindow().getDecorView();
 
