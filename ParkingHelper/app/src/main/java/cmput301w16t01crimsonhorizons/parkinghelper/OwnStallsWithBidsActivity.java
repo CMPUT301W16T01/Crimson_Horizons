@@ -28,6 +28,8 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
         String[]temp = new String[4];
         temp[0]=email;
         temp[1]="Owner";
+        temp[2]="0.0";
+        temp[3]="BidAmt";
         try {
             ArrayList<Stalls>tempAry = new ArrayList<>();
             getBidStall.execute(temp);
