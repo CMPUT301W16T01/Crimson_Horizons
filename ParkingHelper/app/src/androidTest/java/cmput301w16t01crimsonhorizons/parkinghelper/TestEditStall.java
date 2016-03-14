@@ -6,6 +6,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
 import android.widget.ImageView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -117,6 +118,21 @@ public class TestEditStall extends ActivityInstrumentationTestCase2<EditStall> {
         returned.clear();
         while(returned.size()!=0) {
             returned = this.retrieveStall(temp);
+        }
+    }
+    /**
+     * US 02.01.01
+     * Test that a stall has a status. Since the status is a string, the is little
+     * way to ensure that it is always one of three values, other than testing
+     * all possible scenarios. However, the code is such that only the three values
+     * are used.
+     */
+    public void testStallHasStatus() {
+        try {
+            Field f = Stalls.class.getField("Status");
+            assertEquals("Status should be a string", f.getType(), String.class);
+        } catch (NoSuchFieldException e) {
+            fail();
         }
     }
 
