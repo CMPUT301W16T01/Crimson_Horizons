@@ -12,6 +12,16 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+
+import io.searchbox.core.Get;
+
+/**
+ * Developed by Kevin Lang and Lee Ingram
+ *
+ * This class is responsible for displaying the results from
+ * the SearchDataBaseTask @see "ElasticSearchCtr".
+ */
+
 public class Search extends AppCompatActivity implements ViewInterface<Commands> {
     private ListView Result;
     private ArrayList<Stalls>StallAry = new ArrayList<>();
@@ -30,7 +40,7 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
         final EditStallSave command = new EditStallSave();
         command.addView(this);
         GetAvailable[0] = "Status";
-        GetAvailable[1] = "Aavailable";
+        GetAvailable[1] = "Available";
         GetAvailable[2] = "Bidded";
         final ElasticSearchCtr.GetAvailableStall getAvailableStall = new ElasticSearchCtr.GetAvailableStall();
         getAvailableStall.execute(GetAvailable);
@@ -41,6 +51,7 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
 
         searchBtn.setOnClickListener( new View.OnClickListener(){
             @Override
@@ -77,11 +88,6 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
         myAdapter = new AdapterEditStall(this, R.layout.account_stalls, StallAry);
         Result.setAdapter(myAdapter);
         this.updateView(new EditStallSave());
-/*        adapter = new ArrayAdapter<Stalls>(this, R.layout.own_stalls_with_bids,
-                StallAry);
-        Result.setAdapter(adapter);*/
-
-
     }
 
     @Override
@@ -132,6 +138,14 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
 
         myAdapter.notifyDataSetChanged();
 
+    }
+
+    AdapterEditStall getAdapter(){
+        return myAdapter;
+    }
+
+    ArrayList<Stalls> getResults() {
+        return StallAry;
     }
 
 }

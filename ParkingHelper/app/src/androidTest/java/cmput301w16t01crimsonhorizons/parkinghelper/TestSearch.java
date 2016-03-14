@@ -1,8 +1,14 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
+import android.test.ViewAsserts;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.concurrent.ExecutionException;
@@ -11,12 +17,28 @@ import java.util.concurrent.ExecutionException;
  * Created by schuman on 3/10/16.
  */
 public class TestSearch extends ActivityInstrumentationTestCase2 {
+    Instrumentation instrumentation;
+    Activity activity;
+    EditText testInput;
+    boolean accountMade = false;
+    Stalls testStall;
+    Account testAccount;
+
+
     public TestSearch() {
         super(Search.class);
     }
 
-
     protected void setUp(){
+        try {
+            super.setUp();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        instrumentation = getInstrumentation();
+        activity = getActivity();
+        testInput = ((EditText) activity.findViewById(R.id.query));
+
         ElasticSearchForTest.addUser executeAdd = new ElasticSearchForTest.addUser();
 
         Account account1 = new Account();
@@ -81,4 +103,33 @@ public class TestSearch extends ActivityInstrumentationTestCase2 {
         String y = viewProfile.getClass().toString();
         assertTrue("The ViewProfile intent should have been returned", viewProfile.getClass().toString().contains(intent.getComponent().getClassName()));
     }
+
+
+
+    protected  void makeSearch(String text) {
+        testInput.setText(text);
+        ((Button) activity.findViewById(R.id.SearchBtn)).performClick();
+    }
+
+    @UiThreadTest
+    public void testSearchKeyWords(){
+
+        Search searchActivity = (Search)getActivity();
+        makeSearch("(test 1)");
+        while (searchActivity.getResults().isEmpty());
+        assertTrue(searchActivity.getAdapter().getCount() == 2);
+
+    }
+
+    @UiThreadTest
+    public void testSearchView() {
+        Search search = (Search)getActivity();
+        while (search.getResults().isEmpty());
+        View view1 = search.getWindow().getDecorView();
+        ViewAsserts.assertOnScreen(view1, search.findViewById(R.id.ResultLv));
+        ViewAsserts.assertOnScreen(view1, search.findViewById(R.id.SearchTitle));
+        ViewAsserts.assertOnScreen(view1, search.findViewById(R.id.query));
+        ViewAsserts.assertOnScreen(view1, search.findViewById(R.id.SearchBtn));
+    }
+
 }

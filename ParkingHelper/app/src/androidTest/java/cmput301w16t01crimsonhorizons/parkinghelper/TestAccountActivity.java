@@ -94,6 +94,20 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         ViewAsserts.assertOnScreen(view, accountActivity.findViewById(R.id.OwnStalls));
     }
 
+    /**
+     * US 01.03.01
+     * Test that an object is displayed in account.
+     */
+    public void testDisplayStatus() {
+        AccountActivity accountActivity = (AccountActivity) getActivity();
+        accountActivity.update();
+
+        View view = accountActivity.getWindow().getDecorView();
+        ViewAsserts.assertOnScreen(view, accountActivity.findViewById(R.id.OwnStalls));
+        ListView lv = (ListView)accountActivity.findViewById(R.id.OwnStalls);
+        assertTrue(lv.getAdapter().getCount() != 0);
+    }
+
     @Override
     protected void tearDown() throws Exception {
         ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
