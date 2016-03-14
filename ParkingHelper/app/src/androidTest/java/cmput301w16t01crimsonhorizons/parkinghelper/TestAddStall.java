@@ -2,12 +2,8 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-
 import android.test.UiThreadTest;
-
-import android.test.ViewAsserts;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,13 +14,16 @@ import java.util.concurrent.ExecutionException;
  */
 
 public class TestAddStall extends ActivityInstrumentationTestCase2 {
+    ArrayList<Stalls> tempAry;
+    Account account1;
+
     public TestAddStall() {
         super(AddStall.class);
     }
 
     @UiThreadTest
     public void testAddStall(){
-        Account account1 = new Account();
+        account1 = new Account();
         account1.setEmail("__test1");
         account1.setWorkPhone("1.1");
         account1.setCellPhone("1.2");
@@ -43,17 +42,15 @@ public class TestAddStall extends ActivityInstrumentationTestCase2 {
         View addButton = addStall.findViewById(R.id.AddInAddBtn);
         addButton.performClick();
 
-        ElasticSearchCtr.GetBidStall getBidStall = new ElasticSearchCtr.GetBidStall();
+        ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
         String[]temp = new String[4];
         temp[0]="__test1";
         temp[1]="Owner";
-        temp[2]="Test.";
-        temp[3]="Description";
 
-        ArrayList<Stalls>tempAry = new ArrayList<>();
+        tempAry = new ArrayList<>();
         try {
-            getBidStall.execute(temp);
-            tempAry = getBidStall.get();
+            getStall.execute(temp);
+            tempAry = getStall.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -63,9 +60,15 @@ public class TestAddStall extends ActivityInstrumentationTestCase2 {
         assertTrue(tempAry.get(0).getOwner() == "__test1");
         assertTrue(tempAry.get(0).getDescription() == "Test.");
 
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
         ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
         deleteStall.doInBackground(tempAry.get(0));
 
+        ElasticSearchCtr.deleteUser deleteUser = new ElasticSearchCtr.deleteUser();
+        deleteUser.doInBackground(account1);
     }
 
 }
