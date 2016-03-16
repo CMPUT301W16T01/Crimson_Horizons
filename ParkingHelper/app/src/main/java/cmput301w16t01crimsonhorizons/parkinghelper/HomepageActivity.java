@@ -86,7 +86,7 @@ public class HomepageActivity extends AppCompatActivity {
     }
 
     public void clickBorrowing(View view){
-        Intent intent = new Intent(this,BorrowedStalls.class);
+        Intent intent = new Intent(getApplicationContext(),BorrowStallActivity.class);
         intent.putExtra("email",email);
         startActivity(intent);
     }

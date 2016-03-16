@@ -77,3 +77,31 @@ Kevin:
 	Done: Login stuff.
 	Will Do: display/edit stall and store on elastic search
 	Blockers: midterm
+
+March 8, 2016
+
+Lee: 
+     Done: Done all his requirements, need to test them now.
+     Will Do: He has to test everything. Make new use cases
+     Blockers: Capstone 
+
+JP:
+     Done: Implemented 2 of his requirements to part 4, although apparently,
+     have bugs.
+     Will Do: Debug and finish last requirements.
+     Blockers: Capstone, labs, 2 other projects
+
+JO:
+     Done: Been busy with blockers
+     Will Do: Finish his stuff
+     Blockers: None
+
+Kevin:
+    Done: 3 requirements, 1 test cases, fixed some UML
+    Will Do: more test cases, UML
+    Blockers: Essay,2 tests
+
+Aaron:
+    Done: Javadocs, Asynctask, finished his stuff, started testing.
+    Will Do: Complete/proof read
+    Blockers: Usual stuff.

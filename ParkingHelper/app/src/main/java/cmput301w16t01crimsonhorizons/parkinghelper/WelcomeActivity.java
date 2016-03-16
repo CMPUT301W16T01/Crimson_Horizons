@@ -1,6 +1,7 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -27,9 +28,10 @@ public class WelcomeActivity extends AppCompatActivity {
 */
 
 /*        Stalls s1 = new Stalls();
-        s1.setOwner("123@123");
-        s1.setStatus("Available");
-        s1.setDescription("the first stall owned by 123@123");
+        s1.setOwner("ABC");
+        s1.setStatus("Borrowed");
+        s1.setDescription("owned by ABC, borrowed by 123@123");
+        s1.setBorrower("123@123");
         AsyncTask<Stalls, Void, Void> s1execute = new ElasticSearchCtr.MakeStall().execute(s1);
         setResult(RESULT_OK);*/
 /*        Stalls s2 = new Stalls();

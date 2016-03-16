@@ -128,8 +128,8 @@ public class ElasticSearchCtr{
             verifyClient();
             ArrayList<Stalls> AllStall = new ArrayList<>();
             //start initial array list empty.
-            String query = "{" +"\"query\": {\"bool\": {\"must\":     { \"match\": "+
-                    "{ \""+search_string[0]+"\": \""+search_string[1]+"\" }}"+"}}";
+            String query = "{" +"\"query\": { \"match\": "+
+                    "{ \""+search_string[0]+"\": \""+search_string[1]+"\" }}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
