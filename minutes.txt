@@ -105,3 +105,30 @@ Aaron:
     Done: Javadocs, Asynctask, finished his stuff, started testing.
     Will Do: Complete/proof read
     Blockers: Usual stuff.
+
+
+March 15, 2016
+
+Kevin Lang: 
+      Did: did another user story and implented, and worked on part 4
+      to-do: use cases + refactoring
+      blockers: None 
+
+Jonathan Peard: 
+	 did: implemented use cases for part 4 and test case
+	 to-do: look at part 5, and do one use case 
+	 bockers: capstone, lab, two other projects
+JO: 
+    did: part 4 use cases and testing
+    to-do: look at part 5, LOTS OF REFACTORING in model 
+    blockers: labs assignments and coding project 
+
+Lee Ingram: 
+    did: use case and testing for part 4
+    to-do: get test cases working for part 4 and look at part 5
+    blockers: capstone
+
+Aaron: 
+       did: use cases and testing for part 4 
+       to-do: get new intent testing done, look part 5 
+       blockers: capstone, midterm 
