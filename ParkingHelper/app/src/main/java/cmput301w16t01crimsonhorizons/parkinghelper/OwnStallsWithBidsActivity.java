@@ -20,7 +20,7 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_own_stalls_with_bids);
+        setContentView(R.layout.content_own_stalls_with_bids);
         account = CurrentAccount.getAccount();
         OwnStalls = (ListView)findViewById(R.id.OwnStalls);
         String email = account.getEmail();
@@ -58,6 +58,12 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         this.update();
+    }
+
+    public void adapterClickUserName(View view){
+        ClickUserName clickUserName = new ClickUserName();
+        Intent newIntent = clickUserName.clickUserName(this, view, new ElasticSearchCtr.GetAccount());
+        startActivity(newIntent);
     }
 
     public void update(){

@@ -73,6 +73,7 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
         executeAdd.execute(account1).get();
         executeAdd2.execute(account2).get();
 
+        //netowrk syncronization
         while(account1.getId().equals(null)){}
         assertTrue("Account 1 should of been created",executeVerify.execute("__test1_").get());
 
@@ -90,9 +91,8 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
         Boolean status;
 
             while (!account1.getEmail().matches("__test1.1")) {
+                wait(100);
             }
-            assertFalse("Account 1 should not have kept its previous email address", executeVerify.execute("__test1_").get());
-            assertTrue("Account 1 should have a new email address",executeVerify2.execute("__test1.1").get());
 
        newEmail.setText("__test2");
 
