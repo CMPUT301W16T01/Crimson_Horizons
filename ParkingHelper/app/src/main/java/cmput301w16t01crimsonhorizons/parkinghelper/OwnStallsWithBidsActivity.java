@@ -48,7 +48,8 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
                 Intent clickStall = new Intent(view.getContext(), BidsForStall.class);
                 Stalls entry = (Stalls)OwnStalls.getItemAtPosition(position);
                 clickStall.putExtra("entry", entry);
-                startActivityForResult(clickStall,1);
+                startActivity(clickStall);
+
             }
         });
         myAdapter = new AdapterEditStall(this, R.layout.account_stalls, StallAry);
