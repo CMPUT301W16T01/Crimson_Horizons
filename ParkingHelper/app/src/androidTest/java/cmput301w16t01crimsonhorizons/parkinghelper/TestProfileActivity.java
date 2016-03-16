@@ -2,13 +2,8 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-
 import android.test.UiThreadTest;
-import android.test.ViewAsserts;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-
 
 import java.util.concurrent.ExecutionException;
 
@@ -19,6 +14,33 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
     public TestProfileActivity() {
         super(Profile.class);
     }
+
+    protected void setUp(){
+
+    }
+
+    protected void tearDown(){
+        ElasticSearchForTest.deleteUser executeDelete = new ElasticSearchForTest.deleteUser();
+        ElasticSearchForTest.deleteUser executeDelete2 = new ElasticSearchForTest.deleteUser();
+        ElasticSearchForTest.GetAccount executeGet = new ElasticSearchForTest.GetAccount();
+        ElasticSearchForTest.GetAccount executeGet2 = new ElasticSearchForTest.GetAccount();
+
+        Account account1 = null;
+        Account account2 = null;
+
+        try {
+            account1 = executeGet.execute("__test1_").get();
+            account2 = executeGet.execute("__test2").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        executeDelete.execute(account1);
+        executeDelete2.execute(account2);
+    }
+
 
     @UiThreadTest
     public void testModifyAccount(){
@@ -51,8 +73,8 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
         executeAdd.execute(account1).get();
         executeAdd2.execute(account2).get();
 
-        while(account1.getId() == null){}
-        assertTrue(executeVerify.execute("__test1_").get());
+        while(account1.getId().equals(null)){}
+        assertTrue("Account 1 should of been created",executeVerify.execute("__test1_").get());
 
 
         Intent intent = new Intent();
@@ -67,16 +89,17 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
         String temp = account1.getEmail();
         Boolean status;
 
-        while(!account1.getEmail().matches("__test1.1")){}
-        assertFalse(executeVerify.execute("__test1_").get());
-        assertTrue(executeVerify2.execute("__test1.1").get());
+            while (!account1.getEmail().matches("__test1.1")) {
+            }
+            assertFalse("Account 1 should not have kept its previous email address", executeVerify.execute("__test1_").get());
+            assertTrue("Account 1 should have a new email address",executeVerify2.execute("__test1.1").get());
 
        newEmail.setText("__test2");
 
         profile.findViewById(R.id.SaveInProfileBtn).performClick();
 
 
-        assertTrue(executeVerify.execute("__test1.1").get());
+        assertTrue("Account 1 should not have changed email addresses",executeVerify.execute("__test1.1").get());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -90,7 +113,7 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
     }
 
 
-    @UiThreadTest
+   /* @UiThreadTest
 
     public void testNotificationsButton(){
         Intent intent = new Intent();
@@ -105,5 +128,5 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
 
         ViewAsserts.assertOnScreen(view, profile.findViewById(R.id.NotificationsListView));
 
-    }
+    }*/
 }

@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -78,7 +77,7 @@ public class AccountActivity extends AppCompatActivity {
 
     public void adapterClickUserName(View view){
         ClickUserName clickUserName = new ClickUserName();
-        Intent newIntent = clickUserName.clickUserName(this, view);
+        Intent newIntent = clickUserName.clickUserName(this, view, new ElasticSearchCtr.GetAccount());
         startActivity(newIntent);
     }
 

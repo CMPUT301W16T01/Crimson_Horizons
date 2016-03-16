@@ -2,11 +2,6 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.Button;
-import android.widget.EditText;
-
-import java.util.concurrent.ExecutionException;
-
 import android.test.UiThreadTest;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +17,21 @@ public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
         super(SigninActivity.class);
     }
 
+    protected void setUp(){
+
+    }
+
+    protected  void tearDown(){
+        ElasticSearchCtr.GetAccount executeGet = new ElasticSearchCtr.GetAccount();
+        ElasticSearchCtr.deleteUser executeDelete = new ElasticSearchCtr.deleteUser();
+        try {
+            executeDelete.execute(executeGet.execute("__test1").get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
 
     @UiThreadTest
     public void testSignup() {
@@ -48,7 +58,7 @@ public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
         createButton.performClick();
 
         try {
-            assertTrue(executeVerify.execute("__test1").get());
+            assertTrue("A new user should have been created",executeVerify.execute("__test1").get());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -69,12 +79,19 @@ public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
         CellText.setText("test2.2");
 
         try {
-            assertFalse(executeGet.execute("__test1").get().getCellPhone() == "test2.2");
-            executeDelete.execute(executeGet.execute("__test1").get());
+            assertFalse("The new account should be rejected and the old account should remain", executeGet.execute("__test1").get().getCellPhone() == "test2.2");
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                executeDelete.execute(executeGet.execute("__test1").get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

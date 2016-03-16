@@ -1,7 +1,13 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.ViewAsserts;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 /**
  * Created by Kevin L on 3/11/2016.
@@ -26,9 +32,31 @@ public class TestBidsForStall  extends ActivityInstrumentationTestCase2<BidsForS
                 testing.getNotifications().size());
         CommandForTesting commandForTesting = new CommandForTesting(s1);
         commandForTesting.execute();
-        assertEquals("user testing should get a notification",1,
+        assertEquals("user testing should get a notification", 1,
                 testing.getNotifications().size());
     }
+    /**
+     * US 05.05.01
+     * Test if bids are displayed
+     */
+    public void testDisplayBids(){
+        Stalls s1 = new Stalls();
+        ArrayList<String> lstBidders = new ArrayList<>();
+        lstBidders.add("bid1");
+        lstBidders.add("bid2");
+        s1.setLstBidders(lstBidders);
+
+        Intent i = new Intent();
+        i.putExtra("entry", s1);
+        BidsForStall b = new BidsForStall();
+        b.setIntent(i);
+
+        //Should display two bids
+        View view = b.getWindow().getDecorView();
+        ListView lv = (ListView)b.findViewById(R.id.BidsForStallsLv);
+        assertEquals(lv.getAdapter().getCount(), 2);
+    }
+
     /**
      * US 05.06.01
      * Test if one can accept the bid

@@ -289,3 +289,80 @@ basic flow:	1 	user presses the add button
 Exceptions:	3.0	User enters invalid information
 		-3.1	system prompts the user to enter valid information
 		-3.2	user enters valid information
+US 09.01.01
+As an owner I want to optionally attach a photograph to a thing of mine.
+US 09.04.01
+As a sys admin, I want each photograph to be uner 65536 bytes in size.
+use case name:	      		 Attach Photograph
+participating actors:		 owner (primary)
+goal:					 Attach a photograph of a parking stall
+trigger:				 	 Owner selects "Add Photo"
+precondition:				 At parking <stall add screen>
+postondition:				 <home screen>
+basic flow:				 1. Owner selects "Add Photo"
+      					         2. Owner is prompted to take a photo, or select one from
+						     their photo library
+						 3. Photo appears on the add stall form
+						 4. Owner either selects confirm 
+						 5. Owner arrives at home screen
+					
+Exceptions:				 4       If Photo is larger than 65536 bytes in size
+					         4.1    Owner recieves, "photo too large" notification
+						 - 	  US 9.04.01 met
+
+Us 09.02.01
+As an owner, I want to delete any attached photograph for a thing of mine.
+use case name: 	       	      	 Delete Attached Photo
+participating actors:		 Owner (primary)
+goal:	 			 	 Delete a photo attached to a parking stall
+trigger:				 	 Owner selects <View Owned stalls button>
+preconditon:				 <home screen>
+postcondition:				 <view owned stall screen> stall does not have photo
+basic flow:				 1. Owner selects <view owned stalls>
+      					    	 2. Owner selects stall
+						 3. Owners pushes "Delete Photo" button
+
+exceptions:				 3	 If stall has no photo
+					      	 3.1   "Delete Photo" button does nothing 
+
+
+US 09.03.01
+As an owner or borrower, I want to view any attached photogrph for a thing.
+use case name: 		   	 View Attached Photo
+participating actors:		 User (primary)
+goal:					 View a photo attached to a parking stall
+trigger:				      	 "View Photo" button is selected
+precondition:				 User is viewing the <parking stall summary>
+postconidtion:				 User is viewing the attached photo
+basic flow:				 1. User selects "View Photo Button"
+      					    	 2. Photo is displayed in fullscreen 
+
+
+US 10.01.01
+AS AN OWNER, I WANT TO SPECIFY A GEO LOCATIon on a map of where to receive a thing
+when I accept a bid for a thing
+use case name:			 Add Pick Up Location
+participating actors: 		 Owner (primary)
+goal:	      			         Attach geo location to parking stall
+trigger:				 	 "Add Location" button selected
+precondition:				 Owner is at the <add stall screen>
+postcondition: 			 Owner is viewing the <add stallsummary>
+basic flow:			         1. Owner selects <add stallbutton>
+      					         2. Owner selects <add
+						 location button>
+						 3. Owner selects
+						 location on map
+
+US 10.02.01
+As an borrower, I want to view the geo location of where to receive a thing I will be borrowing
+use case name: 		See Pick Up Location
+actors:			Borrower
+goal: 			see location
+precondition:		Borrower viewing bids
+postcondition:		Borrower viewing geolocation
+basic flow:		1. Borrower selects an item they bidded on
+			2. Borrower selects view location
+			3. location is displayed 
+
+exceptions: 		3. No location specified by owner
+			3.1 No location notification sent
