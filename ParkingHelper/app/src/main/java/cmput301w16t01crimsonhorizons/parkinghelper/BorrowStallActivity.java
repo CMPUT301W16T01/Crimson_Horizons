@@ -2,26 +2,26 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-/**
- * Created by schuman on 2/26/16.
- * US 06.01.01
- */
-
-public class BorrowedStalls extends AppCompatActivity {
+public class BorrowStallActivity extends AppCompatActivity {
     private ListView eachBorrowedStalls;
     private Intent intent;
     private String user;
     private BorrowedStallAdapter myAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_borrowed_stalls);
+        setContentView(R.layout.activity_borrow_stall);
         intent = getIntent();
         user = intent.getStringExtra("email");
         eachBorrowedStalls = (ListView)findViewById(R.id.borrowedStallsList);
@@ -41,4 +41,5 @@ public class BorrowedStalls extends AppCompatActivity {
         myAdapter = new BorrowedStallAdapter(this,R.layout.borrowed_stall_layout,stallsArrayList);
         eachBorrowedStalls.setAdapter(myAdapter);
     }
+
 }

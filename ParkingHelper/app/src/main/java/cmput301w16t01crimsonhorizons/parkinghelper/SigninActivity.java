@@ -3,8 +3,6 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -74,7 +72,7 @@ public class SigninActivity extends AppCompatActivity {
      * @return null
      */
 
-    public void clickCancel(){
+    protected void clickCancel(){
         Intent intent = new Intent(this,WelcomeActivity.class);
         startActivity(intent);
     }
@@ -87,7 +85,7 @@ public class SigninActivity extends AppCompatActivity {
      * @return null
      */
 
-    public void clickSignin(){
+    protected void clickSignin(){
 
         //Here is assuming that it was able to verify the account
 

@@ -24,7 +24,7 @@ public class BidStall extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bid_stall);
+        setContentView(R.layout.content_bid_stall);
         //Retrieve stalls and set all information.
         intent = getIntent();
         stall = (Stalls)intent.getSerializableExtra("stall");
@@ -71,5 +71,11 @@ public class BidStall extends AppCompatActivity {
             }
         }
     }
+
+    /*public void adapterClickUserName(View view){
+        ClickUserName clickUserName = new ClickUserName();
+        Intent newIntent = clickUserName.clickUserName(this, view, new ElasticSearchCtr.GetAccount());
+        startActivity(newIntent);
+    }*/
 
 }

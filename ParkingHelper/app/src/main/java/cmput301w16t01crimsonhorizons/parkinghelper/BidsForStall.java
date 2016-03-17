@@ -2,14 +2,9 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ListView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class BidsForStall extends AppCompatActivity {
@@ -19,7 +14,7 @@ public class BidsForStall extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bids_for_stall);
+        setContentView(R.layout.content_bids_for_stall);
         Intent intent = getIntent();
         stall= (Stalls) intent.getSerializableExtra("entry");
         ArrayList<String>all = stall.getLstBidders();
@@ -38,4 +33,10 @@ public class BidsForStall extends AppCompatActivity {
         stall.setBorrower(bidder);
         stall.setStatus("Borrowed");
     }
+
+   /* public void adapterClickUserName(View view){
+        ClickUserName clickUserName = new ClickUserName();
+        Intent newIntent = clickUserName.clickUserName(this, view, new ElasticSearchCtr.GetAccount());
+        startActivity(newIntent);
+    }*/
 }
