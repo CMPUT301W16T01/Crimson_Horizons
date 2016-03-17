@@ -55,6 +55,7 @@ public class TestSearch extends ActivityInstrumentationTestCase2 {
         stalls.setOwner(account1.getEmail());
         stalls.setStatus("available");
         stalls.setDescription("A test stall");
+        stalls.setDescription("__test__");
 
         CurrentAccount.setAccount(account2);
     }
@@ -115,9 +116,9 @@ public class TestSearch extends ActivityInstrumentationTestCase2 {
     public void testSearchKeyWords(){
 
         Search searchActivity = (Search)getActivity();
-        makeSearch("(test 1)");
+        makeSearch("Best");
         while (searchActivity.getResults().isEmpty());
-        assertTrue(searchActivity.getAdapter().getCount() == 2);
+        assertTrue(searchActivity.getAdapter().getCount() == 1);
 
     }
 
