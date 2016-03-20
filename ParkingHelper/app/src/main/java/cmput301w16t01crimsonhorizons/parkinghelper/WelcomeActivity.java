@@ -26,11 +26,11 @@ public class WelcomeActivity extends AppCompatActivity {
         AsyncTask<Account, Void, Boolean> execute2 = new ElasticSearchCtr.addUser().execute(a2);
         setResult(RESULT_OK);
 */
-
-/*        Stalls s1 = new Stalls();
-        s1.setOwner("ABC");
-        s1.setStatus("Borrowed");
-        s1.setDescription("owned by ABC, borrowed by 123@123");
+/*
+        Stalls s1 = new Stalls();
+        s1.setOwner("999@999");
+        s1.setStatus("Bidded");
+        s1.setDescription(" 2nd owned by ABC, borrowed by 123@123");
         s1.setBorrower("123@123");
         AsyncTask<Stalls, Void, Void> s1execute = new ElasticSearchCtr.MakeStall().execute(s1);
         setResult(RESULT_OK);*/

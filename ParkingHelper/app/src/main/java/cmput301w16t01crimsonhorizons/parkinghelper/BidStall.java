@@ -59,7 +59,8 @@ public class BidStall extends AppCompatActivity {
         } else {
             stall.setStatus("Bidded");
             stall.setBidAmt(BidAmt);
-            stall.getLstBidders().add(CurrentAccount.getAccount().getEmail()+" "+BidAmt.toString());
+            String bidderInfo = CurrentAccount.getAccount().getEmail()+" "+BidAmt;
+            stall.setLstBidders(stall.getLstBidders() + "," + bidderInfo);
             stall.setBidder(account.getEmail());
             Commands command = new EditStallSave(stall);
             Boolean check = command.execute();

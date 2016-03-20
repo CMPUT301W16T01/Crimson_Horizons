@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 public class AddStall extends AppCompatActivity {
     protected Stalls stall;
     private Intent intent;
@@ -38,7 +40,6 @@ public class AddStall extends AppCompatActivity {
         stall = new Stalls();
         EditText title = (EditText)findViewById(R.id.NamePrompET);
         EditText description = (EditText)findViewById(R.id.DescriptionET);
-        String newTitle = title.getText().toString();
         String newDescription = description.getText().toString();
         stall.setOwner(CurrentAccount.getAccount().getEmail());
         stall.setDescription(newDescription);

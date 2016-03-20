@@ -3,12 +3,15 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.common.base.Strings;
+import com.google.gson.Gson;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.searchbox.core.Delete;
@@ -17,6 +20,7 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.Update;
+import io.searchbox.indices.mapping.PutMapping;
 
 /**
  * Created by Kevin L on 2/24/2016.
@@ -72,7 +76,7 @@ public class ElasticSearchCtr{
             String query = "{" +"\"query\": {\"bool\": {\"should\":     { \"match\": "+
                     "{ \"Status\": \"Available\" }}," +
                     "\"should\" : {\"match\":{\"Status\": \"Bidded\" }},"+
-                    "\"must\" : {\"match\":{\""+search_string[1]+"\": "+"\""+search_string[0]+"\""+"}}}}}}";
+                    "\"must\" : {\"match\":{\""+search_string[1]+"\": "+"\""+search_string[0]+"\""+"}}}}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
@@ -343,6 +347,7 @@ public class ElasticSearchCtr{
         @Override
         protected Void doInBackground(Stalls... stalls) {
             verifyClient();
+            map();
             //Since AsyncTasks work on arrays, we need to work with arrays as well
             for (int i = 0; i < stalls.length; i++){
                 Stalls stall = stalls[i];
@@ -373,17 +378,31 @@ public class ElasticSearchCtr{
         @Override
         protected Boolean doInBackground(Stalls... stall) {
             verifyClient();
+            map();
             String status = stall[0].getStatus();
             String Description = stall[0].getDescription();
             String Owner = stall[0].getOwner();
             Double BidAmt = stall[0].getBidAmt();
             String Bidder = stall[0].getBidder();
+            String Borrower = stall[0].getBorrower();
+            String LstBidders = stall[0].getLstBidders();
+            Double[] location = stall[0].getLocation();
             String doc = "{" +
                     "\"doc\": { \"Status\": " + "\""+ status + "\", " +
                     " \"Description\": " + "\""+ Description + "\", " +
                     " \"Owner\": " + "\""+ Owner + "\", " +
                     " \"BidAmt\": " + "\"" + BidAmt + "\", " +
-                    " \"Bidder\": " + "\"" + Bidder + "\"" +"}}";
+                    " \"Bidder\": " + "\"" + Bidder + "\"," +
+                    " \"LstBidders\": " + "\"" +LstBidders+ "\"," +
+                    " \"location\": [" +location[0].toString()+ "," +
+                                        location[1].toString()+"],"+
+                    " \"Borrower\": " + "\"" + Borrower + "\""+ "}," +
+                    "    \"stall\" : {\n" +
+                    "        \"properties\" : {\n" +
+                    "            \"location\" : {\"type\" : \"geo_point\"}\n" +
+                    "        }\n" +
+                    "    }\n" +
+                    "}";
             try {
                 DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
                                     type("stall_database").id(stall[0].getStallID()).build());
@@ -409,7 +428,7 @@ public class ElasticSearchCtr{
         @Override
         protected Boolean doInBackground(Stalls... stall) {
             verifyClient();
-
+            map();
             try {
                 DocumentResult result = client.execute(new Delete.Builder(stall[0].getStallID())
                         .index("t01")
@@ -439,6 +458,7 @@ public class ElasticSearchCtr{
         @Override
         protected ArrayList<Stalls> doInBackground(String... params) {
             verifyClient();
+            map();
             //start initial array list empty.
             ArrayList<Stalls> returnStalls = new ArrayList<Stalls>();
             String query = "{" +"\"query\": {\"bool\": {\"should\":     { \"match\": "+
@@ -450,8 +470,11 @@ public class ElasticSearchCtr{
             try {
                 SearchResult execute = client.execute(search);
                 if (execute.isSucceeded()){
-                   List<Stalls> stalls = execute.getSourceAsObjectList(Stalls.class);
-                   returnStalls.addAll(stalls);
+                    List<String> stalls = execute.getSourceAsStringList();
+                    List<Stalls> another1 = execute.getSourceAsObjectList(Stalls.class);
+                    String temp = "hi";
+                    returnStalls.addAll(another1);
+
                 }
             } catch (IOException e) {
                 Log.i("TODO", "SEARCH PROBLEMS");
@@ -471,6 +494,7 @@ public class ElasticSearchCtr{
         @Override
         protected ArrayList<Stalls> doInBackground(String... search_string) {
             verifyClient();
+            map();
             ArrayList<Stalls> returnedStalls = new ArrayList<Stalls>();
             List<Stalls> stalls;
             //start initial array list empty.
@@ -498,12 +522,25 @@ public class ElasticSearchCtr{
     public static void verifyClient(){
         //verify that "client" exists and if it does not make it.
         //This had to be done the other functions anyway. Just make a helper function.
+
         if (client == null) {
             DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080");
             DroidClientConfig config = builder.build();
             JestClientFactory factory = new JestClientFactory();
             factory.setDroidClientConfig(config);
             client = (JestDroidClient) factory.getObject();
+        }
+    }
+    public static void map(){
+        PutMapping putMapping = new PutMapping.Builder(
+                "t01",
+                "stall_database",
+                "{ \"location\" : {\"type\" : \"geo_point\" } }"
+        ).build();
+        try {
+            client.execute(putMapping);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

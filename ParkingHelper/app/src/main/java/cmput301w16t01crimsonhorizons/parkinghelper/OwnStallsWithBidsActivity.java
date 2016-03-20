@@ -45,9 +45,9 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
             EditText lv = (EditText)findViewById(R.id.EmailET);
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent clickStall = new Intent(view.getContext(), BidsForStall.class);
-                Stalls entry = (Stalls)OwnStalls.getItemAtPosition(position);
-                clickStall.putExtra("entry", entry);
+                Intent clickStall = new Intent(getApplicationContext(), BidsForStall.class);
+                Stalls stall = (Stalls)OwnStalls.getItemAtPosition(position);
+                clickStall.putExtra("stall", stall);
                 startActivity(clickStall);
 
             }
@@ -93,9 +93,8 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent clickStall = new Intent(view.getContext(), BidsForStall.class);
-                Stalls entry = (Stalls) OwnStalls.getItemAtPosition(position);
-                clickStall.putExtra("entry", entry);
-                clickStall.putExtra("id", position);
+                Stalls stall = (Stalls) OwnStalls.getItemAtPosition(position);
+                clickStall.putExtra("stall", stall);
                 startActivity(clickStall);
             }
         });

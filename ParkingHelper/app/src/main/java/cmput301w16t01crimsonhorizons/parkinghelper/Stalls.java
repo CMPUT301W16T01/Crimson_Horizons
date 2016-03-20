@@ -1,11 +1,18 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.location.Location;
 import android.media.Image;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import com.google.common.base.Strings;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import io.searchbox.annotations.JestId;
+import io.searchbox.indices.mapping.PutMapping;
 
 /**
  * Created by schuman on 2/23/16.
@@ -19,26 +26,30 @@ public class Stalls implements Serializable{
     private String Status = "";
     private Double BidAmt = 0.00;
     private String Bidder = "";
-
     private String Borrower = "";
-    ArrayList<String>LstBidders = new ArrayList<>();
+    private String LstBidders = "";
+    private Double[] location = {0.00,0.00};
+    public Double[] getLocation() {
+        return location;
+    }
+    public void setLocation(Double[] location) {
+        this.location = location;
+    }
 
     //// TODO: 3/10/2016 MAKE THE IMAGE STORE PROPERLY
     private String image;
-
-    public String getBorrower() {
+        public String getBorrower() {
         return Borrower;
     }
     public void setBorrower(String borrower) {
-        Borrower = borrower;
+        this.Borrower = borrower;
     }
 
-
-    public ArrayList<String > getLstBidders() {
+    public String getLstBidders() {
         return LstBidders;
     }
 
-    public void setLstBidders(ArrayList<String > lstBidders) {
+    public void setLstBidders(String lstBidders) {
         LstBidders = lstBidders;
     }
 
@@ -92,14 +103,10 @@ public class Stalls implements Serializable{
     public void setStatus(String status) {
         Status = status;
     }
-
     public String getStallID() {
         return StallID;
     }
-
     public void setStallID(String stallID) {
         StallID = stallID;
     }
-
-
 }

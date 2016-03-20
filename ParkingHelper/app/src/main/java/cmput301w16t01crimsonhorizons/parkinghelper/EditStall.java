@@ -31,9 +31,13 @@ public class EditStall extends AppCompatActivity {
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
         EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
         EditText status = (EditText)findViewById(R.id.StatusEditStallEv);
+        EditText longitude = (EditText)findViewById(R.id.longitudeEditStallET);
+        EditText latitude = (EditText)findViewById(R.id.latitudeEditStallET);
         title.setText(stall.getOwner());
         status.setText(stall.getStatus());
         description.setText(stall.getDescription());
+        longitude.setText(stall.getLocation()[0].toString());
+        latitude.setTag(stall.getLocation()[1].toString());
     }
     @Override
     protected void onStart(){
@@ -62,12 +66,18 @@ public class EditStall extends AppCompatActivity {
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
         EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
         EditText status = (EditText)findViewById(R.id.StatusEditStallEv);
+        EditText longitude = (EditText)findViewById(R.id.longitudeEditStallET);
+        EditText latitude = (EditText)findViewById(R.id.latitudeEditStallET);
+        Double[] location_double = new Double[2];
+        location_double[0]=Double.parseDouble(longitude.getText().toString());
+        location_double[1]=Double.parseDouble(latitude.getText().toString());
         String newTitle = title.getText().toString();
         String newDescription = description.getText().toString();
         String newStatus = status.getText().toString();
         stall.setDescription(newDescription);
         stall.setStatus(newStatus);
         stall.setOwner(newTitle);
+        stall.setLocation(location_double);
         Commands command = new EditStallSave(stall);
         Boolean check = command.execute();
         if (check){
