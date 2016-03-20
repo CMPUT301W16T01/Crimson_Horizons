@@ -62,9 +62,9 @@
         android:layout_height="wrap_content"
         android:text="Add"
         android:id="@+id/AddInAddBtn"
-        android:layout_above="@+id/CancelInAddBtn"
-        android:layout_centerHorizontal="true"
-        android:onClick="saveStallInformation"/>
+        android:onClick="saveStallInformation"
+        android:layout_alignTop="@+id/CancelInAddBtn"
+        android:layout_toEndOf="@+id/DescriptionPrompEditStall" />
 
     <Button
         android:layout_width="wrap_content"
@@ -92,5 +92,30 @@
         android:hint="As longitude,latitude (eg -115.0132 53.0123)"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/AddInAddBtn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Picture"
+        android:id="@+id/pictureAddStallButton"
+        android:layout_above="@+id/AddInAddBtn"
+        android:layout_alignStart="@+id/AddInAddBtn"
+        android:layout_toStartOf="@+id/CancelInAddBtn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove"
+        android:id="@+id/button"
+        android:layout_alignTop="@+id/pictureAddStallButton"
+        android:layout_toEndOf="@+id/pictureAddStallButton" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addStallImage"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

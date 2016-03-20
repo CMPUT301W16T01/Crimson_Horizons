@@ -133,7 +133,16 @@
         android:id="@+id/latitudeEditStallET"
         android:hint = "enter latitude"
         android:layout_alignTop="@+id/longitudeEditStallET"
-        android:layout_toEndOf="@+id/ImageEditStall" />
+        android:layout_toEndOf="@+id/ImageEditStall"
+        android:layout_alignEnd="@+id/EditStallTitle"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editStallImage"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/StatusEditStallEv" />
 
 
 </RelativeLayout>
