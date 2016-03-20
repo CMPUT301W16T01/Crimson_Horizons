@@ -1,10 +1,13 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,14 +21,20 @@ import java.util.ArrayList;
 public class EditStall extends AppCompatActivity {
     protected Stalls stall;
     private Intent intent;
+    static final int REQUEST_IMAGE_CAPTURE = 1234;
+    private Bitmap thumbnail;
+    private ImageView picture;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_stall);
+        setContentView(R.layout.content_edit_stall);
         //UpdateCommand my stall that user clicked
         intent = getIntent();
         stall = (Stalls)intent.getSerializableExtra("entry");
         int pos = intent.getIntExtra("id",-1);
+
+        picture = (ImageView) findViewById(R.id.editStallImage);
 
         //Set all the fields
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
@@ -88,7 +97,11 @@ public class EditStall extends AppCompatActivity {
     }
 
     public void takePicture(View view){
-        Intent intent = new Intent();
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (intent.resolveActivity(getPackageManager()) != null){
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+        }
+
     }
     public void update(){
         stall = (Stalls)intent.getSerializableExtra("entry");
@@ -101,6 +114,15 @@ public class EditStall extends AppCompatActivity {
         title.setText(stall.getOwner());
         status.setText(stall.getStatus());
         description.setText(stall.getDescription());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
+            Bundle extras = data .getExtras();
+            thumbnail = (Bitmap) extras.get("data");
+            picture.setImageBitmap(thumbnail);
+        }
     }
 
 }
