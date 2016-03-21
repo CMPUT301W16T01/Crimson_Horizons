@@ -61,3 +61,25 @@ postcondition:		The program notifies the owner of a bid
 extends:		bidOnParkingStall	
 basic flow: 	1	Program sends notification to owner
 		2	Owner recieves notification on their main menu
+		
+9.1.1
+use case name:		addPhotoToProfile
+participating actors:	user (primary)
+goal:			The user's picture is added to a stall
+trigger:		User clicks create stall
+precondition:		program knows user data-base, and stall data-base
+extends:		addNewItem
+basic flow:	1	User clicks add photo
+		2	Program starts the camera program
+		3	User takes picture
+		4	Program adds the picture to the stall and returns to the add stall activity
+
+9.2.1
+use case name:		addPhotoToProfile
+participating actors:	user (primary)
+goal:			The user's picture is removed from a stall
+trigger:		User clicks edit stall
+precondition:		program knows user data-base, and stall data-base
+extends:		editParkingStall
+basic flow:	1	User clicks remove photo
+		2	Program removes the picture from the stall
