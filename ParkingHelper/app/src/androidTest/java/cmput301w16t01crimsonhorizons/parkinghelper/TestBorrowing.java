@@ -23,7 +23,7 @@ public class TestBorrowing extends ActivityInstrumentationTestCase2<HomepageActi
         HomepageActivity activity = getActivity();
         Button borrowed = (Button) activity.findViewById(R.id.BorrowingBtn);
         borrowed.performClick();
-        BorrowedStalls borrowedStalls = new BorrowedStalls();
+        BorrowStallActivity borrowedStalls = new BorrowStallActivity();
         ListView lvBorrowed = (ListView)borrowedStalls.findViewById(R.id.borrowedStallsList);
         ViewAsserts.assertOnScreen(borrowedStalls.getWindow().getDecorView(), lvBorrowed);
     }

@@ -44,7 +44,7 @@ public class TestBidsForStall  extends ActivityInstrumentationTestCase2<BidsForS
         ArrayList<String> lstBidders = new ArrayList<>();
         lstBidders.add("bid1");
         lstBidders.add("bid2");
-        s1.setLstBidders(lstBidders);
+/*        s1.setLstBidders(lstBidders);*/
 
         Intent i = new Intent();
         i.putExtra("entry", s1);
