@@ -14,12 +14,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.searchbox.client.JestResult;
 import io.searchbox.core.Delete;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.Update;
+import io.searchbox.indices.mapping.DeleteMapping;
 import io.searchbox.indices.mapping.PutMapping;
 
 /**
@@ -347,7 +349,6 @@ public class ElasticSearchCtr{
         @Override
         protected Void doInBackground(Stalls... stalls) {
             verifyClient();
-            map();
             //Since AsyncTasks work on arrays, we need to work with arrays as well
             for (int i = 0; i < stalls.length; i++){
                 Stalls stall = stalls[i];
@@ -378,7 +379,6 @@ public class ElasticSearchCtr{
         @Override
         protected Boolean doInBackground(Stalls... stall) {
             verifyClient();
-            map();
             String status = stall[0].getStatus();
             String Description = stall[0].getDescription();
             String Owner = stall[0].getOwner();
@@ -428,7 +428,6 @@ public class ElasticSearchCtr{
         @Override
         protected Boolean doInBackground(Stalls... stall) {
             verifyClient();
-            map();
             try {
                 DocumentResult result = client.execute(new Delete.Builder(stall[0].getStallID())
                         .index("t01")
@@ -458,7 +457,6 @@ public class ElasticSearchCtr{
         @Override
         protected ArrayList<Stalls> doInBackground(String... params) {
             verifyClient();
-            map();
             //start initial array list empty.
             ArrayList<Stalls> returnStalls = new ArrayList<Stalls>();
             String query = "{" +"\"query\": {\"bool\": {\"should\":     { \"match\": "+
@@ -494,7 +492,6 @@ public class ElasticSearchCtr{
         @Override
         protected ArrayList<Stalls> doInBackground(String... search_string) {
             verifyClient();
-            map();
             ArrayList<Stalls> returnedStalls = new ArrayList<Stalls>();
             List<Stalls> stalls;
             //start initial array list empty.
@@ -529,16 +526,25 @@ public class ElasticSearchCtr{
             JestClientFactory factory = new JestClientFactory();
             factory.setDroidClientConfig(config);
             client = (JestDroidClient) factory.getObject();
+            /*map();*/
         }
     }
     public static void map(){
         PutMapping putMapping = new PutMapping.Builder(
                 "t01",
                 "stall_database",
-                "{ \"location\" : {\"type\" : \"geo_point\" } }"
+                "{ \"location\" : {\"type\" : \"geo_point\",\"store\":\"yes\" } }"
         ).build();
         try {
-            client.execute(putMapping);
+           /* DeleteMapping deleteMapping = new DeleteMapping.Builder("t01","stall_database").build();
+            client.execute(deleteMapping);*/
+            JestResult Result = client.execute(putMapping);
+            if (Result.isSucceeded()){
+                String done = "yes";
+            } else {
+                String done = "no";
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

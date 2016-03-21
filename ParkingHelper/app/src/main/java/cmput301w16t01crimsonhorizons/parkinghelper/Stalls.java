@@ -1,9 +1,11 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.graphics.Point;
 import android.location.Location;
 import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.webkit.GeolocationPermissions;
 
 import com.google.common.base.Strings;
 
@@ -29,9 +31,13 @@ public class Stalls implements Serializable{
     private String Borrower = "";
     private String LstBidders = "";
     private Double[] location = {0.00,0.00};
+
+
     public Double[] getLocation() {
         return location;
     }
+
+
     public void setLocation(Double[] location) {
         this.location = location;
     }

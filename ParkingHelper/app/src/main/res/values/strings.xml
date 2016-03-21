@@ -38,4 +38,5 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_edit_stall_for_testing">EditStallForTesting</string>
     <string name="title_activity_borrow_stall">BorrowStallActivity</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

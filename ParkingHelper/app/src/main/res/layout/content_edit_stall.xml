@@ -112,7 +112,7 @@
         android:layout_height="wrap_content"
         android:text="Location"
         android:id="@+id/LocationEditStallTV"
-        android:layout_below="@+id/StatusEditStallEv"
+        android:layout_above="@+id/longitudeEditStallET"
         android:layout_alignParentStart="true" />
 
     <EditText
@@ -121,10 +121,8 @@
         android:ems="10"
         android:id="@+id/longitudeEditStallET"
         android:hint="enter longitude"
-        android:layout_below="@+id/LocationEditStallTV"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
-        android:layout_toStartOf="@+id/latitudeEditStallET" />
+        android:layout_above="@+id/ImageEditStall"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -133,8 +131,7 @@
         android:id="@+id/latitudeEditStallET"
         android:hint = "enter latitude"
         android:layout_alignTop="@+id/longitudeEditStallET"
-        android:layout_toEndOf="@+id/ImageEditStall"
-        android:layout_alignEnd="@+id/EditStallTitle"/>
+        android:layout_alignStart="@+id/ImageEditStall" />
 
     <ImageView
         android:layout_width="wrap_content"

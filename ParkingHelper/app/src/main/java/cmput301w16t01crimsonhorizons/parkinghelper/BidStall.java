@@ -1,6 +1,7 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,6 +32,8 @@ public class BidStall extends AppCompatActivity {
         TextView HighestBid = (TextView)findViewById(R.id.BidStallHighestBidDisp);
         TextView Owner = (TextView)findViewById(R.id.BidStallNameDisp);
         TextView Descrip = (TextView)findViewById(R.id.BidStallDescriptionDisp);
+        TextView latitude = (TextView)findViewById(R.id.latitudeBiStallTV);
+        TextView longtitude = (TextView)findViewById(R.id.longitudeBidStallTV);
         Double temp = Double.valueOf(stall.getBidAmt());
         if (temp==null){
             temp = 0.00;
@@ -38,6 +41,8 @@ public class BidStall extends AppCompatActivity {
         HighestBid.setText(temp.toString());
         Owner.setText(stall.getOwner().toString());
         Descrip.setText(stall.getDescription().toString());
+        longtitude.setText(stall.getLocation()[1].toString());
+        latitude.setText(stall.getLocation()[0].toString());
     }
 
     /**
@@ -73,10 +78,22 @@ public class BidStall extends AppCompatActivity {
         }
     }
 
-    /*public void adapterClickUserName(View view){
+    public void getDirection(View view){
+        Double lat = stall.getLocation()[1];
+        Double lon = stall.getLocation()[0];
+        String query = "geo:"+lat.toString()+","+lon.toString();
+/*        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(query));
+        i.setClassName("com.google.android.apps.maps",
+                "com.google.android.maps.MapsActivity");
+        startActivity(i);*/
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+0+","+0+"&daddr="+lat+","+lon));
+        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+        startActivity(intent);
+    }
+    public void adapterClickUserName(View view){
         ClickUserName clickUserName = new ClickUserName();
         Intent newIntent = clickUserName.clickUserName(this, view, new ElasticSearchCtr.GetAccount());
         startActivity(newIntent);
-    }*/
+    }
 
 }

@@ -36,7 +36,7 @@
         android:id="@+id/BidStallHighestBidDisp"
         android:layout_below="@+id/BidStallHighest"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignEnd="@+id/longitudeTtitleAddStallTV" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,7 +53,8 @@
         android:id="@+id/BidStallNameDisp"
         android:layout_below="@+id/BidStallName"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toStartOf="@+id/longitudeTtitleAddStallTV"
+        android:layout_alignEnd="@+id/longitudeTtitleAddStallTV" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,16 +71,17 @@
         android:id="@+id/BidStallDescriptionDisp"
         android:layout_below="@+id/BidStallDescription"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/longitudeTtitleAddStallTV" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Bid ($/hr)"
         android:id="@+id/BidStallBidAmt"
-        android:layout_marginTop="85dp"
-        android:layout_below="@+id/BidStallDescriptionDisp"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/latitudeTitleAddStallTV"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="35dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -89,15 +91,62 @@
         android:id="@+id/BidStallAmtET"
         android:layout_below="@+id/BidStallBidAmt"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignEnd="@+id/BidStallDescriptionDisp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bid"
         android:id="@+id/BidStallBidBtn"
+        android:onClick="BidStall"
         android:layout_below="@+id/BidStallAmtET"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
-        android:onClick="BidStall"/>
+        android:layout_toEndOf="@+id/latitudeTitleAddStallTV"
+        android:layout_marginStart="29dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/longitudeTtitleAddStallTV"
+        android:text="longitude"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/latitudeTitleAddStallTV"
+        android:text="latitude"
+        android:layout_alignBaseline="@+id/latitudeBiStallTV"
+        android:layout_alignBottom="@+id/latitudeBiStallTV"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/longitudeBidStallTV"
+        android:text="No value"
+        android:layout_alignTop="@+id/longitudeTtitleAddStallTV"
+        android:layout_toEndOf="@+id/BidStallHighest" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/latitudeBiStallTV"
+        android:text="No value"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/longitudeTtitleAddStallTV"
+        android:layout_toEndOf="@+id/BidStallDescription" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Direction"
+        android:id="@+id/directionBidStallBtn"
+        android:layout_alignBottom="@+id/BidStallBidBtn"
+        android:layout_alignStart="@+id/BidStallTitle"
+        android:onClick="getDirection"/>
 </RelativeLayout>

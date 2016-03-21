@@ -46,7 +46,7 @@ public class EditStall extends AppCompatActivity {
         status.setText(stall.getStatus());
         description.setText(stall.getDescription());
         longitude.setText(stall.getLocation()[0].toString());
-        latitude.setTag(stall.getLocation()[1].toString());
+        latitude.setText(stall.getLocation()[1].toString());
     }
     @Override
     protected void onStart(){
