@@ -78,6 +78,12 @@ public class BidStall extends AppCompatActivity {
         }
     }
 
+    /**
+     * This is the function called when the direction is clicked on the screen.
+     * This is where bidders (potential bidders) can look at the possible stalls
+     * and get the idea of where they are on google maps.
+     * @param view
+     */
     public void getDirection(View view){
         Double lat = stall.getLocation()[1];
         Double lon = stall.getLocation()[0];

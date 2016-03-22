@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class AddStall extends AppCompatActivity {
     protected Stalls stall;
-    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,18 +22,6 @@ public class AddStall extends AppCompatActivity {
         setContentView(R.layout.activity_add_stall);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        intent = getIntent();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void saveStallInformation(View view){

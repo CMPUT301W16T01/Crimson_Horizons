@@ -396,12 +396,7 @@ public class ElasticSearchCtr{
                     " \"LstBidders\": " + "\"" +LstBidders+ "\"," +
                     " \"location\": [" +location[0].toString()+ "," +
                                         location[1].toString()+"],"+
-                    " \"Borrower\": " + "\"" + Borrower + "\""+ "}," +
-                    "    \"stall\" : {\n" +
-                    "        \"properties\" : {\n" +
-                    "            \"location\" : {\"type\" : \"geo_point\"}\n" +
-                    "        }\n" +
-                    "    }\n" +
+                    " \"Borrower\": " + "\"" + Borrower + "\""+ "}" +
                     "}";
             try {
                 DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
@@ -526,27 +521,6 @@ public class ElasticSearchCtr{
             JestClientFactory factory = new JestClientFactory();
             factory.setDroidClientConfig(config);
             client = (JestDroidClient) factory.getObject();
-            /*map();*/
-        }
-    }
-    public static void map(){
-        PutMapping putMapping = new PutMapping.Builder(
-                "t01",
-                "stall_database",
-                "{ \"location\" : {\"type\" : \"geo_point\",\"store\":\"yes\" } }"
-        ).build();
-        try {
-           /* DeleteMapping deleteMapping = new DeleteMapping.Builder("t01","stall_database").build();
-            client.execute(deleteMapping);*/
-            JestResult Result = client.execute(putMapping);
-            if (Result.isSucceeded()){
-                String done = "yes";
-            } else {
-                String done = "no";
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
