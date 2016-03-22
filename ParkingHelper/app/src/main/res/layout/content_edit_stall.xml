@@ -104,7 +104,7 @@
         android:text="Picture"
         android:id="@+id/PictureEditStallBtn"
         android:onClick="takePicture"
-        android:layout_alignTop="@+id/EditStallDeleteBtn"
+        android:layout_alignTop="@+id/ImageEditStall"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -140,6 +140,15 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/StatusEditStallEv" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Del Pic"
+        android:id="@+id/DelPicEditStallBtn"
+        android:layout_alignTop="@+id/EditStallDeleteBtn"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

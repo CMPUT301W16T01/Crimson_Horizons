@@ -87,13 +87,21 @@ public class BidStall extends AppCompatActivity {
     public void getDirection(View view){
         Double lat = stall.getLocation()[1];
         Double lon = stall.getLocation()[0];
-        String query = "geo:"+lat.toString()+","+lon.toString()+"?z=100";
+        String label = "Here it is";
+        String uriBegin = "geo:"+lat.toString()+","+lon.toString();
+        String query = lat.toString()+","+lon.toString()+"(" + label + ")";
+        String encodedQuery = Uri.encode( query  );
+        String uriString = uriBegin + "?q=" + encodedQuery;
+        Uri uri = Uri.parse( uriString );
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, uri );
+        startActivity( intent );
+        /*String query = "geo:"+lat.toString()+","+lon.toString()+"?z=100,q="+lat.toString()+","+lon.toString()+"(PLACE)";
         Uri gmmIntentUri = Uri.parse(query);
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         if (mapIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(mapIntent);
-        }
+        }*/
     }
     public void adapterClickUserName(View view){
         ClickUserName clickUserName = new ClickUserName();
