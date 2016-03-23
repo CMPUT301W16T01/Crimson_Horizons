@@ -197,6 +197,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cmput301w16t01crimsonhorizons.parkinghelper.EditStall" />
         </activity>
+        <activity
+            android:name=".ReturningStallActivity"
+            android:label="@string/title_activity_returning_stall"
+            android:parentActivityName=".LendingStalls"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cmput301w16t01crimsonhorizons.parkinghelper.LendingStalls" />
+        </activity>
     </application>
 
 </manifest>
