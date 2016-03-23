@@ -1,28 +1,23 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.common.base.Strings;
-import com.google.gson.Gson;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import io.searchbox.client.JestResult;
 import io.searchbox.core.Delete;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.Update;
-import io.searchbox.indices.mapping.DeleteMapping;
-import io.searchbox.indices.mapping.PutMapping;
 
 /**
  * Created by Kevin L on 2/24/2016.
@@ -387,6 +382,7 @@ public class ElasticSearchCtr{
             String Borrower = stall[0].getBorrower();
             String LstBidders = stall[0].getLstBidders();
             Double[] location = stall[0].getLocation();
+            Bitmap thumbnail = stall[0].getThumbnail();
             String doc = "{" +
                     "\"doc\": { \"Status\": " + "\""+ status + "\", " +
                     " \"Description\": " + "\""+ Description + "\", " +
@@ -396,7 +392,8 @@ public class ElasticSearchCtr{
                     " \"LstBidders\": " + "\"" +LstBidders+ "\"," +
                     " \"location\": [" +location[0].toString()+ "," +
                                         location[1].toString()+"],"+
-                    " \"Borrower\": " + "\"" + Borrower + "\""+ "}" +
+                    " \"Borrower\": " + "\"" + Borrower + "\""+ "," +
+                    " \"Thumbnail\": " + "\"" + thumbnail.toString() + "\""+ "}" +
                     "}";
             try {
                 DocumentResult result = client.execute(new Update.Builder(doc).index("t01").

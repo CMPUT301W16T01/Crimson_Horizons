@@ -148,7 +148,8 @@
         android:text="Del Pic"
         android:id="@+id/DelPicEditStallBtn"
         android:layout_alignTop="@+id/EditStallDeleteBtn"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="deletePicture" />
 
 
 </RelativeLayout>

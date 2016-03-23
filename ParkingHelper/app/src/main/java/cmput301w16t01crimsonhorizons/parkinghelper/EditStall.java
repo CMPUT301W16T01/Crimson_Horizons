@@ -2,6 +2,7 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 /**
  * Created by Kevin
@@ -22,8 +21,8 @@ public class EditStall extends AppCompatActivity {
     protected Stalls stall;
     private Intent intent;
     static final int REQUEST_IMAGE_CAPTURE = 1234;
-    private Bitmap thumbnail;
-    private ImageView picture;
+    //private Bitmap thumbnail;
+    //private ImageView picture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,19 +33,19 @@ public class EditStall extends AppCompatActivity {
         stall = (Stalls)intent.getSerializableExtra("entry");
         int pos = intent.getIntExtra("id",-1);
 
-        picture = (ImageView) findViewById(R.id.editStallImage);
-
         //Set all the fields
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
         EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
         EditText status = (EditText)findViewById(R.id.StatusEditStallEv);
         EditText longitude = (EditText)findViewById(R.id.longitudeEditStallET);
         EditText latitude = (EditText)findViewById(R.id.latitudeEditStallET);
+        ImageView picture = (ImageView)findViewById(R.id.editStallImage);
         title.setText(stall.getOwner());
         status.setText(stall.getStatus());
         description.setText(stall.getDescription());
         longitude.setText(stall.getLocation()[0].toString());
         latitude.setText(stall.getLocation()[1].toString());
+        picture.setImageBitmap(stall.getThumbnail());
     }
     @Override
     protected void onStart(){
@@ -77,16 +76,19 @@ public class EditStall extends AppCompatActivity {
         EditText status = (EditText)findViewById(R.id.StatusEditStallEv);
         EditText longitude = (EditText)findViewById(R.id.longitudeEditStallET);
         EditText latitude = (EditText)findViewById(R.id.latitudeEditStallET);
+        ImageView picture = (ImageView)findViewById(R.id.editStallImage);
         Double[] location_double = new Double[2];
         location_double[0]=Double.parseDouble(longitude.getText().toString());
         location_double[1]=Double.parseDouble(latitude.getText().toString());
         String newTitle = title.getText().toString();
         String newDescription = description.getText().toString();
         String newStatus = status.getText().toString();
+        Bitmap thumbnail = ((BitmapDrawable)picture.getDrawable()).getBitmap();
         stall.setDescription(newDescription);
         stall.setStatus(newStatus);
         stall.setOwner(newTitle);
         stall.setLocation(location_double);
+        stall.setThumbnail(thumbnail);
         Commands command = new EditStallSave(stall);
         Boolean check = command.execute();
         if (check){
@@ -111,8 +113,8 @@ public class EditStall extends AppCompatActivity {
         if (intent.resolveActivity(getPackageManager()) != null){
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
-
     }
+
     public void update(){
         stall = (Stalls)intent.getSerializableExtra("entry");
         int pos = intent.getIntExtra("id",-1);
@@ -121,16 +123,25 @@ public class EditStall extends AppCompatActivity {
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
         EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
         EditText status = (EditText)findViewById(R.id.StatusEditStallEv);
+        ImageView picture = (ImageView)findViewById(R.id.editStallImage);
         title.setText(stall.getOwner());
         status.setText(stall.getStatus());
         description.setText(stall.getDescription());
+        picture.setImageBitmap(stall.getThumbnail());
+    }
+
+    public void deletePicture(View view){
+        ImageView picture = (ImageView)findViewById(R.id.editStallImage);
+        picture.setImageBitmap(null);
+        stall.setThumbnail(null);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
             Bundle extras = data .getExtras();
-            thumbnail = (Bitmap) extras.get("data");
+            ImageView picture = (ImageView)findViewById(R.id.editStallImage);
+            Bitmap thumbnail = (Bitmap) extras.get("data");
             picture.setImageBitmap(thumbnail);
         }
     }
