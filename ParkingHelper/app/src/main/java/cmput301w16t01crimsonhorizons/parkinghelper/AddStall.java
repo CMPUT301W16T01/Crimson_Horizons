@@ -1,6 +1,7 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -45,6 +46,11 @@ public class AddStall extends AppCompatActivity {
         AsyncTask<Stalls, Void, Void> s1execute = new ElasticSearchCtr.MakeStall().execute(stall);
         setResult(RESULT_OK);
         finish();
+    }
+    public void map(View view){
+        String query = "geo:0,0?q=0,0";
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(query));
+        startActivity(intent);
     }
 
 }

@@ -23,7 +23,6 @@ public class LoginCommands extends Commands {
         return false;
     }
     public Boolean CheckCommand(){
-        Boolean check = ElasticSearchCtr.CheckAccount(Email);
-        return check;
+        return ElasticSearchCtr.CheckAccount(Email);
     }
 }

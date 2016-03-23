@@ -87,8 +87,8 @@
         android:text="Delete"
         android:id="@+id/EditStallDeleteBtn"
         android:onClick="deleteStall"
-        android:layout_alignTop="@+id/SaveEdit"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/latitudeEditStallET"
+        android:layout_alignStart="@+id/SaveEdit" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -104,8 +104,8 @@
         android:text="Picture"
         android:id="@+id/PictureEditStallBtn"
         android:onClick="takePicture"
-        android:layout_alignTop="@+id/ImageEditStall"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/longitudeEditStallET"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -147,8 +147,18 @@
         android:layout_height="wrap_content"
         android:text="Del Pic"
         android:id="@+id/DelPicEditStallBtn"
-        android:layout_alignTop="@+id/EditStallDeleteBtn"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/PictureEditStallBtn"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Review"
+        android:id="@+id/ReviewBtnEditStall"
+        android:layout_alignBaseline="@+id/SaveEdit"
+        android:layout_alignBottom="@+id/SaveEdit"
+        android:layout_centerHorizontal="true"
+        android:onClick="reviews"/>
 
 
 </RelativeLayout>

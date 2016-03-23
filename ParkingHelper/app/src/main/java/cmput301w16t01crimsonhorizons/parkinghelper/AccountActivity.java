@@ -44,9 +44,7 @@ public class AccountActivity extends AppCompatActivity {
             StallAry.clear();
             StallAry.addAll(tmp);
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
@@ -118,9 +116,7 @@ public class AccountActivity extends AppCompatActivity {
             tempAry = getStall.get();
             StallAry.clear();
             StallAry.addAll(tempAry);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
         MyStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {

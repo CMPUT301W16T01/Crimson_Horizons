@@ -311,7 +311,7 @@ public class ElasticSearchCtr{
      */
     public static Boolean CheckAccount(String search_string){
         verifyClient();
-        Boolean value = new Boolean(false);
+        Boolean value = false;
         String query = "{" +
                 "    \"query\": {" +
                 "        \"match\" :{ \"Email\":\"" + search_string+ "\""+
@@ -401,11 +401,7 @@ public class ElasticSearchCtr{
             try {
                 DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
                                     type("stall_database").id(stall[0].getStallID()).build());
-                if (result.isSucceeded()){
-                    return true;
-                } else {
-                    return false;
-                }
+                return result.isSucceeded();
             } catch (IOException e) {
                 e.printStackTrace();
             }

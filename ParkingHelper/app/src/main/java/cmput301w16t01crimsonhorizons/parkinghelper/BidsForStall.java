@@ -14,12 +14,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BidsForStall extends AppCompatActivity {
-    private ListView EachStallsWithBids;
+
     private Stalls stall;
-    private CustomLstAdapter myAdapter;
     ArrayList<String>all = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ListView EachStallsWithBids;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_bids_for_stall);
         Intent intent = getIntent();
@@ -31,7 +31,7 @@ public class BidsForStall extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"No one bidded on your stuff",Toast.LENGTH_SHORT).show();
         }
         EachStallsWithBids = (ListView)findViewById(R.id.BidsForStallsLv);
-        myAdapter=new CustomLstAdapter(this,R.layout.bids_for_stalls,all);
+        CustomLstAdapter myAdapter = new CustomLstAdapter(this, R.layout.bids_for_stalls, all);
         EachStallsWithBids.setAdapter(myAdapter);
     }
     //US 05.07.01

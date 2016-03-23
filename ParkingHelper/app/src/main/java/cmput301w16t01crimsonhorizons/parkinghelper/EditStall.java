@@ -135,4 +135,9 @@ public class EditStall extends AppCompatActivity {
         }
     }
 
+    public void reviews(View view){
+        Intent intent = new Intent (this,ReviewsActivity.class);
+        startActivity(intent);
+    }
+
 }

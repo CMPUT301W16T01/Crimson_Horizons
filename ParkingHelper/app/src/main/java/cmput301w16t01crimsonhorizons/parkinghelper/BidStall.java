@@ -17,18 +17,14 @@ import java.text.NumberFormat;
  * This is where user needs to be if user wants to bid on a stall
  */
 public class BidStall extends AppCompatActivity {
-    //These are variables required for this activity
-    // Stall is the stall it has
-    //Intent contains the stall retrieved from searchActivity.
-    private Intent intent;
     private Stalls stall;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_bid_stall);
         //Retrieve stalls and set all information.
-        intent = getIntent();
-        stall = (Stalls)intent.getSerializableExtra("stall");
+        Intent intent = getIntent();
+        stall = (Stalls) intent.getSerializableExtra("stall");
         TextView HighestBid = (TextView)findViewById(R.id.BidStallHighestBidDisp);
         TextView Owner = (TextView)findViewById(R.id.BidStallNameDisp);
         TextView Descrip = (TextView)findViewById(R.id.BidStallDescriptionDisp);
@@ -87,21 +83,9 @@ public class BidStall extends AppCompatActivity {
     public void getDirection(View view){
         Double lat = stall.getLocation()[1];
         Double lon = stall.getLocation()[0];
-        String label = "Here it is";
-        String uriBegin = "geo:"+lat.toString()+","+lon.toString();
-        String query = lat.toString()+","+lon.toString()+"(" + label + ")";
-        String encodedQuery = Uri.encode( query  );
-        String uriString = uriBegin + "?q=" + encodedQuery;
-        Uri uri = Uri.parse( uriString );
-        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, uri );
-        startActivity( intent );
-        /*String query = "geo:"+lat.toString()+","+lon.toString()+"?z=100,q="+lat.toString()+","+lon.toString()+"(PLACE)";
-        Uri gmmIntentUri = Uri.parse(query);
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        if (mapIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(mapIntent);
-        }*/
+        String query = "geo:"+lat.toString()+","+lon.toString()+"?q="+lat.toString()+","+lon.toString();
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(query));
+        startActivity(intent);
     }
     public void adapterClickUserName(View view){
         ClickUserName clickUserName = new ClickUserName();

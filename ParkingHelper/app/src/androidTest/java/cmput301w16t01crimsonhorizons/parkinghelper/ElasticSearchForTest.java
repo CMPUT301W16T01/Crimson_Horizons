@@ -401,15 +401,11 @@ public class ElasticSearchForTest{
             try {
                 DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
                         type("stall_database").id(stall[0].getStallID()).build());
-                if (result.isSucceeded()){
-                    return true;
-                } else {
-                    return false;
-                }
+                return result.isSucceeded();
             } catch (IOException e) {
                 e.printStackTrace();
+                return false;
             }
-            return false;
         }
     }
 
@@ -428,11 +424,7 @@ public class ElasticSearchForTest{
                         .index("t01")
                         .type("stall_database")
                         .build());
-                if (result.isSucceeded()){
-                    return true;
-                } else {
-                    return false;
-                }
+                return result.isSucceeded();
             } catch (IOException e) {
                 e.printStackTrace();
                 return false;
