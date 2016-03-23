@@ -3,26 +3,20 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.common.base.Strings;
-import com.google.gson.Gson;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import io.searchbox.client.JestResult;
 import io.searchbox.core.Delete;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.Update;
-import io.searchbox.indices.mapping.DeleteMapping;
-import io.searchbox.indices.mapping.PutMapping;
 
 /**
  * Created by Kevin L on 2/24/2016.
@@ -161,6 +155,32 @@ public class ElasticSearchCtr{
             //start initial array list empty.
             String query = "{" +"\"query\": {\"bool\": {\"must\":     { \"match\": "+
                     "{ \"Status\": \"Bidded\" }}," +
+                    "\"must\": { \"match\": { \""+search_string[1]+"\": "+"\""+search_string[0]+"\""+"}}}}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
+
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()){
+                    List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
+                    AllStall.addAll(returned_stalls);
+                }
+            } catch (IOException e) {
+                Log.i("TODO", "SEARCH PROBLEMS");
+            }
+
+            return AllStall;
+        }
+    }
+
+
+    public static class GetLendedStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
+        @Override
+        protected ArrayList<Stalls> doInBackground(String... search_string) {
+            verifyClient();
+            ArrayList<Stalls> AllStall = new ArrayList<>();
+            //start initial array list empty.
+            String query = "{" +"\"query\": {\"bool\": {\"must\":     { \"match\": "+
+                    "{ \"Status\": \"Borrowed\" }}," +
                     "\"must\": { \"match\": { \""+search_string[1]+"\": "+"\""+search_string[0]+"\""+"}}}}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
