@@ -1,12 +1,19 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * This is where the user can sign up or login.
@@ -17,50 +24,11 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        //Here is to create database with one thing.
-/*
-        Account a1 = new Account("ABC","123456","workphone");
-        AsyncTask<Account, Void, Boolean> execute = new ElasticSearchCtr.addUser().execute(a1);
-        setResult(RESULT_OK);
-        Account a2 = new Account("123@123","123456","workphone");
-        AsyncTask<Account, Void, Boolean> execute2 = new ElasticSearchCtr.addUser().execute(a2);
-        setResult(RESULT_OK);
-*/
-/*
-        Stalls s1 = new Stalls();
-        s1.setOwner("999@999");
-        s1.setStatus("Bidded");
-        s1.setDescription(" 2nd owned by ABC, borrowed by 123@123");
-        s1.setBorrower("123@123");
-        AsyncTask<Stalls, Void, Void> s1execute = new ElasticSearchCtr.MakeStall().execute(s1);
-        setResult(RESULT_OK);*/
-/*        Stalls s2 = new Stalls();
-        s2.setOwner("123@123");
-
-        s2.setStatus("Available");
-        s2.setDescription("the second stall owned by 123@123");
-        AsyncTask<Stalls, Void, Void> s2execute = new ElasticSearchCtr.MakeStall().execute(s2);
-        setResult(RESULT_OK);*/
-/*
-        Stalls s3 = new Stalls();
-
-        s3.setOwner("ABC");
-        s3.setStatus("Available");
-        s3.setDescription("the seccond stall owned by ABC");
-        AsyncTask<Stalls, Void, Void> s3execute = new ElasticSearchCtr.MakeStall().execute(s3);
-        setResult(RESULT_OK);
-        Stalls s4 = new Stalls();
-        s4.setOwner("123@123");
-        s4.setStatus("Available");
-        s4.setDescription("the second stall owned by 123@123");
-        AsyncTask<Stalls, Void, Void> s4execute = new ElasticSearchCtr.MakeStall().execute(s4);
-        setResult(RESULT_OK);*/
-
+        new CurrentAccount();
     }
     @Override
     protected void onStart(){
         super.onStart();
-        new CurrentAccount();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,8 +53,16 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void clickLogin(View view){
-        Intent intent = new Intent(this,LoginActivity.class);
-        startActivity(intent);
+        OfflineIO io = new OfflineIO();
+        Account user = io.LoadUser(this);
+        if (user!=null){
+            Intent homepage = new Intent(getApplicationContext(),HomepageActivity.class);
+            homepage.putExtra("email",user.getEmail());
+            startActivity(homepage);
+        } else {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void clickSignin(View view){

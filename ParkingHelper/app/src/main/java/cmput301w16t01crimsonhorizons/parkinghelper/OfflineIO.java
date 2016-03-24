@@ -22,22 +22,58 @@ import java.util.ArrayList;
 public class OfflineIO {
     // It sets the constant for the file name that it will always write to.
 
-    private static final String FILENAME ="database";
+    private static final String USER_FILE ="user_file";
+    private static final String STALL_FILE ="stall_file";
     public OfflineIO(){};
     // This just deletes the file
-    public void delete(Context context){
-        context.deleteFile(FILENAME);
-    }
-
     // This returns an array of strings of each entries.
-    public ArrayList<String> LoadFromFile(Context context){
-        ArrayList<String> AllEntries= new ArrayList<String>();
-        ArrayList<String> temp = new ArrayList<String>();
+    public Account LoadUser(Context context){
+        Account AllEntries= null;
         Gson gson = new Gson();
         try {
-            FileInputStream fis = context.openFileInput(FILENAME);
+            FileInputStream fis = context.openFileInput(USER_FILE);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            Type ListType = new TypeToken<ArrayList<String>>(){}.getType();
+            Type ListType = new TypeToken<Account>(){}.getType();
+            AllEntries=gson.fromJson(in,ListType);
+            in.close();
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return AllEntries;
+    }
+    // This write to the file using Gson and Json.
+    // It takes in the array as input and the context, as it needs it to write.
+    public void StoreUser(Account account,Context context){
+        Gson gson = new Gson();
+        try{
+            // It completely rewrites the file.
+            this.deleteUserFile(context);
+            FileOutputStream fos = context.openFileOutput(USER_FILE,Context.MODE_PRIVATE);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+            gson.toJson(account, out);
+            out.flush();
+            out.close();
+            fos.close();
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+            throw new RuntimeException("Error in SaveToFile");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error IOexception");
+        }
+    }
+    public ArrayList<Stalls> LoadStalls(Context context){
+        ArrayList<Stalls> AllEntries= new ArrayList<Stalls>();
+        ArrayList<Stalls> temp = new ArrayList<Stalls>();
+        Gson gson = new Gson();
+        try {
+            FileInputStream fis = context.openFileInput(STALL_FILE);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Type ListType = new TypeToken<ArrayList<Stalls>>(){}.getType();
             temp=gson.fromJson(in,ListType);
             in.close();
             fis.close();
@@ -59,16 +95,14 @@ public class OfflineIO {
         }
         return AllEntries;
     }
-    // This write to the file using Gson and Json.
-    // It takes in the array as input and the context, as it needs it to write.
-    public void CurrentUser(String email,Context context){
+    public void StoreStall(ArrayList<Stalls> stalls,Context context){
         Gson gson = new Gson();
         try{
             // It completely rewrites the file.
-            this.delete(context);
-            FileOutputStream fos = context.openFileOutput(FILENAME,Context.MODE_PRIVATE);
+            this.deleteStallFile(context);
+            FileOutputStream fos = context.openFileOutput(STALL_FILE,Context.MODE_PRIVATE);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
-            gson.toJson(email,out);
+            gson.toJson(stalls, out);
             out.flush();
             out.close();
             fos.close();
@@ -80,5 +114,11 @@ public class OfflineIO {
             e.printStackTrace();
             throw new RuntimeException("Error IOexception");
         }
+    }
+    public void deleteStallFile(Context context){
+        context.deleteFile(STALL_FILE);
+    }
+    public void deleteUserFile(Context context){
+        context.deleteFile(USER_FILE);
     }
 }

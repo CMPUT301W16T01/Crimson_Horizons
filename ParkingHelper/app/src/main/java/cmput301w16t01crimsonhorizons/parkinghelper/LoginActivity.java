@@ -290,10 +290,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             LoginCommands command = new LoginCommands(mEmail);
             UserName = command.CheckCommand();
-            if (UserName){
-                OfflineIO io = new OfflineIO();
-                io.CurrentUser(mEmail,getApplicationContext());
-            }
             return UserName;
         }
 
