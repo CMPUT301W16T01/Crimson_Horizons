@@ -51,6 +51,8 @@ public class HomepageActivity extends AppCompatActivity {
             try {
                 Account account = getAccount.get();
                 ArrayList<Stalls> stallsArrayList = getStall.get();
+                new CurrentAccount();
+                new CurrentStalls();
 
                 CurrentStalls.setCurrentStalls(stallsArrayList);
                 io.StoreStall(stallsArrayList,this);
@@ -62,6 +64,9 @@ public class HomepageActivity extends AppCompatActivity {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
+        } else {
+            CurrentAccount.setAccount(io.LoadUser(this));
+            CurrentStalls.setCurrentStalls(io.LoadStalls(this));
         }
     }
     @Override
@@ -127,5 +132,9 @@ public class HomepageActivity extends AppCompatActivity {
         io.deleteUserFile(this);
         io.deleteStallFile(this);
         finish();
+    }
+    public void clickNotifications(View view){
+        Intent intent = new Intent(this,NotificationsActivity.class);
+        startActivity(intent);
     }
 }

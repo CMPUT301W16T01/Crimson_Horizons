@@ -1,7 +1,10 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -87,13 +90,42 @@ public class EditStall extends AppCompatActivity {
         stall.setStatus(newStatus);
         stall.setOwner(newTitle);
         stall.setLocation(location_double);
-        Commands command = new EditStallSave(stall);
-        Boolean check = command.execute();
-        if (check){
-            finish();
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if ((connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE) != null && connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED)
+                || (connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_WIFI) != null && connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+                .getState() == NetworkInfo.State.CONNECTED)) {
+            Commands command = new EditStallSave(stall);
+            Boolean check = command.execute();
+            if (check) {
+                finish();
+            } else {
+                Toast.makeText(getApplicationContext(), "didn't save", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(getApplicationContext(),"didn't save",Toast.LENGTH_SHORT).show();
+            OfflineIO io = new OfflineIO();
+            ArrayList<Stalls>allStalls = CurrentStalls.getCurrentStalls();
+            int idx = -1;
+            int idxTraverse = allStalls.size()-1;
+            while(idxTraverse>=0){
+                if (allStalls.get(idxTraverse).getStallID().equals(stall.getStallID())){
+                    idx=idxTraverse;
+                    break;
+                } else {
+                    idxTraverse=idxTraverse-1;
+                }
+            }
+            allStalls.set(idx, stall);
+            CurrentStalls.setCurrentStalls(allStalls);
+            io.StoreStall(allStalls,this);
+            ArrayList<Stalls>updateStalls = new ArrayList<>();
+            updateStalls.add(stall);
+            io.StoreStallsToUpdate(updateStalls, this);
         }
+        finish();
     }
 
     public void deleteStall(View view){

@@ -83,7 +83,8 @@
         android:text="Notifications"
         android:id="@+id/NotificationsBtnHomePage"
         android:layout_below="@+id/BorrowingBtn"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="clickNotifications"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"

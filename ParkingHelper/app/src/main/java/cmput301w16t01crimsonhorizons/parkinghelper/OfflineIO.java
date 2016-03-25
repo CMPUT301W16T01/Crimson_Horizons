@@ -21,9 +21,10 @@ import java.util.ArrayList;
  */
 public class OfflineIO {
     // It sets the constant for the file name that it will always write to.
-
     private static final String USER_FILE ="user_file";
     private static final String STALL_FILE ="stall_file";
+    private static final String STALL_ADD = "stall_add_file";
+    private static final String STALL_UPDATE = "stall_update_file";
     public OfflineIO(){};
     // This just deletes the file
     // This returns an array of strings of each entries.
@@ -115,10 +116,117 @@ public class OfflineIO {
             throw new RuntimeException("Error IOexception");
         }
     }
+
+    public void StoreStallsToAdd(ArrayList<Stalls> stalls,Context context){
+        Gson gson = new Gson();
+        try{
+            // It completely rewrites the file.
+            this.deleteAddFile(context);
+            FileOutputStream fos = context.openFileOutput(STALL_ADD,Context.MODE_PRIVATE);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+            gson.toJson(stalls, out);
+            out.flush();
+            out.close();
+            fos.close();
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+            throw new RuntimeException("Error in SaveToFile");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error IOexception");
+        }
+    }
+
+    public void StoreStallsToUpdate(ArrayList<Stalls> stalls,Context context){
+        Gson gson = new Gson();
+        try{
+            // It completely rewrites the file.
+            this.deleteAddFile(context);
+            FileOutputStream fos = context.openFileOutput(STALL_UPDATE,Context.MODE_PRIVATE);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+            gson.toJson(stalls, out);
+            out.flush();
+            out.close();
+            fos.close();
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+            throw new RuntimeException("Error in SaveToFile");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error IOexception");
+        }
+    }
+    public ArrayList<Stalls> LoadStallsToAdd(Context context){
+        ArrayList<Stalls> AllEntries= new ArrayList<Stalls>();
+        ArrayList<Stalls> temp = new ArrayList<Stalls>();
+        Gson gson = new Gson();
+        try {
+            FileInputStream fis = context.openFileInput(STALL_ADD);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Type ListType = new TypeToken<ArrayList<Stalls>>(){}.getType();
+            temp=gson.fromJson(in,ListType);
+            in.close();
+            fis.close();
+            // This is to ensure whatever gson returns from the file, it is not null.
+            //If it is, then it means the file was empty. In that case, it will return the
+            // array AllEntries.
+            if (temp==null){
+                return AllEntries;
+            }
+            // If the array is not empty it copies over temp onto AllEntries and returns that in the
+            // end.
+            else {
+                AllEntries.addAll(temp);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return AllEntries;
+    }
+
+    public ArrayList<Stalls> LoadStallsUpdate(Context context){
+        ArrayList<Stalls> AllEntries= new ArrayList<Stalls>();
+        ArrayList<Stalls> temp = new ArrayList<Stalls>();
+        Gson gson = new Gson();
+        try {
+            FileInputStream fis = context.openFileInput(STALL_UPDATE);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Type ListType = new TypeToken<ArrayList<Stalls>>(){}.getType();
+            temp=gson.fromJson(in,ListType);
+            in.close();
+            fis.close();
+            // This is to ensure whatever gson returns from the file, it is not null.
+            //If it is, then it means the file was empty. In that case, it will return the
+            // array AllEntries.
+            if (temp==null){
+                return AllEntries;
+            }
+            // If the array is not empty it copies over temp onto AllEntries and returns that in the
+            // end.
+            else {
+                AllEntries.addAll(temp);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return AllEntries;
+    }
     public void deleteStallFile(Context context){
         context.deleteFile(STALL_FILE);
     }
     public void deleteUserFile(Context context){
         context.deleteFile(USER_FILE);
+    }
+    public void deleteUpdateFile(Context context){
+        context.deleteFile(STALL_ADD);
+    }
+    public void deleteAddFile(Context context){
+        context.deleteFile(STALL_UPDATE);
     }
 }

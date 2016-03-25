@@ -1,5 +1,6 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,8 +10,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Kevin
@@ -67,6 +72,22 @@ public class BidStall extends AppCompatActivity {
             Boolean check = command.execute();
             if (check){
                 Toast.makeText(BidStall.this, "You have made the bid!", Toast.LENGTH_SHORT).show();
+                DateFormat dateformat = new SimpleDateFormat("yyyy/mm/dd hh:mm:ss");
+                Date date = new Date();
+                NotificationObject notification = new NotificationObject();
+                notification.setOwner(stall.getOwner());
+                notification.setBidder(account.getEmail());
+                notification.setBidAmt(BidAmt.toString());
+                notification.setDate(dateformat.format(date));
+                NotificationElasticSearch.AddNotification addNotification = new NotificationElasticSearch.AddNotification();
+                addNotification.execute(notification);
+                try {
+                    addNotification.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
                 finish();
             } else {
                 Toast.makeText(BidStall.this, "Have not made bid!",Toast.LENGTH_SHORT).show();
