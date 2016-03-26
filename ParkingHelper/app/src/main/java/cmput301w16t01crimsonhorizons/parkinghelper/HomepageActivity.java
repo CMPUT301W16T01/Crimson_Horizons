@@ -134,7 +134,7 @@ public class HomepageActivity extends AppCompatActivity {
         finish();
     }
     public void clickNotifications(View view){
-        Intent intent = new Intent(this,NotificationsActivity.class);
+        Intent intent = new Intent(getApplicationContext(),NotificationActivity.class);
         startActivity(intent);
     }
 }

@@ -1,6 +1,7 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,14 +41,14 @@ public class NotificationAdapter extends ArrayAdapter<NotificationObject>{
                     Toast.makeText(getContext(), "Deleted!!", Toast.LENGTH_SHORT).show();
                 }
             });
-            viewHolder.Bidder.setText(notification.getOwner());
+            viewHolder.Bidder.setText(notification.getBidder());
             viewHolder.Date.setText(notification.getDate());
             viewHolder.BidAmt.setText(notification.getBidAmt());
             convertView.setTag(viewHolder);
         }
         else{
             mainHolder = (NotificationHolder)convertView.getTag();
-            mainHolder.Bidder.setText(notification.getOwner());
+            mainHolder.Bidder.setText(notification.getBidder());
             mainHolder.BidAmt.setText(notification.getBidAmt());
             mainHolder.Date.setText(notification.getDate());
         }
