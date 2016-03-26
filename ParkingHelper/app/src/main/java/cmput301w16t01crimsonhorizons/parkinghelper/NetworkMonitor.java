@@ -26,7 +26,9 @@ public class NetworkMonitor extends BroadcastReceiver {
             OfflineIO io_update = new OfflineIO();
             while(updates_add.size()>0) {
                 ElasticSearchCtr.MakeStall makeStall = new ElasticSearchCtr.MakeStall();
-                makeStall.execute(updates_add.get(0));
+                Stalls stall = updates_add.get(0);
+                stall.setStallID(null);
+                makeStall.execute(stall);
                 try {
                     makeStall.get();
                     ArrayList<Stalls> temp = CurrentStalls.getCurrentStalls();
@@ -41,6 +43,12 @@ public class NetworkMonitor extends BroadcastReceiver {
                 }
             }
             io.deleteAddFile(context);
+            Toast.makeText(context, "Network Available, pushing add", Toast.LENGTH_SHORT).show();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             while (updates_edit.size()>0){
                 ElasticSearchCtr.updateStallES updateStallES = new ElasticSearchCtr.updateStallES();
                 updateStallES.execute(updates_edit.get(0));
@@ -74,7 +82,7 @@ public class NetworkMonitor extends BroadcastReceiver {
                 }
             }
             io.deleteUpdateFile(context);
-            Toast.makeText(context, "Network Available, pushing changes", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Network Available, pushing updates", Toast.LENGTH_SHORT).show();
         }
     }
     boolean checkInternet(Context context) {

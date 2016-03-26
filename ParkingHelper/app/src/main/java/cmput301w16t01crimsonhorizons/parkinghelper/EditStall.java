@@ -23,6 +23,7 @@ import java.util.ArrayList;
  */
 public class EditStall extends AppCompatActivity {
     protected Stalls stall;
+    protected Stalls stall_ori = new Stalls();
     private Intent intent;
     static final int REQUEST_IMAGE_CAPTURE = 1234;
     private Bitmap thumbnail;
@@ -35,6 +36,14 @@ public class EditStall extends AppCompatActivity {
         //UpdateCommand my stall that user clicked
         intent = getIntent();
         stall = (Stalls)intent.getSerializableExtra("entry");
+        try {
+            stall_ori.setStallID(stall.getStallID());
+        }catch(NullPointerException e ){
+
+        }
+        stall_ori.setOwner(stall.getOwner());
+        stall_ori.setBidAmt(stall.getBidAmt());
+        stall_ori.setDescription(stall.getDescription());
         int pos = intent.getIntExtra("id",-1);
 
         picture = (ImageView) findViewById(R.id.editStallImage);
@@ -111,19 +120,28 @@ public class EditStall extends AppCompatActivity {
             int idx = -1;
             int idxTraverse = allStalls.size()-1;
             while(idxTraverse>=0){
-                if (allStalls.get(idxTraverse).getStallID().equals(stall.getStallID())){
+                if (this.compare(allStalls.get(idxTraverse), stall_ori)){
                     idx=idxTraverse;
                     break;
                 } else {
                     idxTraverse=idxTraverse-1;
                 }
             }
-            allStalls.set(idx, stall);
-            CurrentStalls.setCurrentStalls(allStalls);
-            io.StoreStall(allStalls,this);
-            ArrayList<Stalls>updateStalls = new ArrayList<>();
-            updateStalls.add(stall);
-            io.StoreStallsToUpdate(updateStalls, this);
+            if (allStalls.get(idxTraverse).getStallID()!=null) {
+                allStalls.set(idx, stall);
+                CurrentStalls.setCurrentStalls(allStalls);
+                io.StoreStall(allStalls, this);
+                ArrayList<Stalls> updateStalls = io.LoadStallsUpdate(this);
+                updateStalls.add(stall);
+                io.StoreStallsToUpdate(updateStalls, this);
+            } else {
+                allStalls.set(idx, stall);
+                CurrentStalls.setCurrentStalls(allStalls);
+                io.StoreStall(allStalls, this);
+                ArrayList<Stalls> addStalls = io.LoadStallsToAdd(this);
+                addStalls.add(stall);
+                io.StoreStallsToAdd(addStalls,this);
+            }
         }
         finish();
     }
@@ -171,5 +189,21 @@ public class EditStall extends AppCompatActivity {
         Intent intent = new Intent (this,ReviewsActivity.class);
         startActivity(intent);
     }
-
+    public Boolean compare(Stalls s1,Stalls s2){
+        try {
+            if ((s1.getDescription().equals(s2.getDescription())) && (s1.getOwner().equals(s2.getOwner()))
+                    && (s1.getStallID().equals(s2.getStallID())) && (s1.getBidder().equals(s2.getBidder()))) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (NullPointerException e){
+            if ((s1.getDescription().equals(s2.getDescription())) && (s1.getOwner().equals(s2.getOwner()))
+                   && (s1.getBidder().equals(s2.getBidder()))) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 }

@@ -142,7 +142,7 @@ public class OfflineIO {
         Gson gson = new Gson();
         try{
             // It completely rewrites the file.
-            this.deleteAddFile(context);
+            this.deleteUpdateFile(context);
             FileOutputStream fos = context.openFileOutput(STALL_UPDATE,Context.MODE_PRIVATE);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
             gson.toJson(stalls, out);
@@ -224,9 +224,9 @@ public class OfflineIO {
         context.deleteFile(USER_FILE);
     }
     public void deleteUpdateFile(Context context){
-        context.deleteFile(STALL_ADD);
+        context.deleteFile(STALL_UPDATE);
     }
     public void deleteAddFile(Context context){
-        context.deleteFile(STALL_UPDATE);
+        context.deleteFile(STALL_ADD);
     }
 }

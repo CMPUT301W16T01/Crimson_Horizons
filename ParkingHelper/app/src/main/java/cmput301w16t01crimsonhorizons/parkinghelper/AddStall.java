@@ -58,7 +58,7 @@ public class AddStall extends AppCompatActivity {
             CurrentStalls.setCurrentStalls(allStalls);
             OfflineIO io = new OfflineIO();
             io.StoreStall(allStalls, this);
-            ArrayList<Stalls>addStalls = new ArrayList<>();
+            ArrayList<Stalls>addStalls = io.LoadStallsToAdd(this);
             addStalls.add(stall);
             io.StoreStallsToAdd(addStalls,this);
         }
