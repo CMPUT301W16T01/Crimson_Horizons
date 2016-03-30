@@ -17,120 +17,86 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Returning Stall"
-        android:id="@+id/BidStallTitle"
+        android:id="@+id/RetStallTitle"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="40sp"/>
-
-
+        android:textSize="25sp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Item Name"
-        android:id="@+id/BidStallName"
-        android:layout_above="@+id/BidStallNameDisp"
-        android:layout_toEndOf="@+id/BidStallNameDisp"
-        android:layout_marginBottom="21dp" />
+        android:id="@+id/RetStallName"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/RetStallTitle"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/RetStallTitle" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/BidStallNameDisp"
-        android:layout_above="@+id/BidStallDescription"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="25dp" />
+        android:id="@+id/RetStallNameDisp"
+        android:layout_below="@+id/RetStallName" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Description"
-        android:id="@+id/BidStallDescription"
-        android:layout_above="@+id/BidStallDescriptionDisp"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="28dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/BidStallDescriptionDisp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@+id/longitudeTtitleAddStallTV" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your Bid ($/hr)"
-        android:id="@+id/BidStallBidAmt"
-        android:layout_below="@+id/latitudeTitleAddStallTV"
-        android:layout_alignParentStart="true"
+        android:id="@+id/RetStallDescription"
+        android:layout_below="@+id/RetStallNameDisp"
         android:layout_marginTop="35dp" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/BidStallAmtET"
-        android:layout_below="@+id/BidStallBidAmt"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/BidStallDescriptionDisp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bid"
-        android:id="@+id/BidStallBidBtn"
-        android:onClick="BidStall"
-        android:layout_below="@+id/BidStallAmtET"
-        android:layout_toEndOf="@+id/latitudeTitleAddStallTV"
-        android:layout_marginStart="29dp" />
+        android:id="@+id/RetStallDescriptionDisp"
+        android:layout_below="@+id/RetStallDescription"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:id="@+id/longitudeTtitleAddStallTV"
+        android:id="@+id/longitudeTitleRetStallTV"
         android:text="longitude"
-        android:layout_centerVertical="true"
+        android:layout_marginBottom="33dp"
+        android:layout_below="@+id/RetStallDescriptionDisp"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:id="@+id/latitudeTitleAddStallTV"
+        android:id="@+id/latitudeTitleRetStallTV"
         android:text="latitude"
-        android:layout_alignBaseline="@+id/latitudeBiStallTV"
-        android:layout_alignBottom="@+id/latitudeBiStallTV"
+        android:layout_below="@+id/longitudeRetStallTV"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:id="@+id/longitudeBidStallTV"
+        android:id="@+id/longitudeRetStallTV"
         android:text="No value"
-        android:layout_alignTop="@+id/longitudeTtitleAddStallTV"
-        android:layout_toEndOf="@+id/BidStallHighest" />
+        android:layout_below="@+id/longitudeTitleRetStallTV"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:id="@+id/latitudeBiStallTV"
+        android:id="@+id/latitudeRetStallTV"
         android:text="No value"
-        android:layout_marginTop="35dp"
-        android:layout_below="@+id/longitudeTtitleAddStallTV"
-        android:layout_toEndOf="@+id/BidStallDescription" />
+        android:layout_marginTop="74dp"
+        android:layout_below="@+id/latitudeTitleRetStallTV"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Direction"
-        android:id="@+id/directionBidStallBtn"
-        android:layout_alignBottom="@+id/BidStallBidBtn"
-        android:layout_alignStart="@+id/BidStallTitle"
-        android:onClick="getDirection"/>
+        android:text="Return stall"
+        android:id="@+id/returnStallBtn"
+        android:onClick="returnStall"
+        android:layout_below="@+id/latitudeRetStallTV"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -30,7 +30,7 @@ public class LendingStalls extends AppCompatActivity {
 //        eachLendingStalls.setAdapter(new CustomLstAdapter(this, R.layout.bids_for_stalls,
 //                all));
         account = CurrentAccount.getAccount();
-        eachLendingStalls = (ListView)findViewById(R.id.OwnStalls);
+        eachLendingStalls = (ListView)findViewById(R.id.lendingStallsList);
         String email = account.getEmail();
         ElasticSearchCtr.GetLendedStall getLendedStall = new ElasticSearchCtr.GetLendedStall();
         String[]temp = new String[4];

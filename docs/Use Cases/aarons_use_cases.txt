@@ -63,7 +63,7 @@ basic flow: 	1	Program sends notification to owner
 		2	Owner recieves notification on their main menu
 		
 9.1.1
-use case name:		addPhotoToProfile
+use case name:		addPhotoToStall
 participating actors:	user (primary)
 goal:			The user's picture is added to a stall
 trigger:		User clicks create stall
@@ -75,7 +75,7 @@ basic flow:	1	User clicks add photo
 		4	Program adds the picture to the stall and returns to the add stall activity
 
 9.2.1
-use case name:		addPhotoToProfile
+use case name:		removePhotoFromStall
 participating actors:	user (primary)
 goal:			The user's picture is removed from a stall
 trigger:		User clicks edit stall
@@ -83,3 +83,22 @@ precondition:		program knows user data-base, and stall data-base
 extends:		editParkingStall
 basic flow:	1	User clicks remove photo
 		2	Program removes the picture from the stall
+
+9.3.1
+use case name:		viewPhoto
+participating actors:	user (primary)
+goal:			The photo for a given stall is displayed
+trigger:		User clicks to an activity that should display a stall
+precondition:		program knows user data-base, and stall data-base
+basic flow:	1	Program displays a photo of any relevant stall that is on screen
+
+9.4.1
+use case name:		compressPhoto
+participating actors:	user (primary)
+goal:			The user's picture is compressed when it is saved
+trigger:		User adds a photo to a stall
+precondition:		program knows user data-base, and stall data-base
+extends:		addParkingStall or editParkingStall
+basic flow:	1	User clicks save
+		2	Program compresses the image so that is takes up less than 65536 bytes
+
