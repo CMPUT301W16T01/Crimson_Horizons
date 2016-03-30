@@ -38,14 +38,13 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
         email = intent.getStringExtra("email");
 
         GetAvailable[0] = email;
-        GetAvailable[1] = "Bidder";
 
-        ElasticSearchCtr.GetPendingStalls getPendingStalls =
-                new ElasticSearchCtr.GetPendingStalls();
-        getPendingStalls.execute(email);
+        ElasticSearchCtr.SearchYourBids getYourBids =
+                new ElasticSearchCtr.SearchYourBids();
+        getYourBids.execute(GetAvailable);
         try {
             ArrayList<Stalls> tempAry = new ArrayList<>();
-            tempAry = getPendingStalls.get();
+            tempAry = getYourBids.get();
             userBids.clear();
             userBids.addAll(tempAry);
         } catch (InterruptedException e) {
@@ -86,12 +85,12 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
 
     @Override
     public void updateView(Commands model) {
-        ElasticSearchCtr.GetPendingStalls getPendingStalls =
-                new ElasticSearchCtr.GetPendingStalls();
-        getPendingStalls.execute(email);
+        ElasticSearchCtr.SearchYourBids getYourBids =
+                new ElasticSearchCtr.SearchYourBids();
+        getYourBids.execute(email);
         try {
             ArrayList<Stalls> tempAry = new ArrayList<>();
-            tempAry = getPendingStalls.get();
+            tempAry = getYourBids.get();
             userBids.clear();
             userBids.addAll(tempAry);
         } catch (InterruptedException e) {

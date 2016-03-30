@@ -8,6 +8,8 @@ import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -410,19 +412,36 @@ public class ElasticSearchCtr{
             Double[] location = stall[0].getLocation();
             Bitmap thumbnail = stall[0].getThumbnail();
             String thumbnailBase64 = stall[0].getThumbnailBase64();
-            String doc = "{" +
-                    "\"doc\": { \"Status\": " + "\""+ status + "\", " +
-                    " \"Description\": " + "\""+ Description + "\", " +
-                    " \"Owner\": " + "\""+ Owner + "\", " +
-                    " \"BidAmt\": " + "\"" + BidAmt + "\", " +
-                    " \"Bidder\": " + "\"" + Bidder + "\"," +
-                    " \"LstBidders\": " + "\"" +LstBidders+ "\"," +
-                    " \"location\": [" +location[0].toString()+ "," +
-                                        location[1].toString()+"],"+
-                    " \"Borrower\": " + "\"" + Borrower + "\""+ "," +
-                    " \"Thumbnail\": " + "\"" + thumbnail.toString() + "\"" + ","  +
-                    " \"thumbnailBase64\": " + "\"" + thumbnailBase64 + "\"" +  "}" +
-                    "}";
+            String doc="";
+            try {
+                doc = "{" +
+                        "\"doc\": { \"Status\": " + "\"" + status + "\", " +
+                        " \"Description\": " + "\"" + Description + "\", " +
+                        " \"Owner\": " + "\"" + Owner + "\", " +
+                        " \"BidAmt\": " + "\"" + BidAmt + "\", " +
+                        " \"Bidder\": " + "\"" + Bidder + "\"," +
+                        " \"LstBidders\": " + "\"" + LstBidders + "\"," +
+                        " \"location\": [" + location[0].toString() + "," +
+                        location[1].toString() + "]," +
+                        " \"Borrower\": " + "\"" + Borrower + "\"" + "," +
+                        " \"Thumbnail\": " + "\"" + thumbnail.toString() + "\"" + "," +
+                        " \"thumbnailBase64\": " + "\"" + thumbnailBase64 + "\"" + "}" +
+                        "}";
+            }catch(NullPointerException e ){
+                doc = "{" +
+                        "\"doc\": { \"Status\": " + "\"" + status + "\", " +
+                        " \"Description\": " + "\"" + Description + "\", " +
+                        " \"Owner\": " + "\"" + Owner + "\", " +
+                        " \"BidAmt\": " + "\"" + BidAmt + "\", " +
+                        " \"Bidder\": " + "\"" + Bidder + "\"," +
+                        " \"LstBidders\": " + "\"" + LstBidders + "\"," +
+                        " \"location\": [" + location[0].toString() + "," +
+                        location[1].toString() + "]," +
+                        " \"Borrower\": " + "\"" + Borrower + "\"" + "," +
+                        " \"Thumbnail\": " + "\"" + "" + "\"" + "," +
+                        " \"thumbnailBase64\": " + "\"" + "" + "\"" + "}" +
+                        "}";
+            }
             try {
                 DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
                                     type("stall_database").id(stall[0].getStallID()).build());
@@ -497,7 +516,42 @@ public class ElasticSearchCtr{
             return returnStalls;
         }
     }
+    public static class SearchYourBids extends AsyncTask<String, Void, ArrayList<Stalls>> {
+        /**
+         *
+         * .@param params a string of keywords found in the description of the parking stall the
+         *               user is looking for
+         * @return returnStalls a list of stall objects with at least one of the words, form
+         *          the params argument in their description
+         */
+        @Override
+        protected ArrayList<Stalls> doInBackground(String... params) {
+            verifyClient();
+            //start initial array list empty.
+            ArrayList<Stalls> returnStalls = new ArrayList<Stalls>();
+            String query = "{" +"\"query\": {\"bool\": {\"should\":     { \"match\": "+
+                    "{ \"Status\": \"Available\" }}," +
+                    "\"should\" : {\"match\":{\"Status\": \"Bidded\" }},"+
+                    "\"should\" : {\"match\":{\"Bidder\": \""+params[0]+"\" }},"+
+                    "\"should\": { \"match\": { \"LstBidders\": "+"\""+params[0]+"\""+"}}}}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()){
+                    List<String> stalls = execute.getSourceAsStringList();
+                    List<Stalls> another1 = execute.getSourceAsObjectList(Stalls.class);
+                    String temp = "hi";
+                    returnStalls.addAll(another1);
+
+                }
+            } catch (IOException e) {
+                Log.i("TODO", "SEARCH PROBLEMS");
+            }
+
+            return returnStalls;
+        }
+    }
     public static class GetPendingStalls extends AsyncTask<String, Void, ArrayList<Stalls>>{
         /**
          *

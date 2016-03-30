@@ -37,7 +37,7 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         solo.finishOpenedActivities();
     }
 
-    public void testClickUsxername(){
+    public void testClickUsername(){
         solo.clickOnView(solo.getView(R.id.LoginButton));
         solo.enterText((EditText) solo.getView(R.id.emailAddress), "123@123");
         solo.clickOnView(solo.getView(R.id.email_sign_in_button));
