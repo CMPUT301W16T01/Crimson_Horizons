@@ -1,11 +1,16 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.app.Instrumentation;
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.ViewAsserts;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+
+import com.robotium.solo.Solo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +19,19 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by Kevin L on 3/10/2016.
  */
-public class TestBidStall extends ActivityInstrumentationTestCase2<Results> {
+public class TestBidStall extends ActivityInstrumentationTestCase2<WelcomeActivity> {
+    private Solo solo;
     public TestBidStall() {
-        super(Results.class);
+        super(WelcomeActivity.class);
+    }
+    @Override
+    public void setUp() throws Exception {
+        solo = new Solo(getInstrumentation());
+        getActivity();
+    }
+    @Override
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
     }
     public void createStall(Stalls s1){
         ElasticSearchForTest.MakeStall makeStall = new ElasticSearchForTest.MakeStall();
@@ -105,16 +120,15 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<Results> {
      * US 05.02.01
      * Test to see if list view appears and that stalls
      */
-    @UiThreadTest
     public void testListView() {
-        Results pendingStalls = (Results)getActivity();
-
-        ViewAsserts.assertOnScreen(pendingStalls.getWindow().getDecorView(),
-                pendingStalls.findViewById(R.id.YourBidsLv));
-
-        for(Stalls ubid: pendingStalls.getUserBids()) {
-            assertNotNull(ubid);
-        }
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "123@123");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+        solo.unlockScreen();
+        solo.clickOnView(solo.getView(R.id.YourBidsBtn));
+        solo.getView(R.id.YourBidsLv);
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
 
 
     }
@@ -122,30 +136,14 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<Results> {
     /**
      * US 05.02.01
      */
-    @UiThreadTest
     public void testOpenNextActivity() {
-        // register next activity that need to be monitored.
-        Instrumentation.ActivityMonitor activityMonitor = getInstrumentation().addMonitor(EditBids.class.getName(), null, false);  // open current activity.
-        final Results myActivity = getActivity();
-        final ListView listView = (ListView) myActivity.findViewById(R.id.YourBidsLv);
-        Stalls stall = new Stalls();
-        stall.setStatus("Bidded");
-        stall.setDescription("whatever");
-        stall.setOwner("whatever");
-
-        myActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                // click button and open next activity.
-                while (myActivity.getUserBids().isEmpty());
-                listView.getChildAt(0).performClick();
-            }
-        });  //Watch for the timeout
-        //example values 5000 if in ms, or 5 if it's in seconds.
-        EditBids nextActivity = (EditBids)getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5000);
-        // next activity is opened and captured.
-        assertNotNull(nextActivity);
-        nextActivity.finish();
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "123@123");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+        solo.clickOnView(solo.getView(R.id.YourBidsBtn));
+        solo.clickInList(0);
+        solo.assertCurrentActivity("Expected Edit Bid activity", EditBids.class);
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
 
     /**US 05.03.01

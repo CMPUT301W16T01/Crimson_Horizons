@@ -6,16 +6,30 @@ import android.test.UiThreadTest;
 import android.test.ViewAsserts;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+
+import com.robotium.solo.Solo;
 
 import java.util.ArrayList;
 
 /**
  * Created by Kevin L on 3/11/2016.
  */
-public class TestBidsForStall  extends ActivityInstrumentationTestCase2<BidsForStall> {
+public class TestBidsForStall  extends ActivityInstrumentationTestCase2<WelcomeActivity> {
+    private Solo solo;
     public TestBidsForStall() {
-        super(BidsForStall.class);
+        super(WelcomeActivity.class);
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        solo = new Solo(getInstrumentation());
+        getActivity();
+    }
+    @Override
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
     }
 
     /**
@@ -23,23 +37,14 @@ public class TestBidsForStall  extends ActivityInstrumentationTestCase2<BidsForS
      * US 05.05.01
      * Test if bids are displayed
      */
-    @UiThreadTest
     public void testDisplayBids(){
-        Stalls s1 = new Stalls();
-        ArrayList<String> lstBidders = new ArrayList<>();
-        lstBidders.add("bid1");
-        lstBidders.add("bid2");
-/*        s1.setLstBidders(lstBidders);*/
-
-        Intent i = new Intent();
-        i.putExtra("stall", s1);
-        setActivityIntent(i);
-
-        BidsForStall b = new BidsForStall();
-
-        //Should display two bids
-        ListView lv = b.eachStallsWithBids;
-        assertEquals(lv.getAdapter().getCount(), 2);
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "123@123");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+        solo.clickOnView(solo.getView(R.id.BidsOwnStallBtn));
+        solo.getView(R.id.OwnStalls);
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
 
     /**

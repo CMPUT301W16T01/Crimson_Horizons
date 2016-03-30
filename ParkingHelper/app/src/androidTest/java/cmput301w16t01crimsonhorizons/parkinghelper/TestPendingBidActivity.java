@@ -6,6 +6,8 @@ import android.test.ViewAsserts;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.robotium.solo.Solo;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -13,21 +15,18 @@ import java.util.concurrent.ExecutionException;
  * Created by Kevin L on 3/10/2016.
  */
 public class TestPendingBidActivity extends ActivityInstrumentationTestCase2<HomepageActivity> {
+    private Solo solo;
     public TestPendingBidActivity() {
         super(HomepageActivity.class);
     }
-    public ArrayList<Stalls> retrieveStall(String[] temp){
-        ArrayList<Stalls>tempreturn = new ArrayList<Stalls>();
-        ElasticSearchForTest.GetStall getStall = new ElasticSearchForTest.GetStall();
-        getStall.execute(temp);
-        try {
-            tempreturn = getStall.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        return tempreturn;
+    @Override
+    public void setUp() throws Exception {
+        solo = new Solo(getInstrumentation());
+        getActivity();
+    }
+    @Override
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
     }
 
     /**
@@ -36,18 +35,10 @@ public class TestPendingBidActivity extends ActivityInstrumentationTestCase2<Hom
      * It test if calling for the get method can successfully
      * retrieve the updated listIt also checks if the view exists.
      */
-    @UiThreadTest
     public void testViewPending(){
-        String[] query = new String[2];
-        query[0]="Available";
-        query[1]="Status";
-        ArrayList<Stalls> AvailabeStalls=this.retrieveStall(query);
-        assertTrue(AvailabeStalls.getClass().equals(ArrayList.class));
-        HomepageActivity activity = (HomepageActivity)getActivity();
-        Button YourBids = (Button)activity.findViewById(R.id.YourBidsBtn);
-        YourBids.performClick();
-        Results yourBids = new Results();
-        ListView lv=(ListView)yourBids.findViewById(R.id.YourBidsLv);
-        ViewAsserts.assertOnScreen(yourBids.getWindow().getDecorView(), lv);
+        solo.unlockScreen();
+        solo.clickOnView(solo.getView(R.id.YourBidsBtn));
+        solo.assertCurrentActivity("should be in yourbids", Results.class);
+        solo.getView(R.id.YourBidsLv);
     }
 }

@@ -45,6 +45,5 @@ public class TestBorrowing extends ActivityInstrumentationTestCase2<HomepageActi
         solo.unlockScreen();
         solo.clickOnView(solo.getView(R.id.LendingBtn));
         solo.assertCurrentActivity("Expected borrwiong stall activity",LendingStalls.class);
-
     }
 }

@@ -7,8 +7,11 @@ import android.test.UiThreadTest;
 
 import android.test.ViewAsserts;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.robotium.solo.Solo;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -17,65 +20,60 @@ import java.util.concurrent.ExecutionException;
  * Created by schuman on 3/10/16.
  */
 public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
+    private Solo solo;
     ArrayList<Stalls> tempAry;
     Account account1;
 
     public TestAccountActivity() {
-        super(AccountActivity.class);
+        super(WelcomeActivity.class);
+    }
+    @Override
+    public void setUp() throws Exception {
+        solo = new Solo(getInstrumentation());
+        getActivity();
+    }
+    @Override
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
     }
 
-
-    @UiThreadTest
-    public void testClickUsername(){
-        //TODO:create test users and test stalls. Delete after use.
-        Account account1 = new Account();
-        account1.setEmail("__test1");
-        account1.setWorkPhone("1.1");
-        account1.setCellPhone("1.2");
-
-        CurrentAccount.setAccount(account1);
-
-        Intent intent = new Intent();
-        setActivityIntent(intent);
-        AccountActivity accountActivity = (AccountActivity) getActivity();
-        ListView activities = (ListView) accountActivity.findViewById(R.id.OwnStalls);
-
-        View stallElement = activities.findViewById(R.id.StallNameEditStallV);
-        //CHANGE
-        stallElement.performClick();
-
-        View view = accountActivity.getWindow().getDecorView();
-
-        ViewAsserts.assertOnScreen(view, accountActivity.findViewById(R.id.emailAddress));
+    public void testClickUsxername(){
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "123@123");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+        solo.clickOnView(solo.getView(R.id.AccountBtn));
+        ListView lv = (ListView)solo.getView(R.id.OwnStalls);
+        View listelement = lv.getChildAt(0);
+        TextView username = (TextView) listelement.findViewById(R.id.StallNameEditStallV);
+        solo.clickOnView(username);
+        solo.assertCurrentActivity("Should be viewProfile", ViewProfile.class);
+        solo.goBack();
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
 
-    @UiThreadTest
     public void testStallsList(){
-        account1 = new Account();
-        account1.setEmail("__test1");
-        account1.setWorkPhone("1.1");
-        account1.setCellPhone("1.2");
-        ElasticSearchCtr.addUser adduser= new ElasticSearchCtr.addUser();
-        adduser.doInBackground(account1);
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
 
-        Intent intent = new Intent();
-        setActivityIntent(intent);
-        AddStall addStall = (AddStall) getActivity();
-        TextView activities1 = (TextView) addStall.findViewById(R.id.NamePrompET);
-        TextView activities2 = (TextView) addStall.findViewById(R.id.DescriptionET);
 
-        activities1.setText("__test1");
-        activities2.setText("Test.");
+        solo.clickOnView(solo.getView(R.id.AccountBtn));
+        solo.assertCurrentActivity("should be lists of own stalls", AccountActivity.class);
 
-        View addButton = addStall.findViewById(R.id.AddInAddBtn);
-        addButton.performClick();
-
+        solo.clickOnView(solo.getView(R.id.AddBtn));
+        solo.enterText((EditText) solo.getView(R.id.NamePrompET), "__test1");
+        solo.enterText((EditText) solo.getView(R.id.DescriptionET), "Test.");
+        solo.clickOnView(solo.getView(R.id.AddInAddBtn));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
-        String[]temp = new String[4];
+        String[]temp = new String[2];
         temp[0]="__test1";
         temp[1]="Owner";
-
-
         tempAry = new ArrayList<>();
         try {
             getStall.execute(temp);
@@ -85,13 +83,21 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+        assertTrue(tempAry.size() == 1);
 
-        AccountActivity accountActivity = (AccountActivity) getActivity();
-        accountActivity.update();
-
-        View view = accountActivity.getWindow().getDecorView();
-
-        ViewAsserts.assertOnScreen(view, accountActivity.findViewById(R.id.OwnStalls));
+        ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
+        deleteStall.execute(tempAry.get(0));
+        Boolean check = false;
+        try {
+            check = deleteStall.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        assertTrue("didn't delete Stall", check);
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
 
     /**
@@ -99,27 +105,14 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
      * Test that an object is displayed in account.
      */
     public void testDisplayStatus() {
-        AccountActivity accountActivity = (AccountActivity) getActivity();
-        accountActivity.update();
-
-        View view = accountActivity.getWindow().getDecorView();
-        ViewAsserts.assertOnScreen(view, accountActivity.findViewById(R.id.OwnStalls));
-        ListView lv = (ListView)accountActivity.findViewById(R.id.OwnStalls);
-        assertTrue(lv.getAdapter().getCount() != 0);
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
-        deleteStall.execute(tempAry.get(0));
-        Boolean check = false;
-        check = deleteStall.get();
-        assertTrue("didn't delete Stall", check);
-        Thread.sleep(1000);
-        ElasticSearchCtr.deleteUser deleteUser = new ElasticSearchCtr.deleteUser();
-        deleteUser.execute(account1);
-        Boolean check2 = false;
-        check2 = deleteUser.get();
-        assertTrue("didn't delete user", check2);
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "123@123");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+        solo.clickOnView(solo.getView(R.id.AccountBtn));
+        solo.clickInList(0);
+        solo.assertCurrentActivity("should be editing stalls", EditStall.class);
+        solo.goBack();
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
 }

@@ -54,7 +54,7 @@ public class ReturningStallActivity extends AppCompatActivity {
 
     public void returnStall(View view){
         stall.setStatus("Available");
-
+        stall.setBorrower("");
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if ((connectivityManager
                 .getNetworkInfo(ConnectivityManager.TYPE_MOBILE) != null && connectivityManager
