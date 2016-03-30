@@ -62,7 +62,7 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
     @Override
     public void onStart(){
         super.onStart();
-        YourBids.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+/*        YourBids.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent clickBids = new Intent(view.getContext(), EditBids.class);
@@ -74,7 +74,7 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
                 startActivity(clickBids);
                 myAdapter.notifyDataSetChanged();
             }
-        });
+        });*/
 
     }
 

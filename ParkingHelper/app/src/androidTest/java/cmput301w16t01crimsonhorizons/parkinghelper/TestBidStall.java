@@ -141,8 +141,12 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<WelcomeActivi
         solo.enterText((EditText) solo.getView(R.id.emailAddress), "123@123");
         solo.clickOnView(solo.getView(R.id.email_sign_in_button));
         solo.clickOnView(solo.getView(R.id.YourBidsBtn));
-        solo.clickInList(0);
-        solo.assertCurrentActivity("Expected Edit Bid activity", EditBids.class);
+/*        solo.clickInList(0);
+        solo.assertCurrentActivity("Expected Edit Bid activity", EditBids.class);*/
+        solo.assertCurrentActivity("Expect to have the list of bids", Results.class);
+        ListView lv = (ListView)solo.getView(R.id.YourBidsLv);
+        assertNotNull(lv);
+        solo.goBack();
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
 
