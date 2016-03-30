@@ -27,11 +27,20 @@ public class TestOwnStallsWithBids extends ActivityInstrumentationTestCase2 {
         account1.setWorkPhone("1.1");
         account1.setCellPhone("1.2");
         ElasticSearchCtr.addUser adduser= new ElasticSearchCtr.addUser();
-        adduser.doInBackground(account1);
+        adduser.execute(account1);
+        Boolean check=false;
+        try {
+            check = adduser.get();
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
         Intent intent = new Intent();
         setActivityIntent(intent);
-        AddStall addStall = (AddStall) getActivity();
+        AddStall addStall = new AddStall();
         TextView activities1 = (TextView) addStall.findViewById(R.id.NamePrompET);
         TextView activities2 = (TextView) addStall.findViewById(R.id.DescriptionET);
 
@@ -69,10 +78,10 @@ public class TestOwnStallsWithBids extends ActivityInstrumentationTestCase2 {
     @Override
     protected void tearDown() throws Exception {
         ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
-        deleteStall.doInBackground(tempAry.get(0));
+        deleteStall.execute(tempAry.get(0));
 
         ElasticSearchCtr.deleteUser deleteUser = new ElasticSearchCtr.deleteUser();
-        deleteUser.doInBackground(account1);
+        deleteUser.execute(account1);
     }
 
 }

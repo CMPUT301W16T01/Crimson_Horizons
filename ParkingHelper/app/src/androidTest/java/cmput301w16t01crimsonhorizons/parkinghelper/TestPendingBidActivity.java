@@ -1,6 +1,7 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.test.ViewAsserts;
 import android.widget.Button;
 import android.widget.ListView;
@@ -35,6 +36,7 @@ public class TestPendingBidActivity extends ActivityInstrumentationTestCase2<Hom
      * It test if calling for the get method can successfully
      * retrieve the updated listIt also checks if the view exists.
      */
+    @UiThreadTest
     public void testViewPending(){
         String[] query = new String[2];
         query[0]="Available";

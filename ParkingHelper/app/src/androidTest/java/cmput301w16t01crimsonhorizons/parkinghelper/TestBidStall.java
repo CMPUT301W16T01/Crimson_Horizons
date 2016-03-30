@@ -122,6 +122,7 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<Results> {
     /**
      * US 05.02.01
      */
+    @UiThreadTest
     public void testOpenNextActivity() {
         // register next activity that need to be monitored.
         Instrumentation.ActivityMonitor activityMonitor = getInstrumentation().addMonitor(EditBids.class.getName(), null, false);  // open current activity.
@@ -141,9 +142,64 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<Results> {
             }
         });  //Watch for the timeout
         //example values 5000 if in ms, or 5 if it's in seconds.
-        EditBids nextActivity = (EditBids)getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 10000);
+        EditBids nextActivity = (EditBids)getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5000);
         // next activity is opened and captured.
         assertNotNull(nextActivity);
-        nextActivity .finish();
+        nextActivity.finish();
+    }
+
+    /**US 05.03.01
+     * Tests when user makes the bid successfully, will the notificaiont be made and
+     * will it be stored properly.
+     */
+    public void testNotification(){
+        NotificationObject notification = new NotificationObject();
+        notification.setOwner("testing");
+        notification.setBidder("bidder");
+        notification.setBidAmt("9.99");
+        notification.setDate("Where the date is");
+        NotificationESForTest.AddNotification addNotification = new NotificationESForTest.AddNotification();
+        addNotification.execute(notification);
+        try {
+            addNotification.get();
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        NotificationESForTest.GetNotifications getNotifications = new NotificationESForTest.GetNotifications();
+        String[] query = new String[2];
+        query[1]="Owner";
+        query[0]="testing";
+        ArrayList<NotificationObject>returned = new ArrayList<>();
+        getNotifications.execute(query);
+        try {
+            returned=getNotifications.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        assertEquals("Size should be only one",1,returned.size());
+        assertEquals("Owner should be same",notification.getOwner(),returned.get(0).getOwner());
+        assertEquals("Bidder should be same",notification.getBidder(),returned.get(0).getBidder());
+        assertEquals("Date should be same",notification.getDate(),returned.get(0).getDate());
+        NotificationESForTest.DeleteNotification reset = new NotificationESForTest.DeleteNotification();
+        Boolean check = false;
+        try {
+            Thread.sleep(2000);
+            reset.execute(notification);
+            check = reset.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        if (!check){
+            assertTrue("Didn't clean up",false);
+        }
+
+
     }
 }

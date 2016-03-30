@@ -111,9 +111,15 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
     @Override
     protected void tearDown() throws Exception {
         ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
-        deleteStall.doInBackground(tempAry.get(0));
-
+        deleteStall.execute(tempAry.get(0));
+        Boolean check = false;
+        check = deleteStall.get();
+        assertTrue("didn't delete Stall", check);
+        Thread.sleep(1000);
         ElasticSearchCtr.deleteUser deleteUser = new ElasticSearchCtr.deleteUser();
-        deleteUser.doInBackground(account1);
+        deleteUser.execute(account1);
+        Boolean check2 = false;
+        check2 = deleteUser.get();
+        assertTrue("didn't delete user", check2);
     }
 }

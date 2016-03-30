@@ -396,11 +396,11 @@ public class ElasticSearchForTest{
                     " \"LstBidders\": " + "\"" +LstBidders+ "\"," +
                     " \"location\": [" +location[0].toString()+ "," +
                     location[1].toString()+"],"+
-                    " \"Borrower\": " + "\"" + Borrower + "\""+ "}," +
+                    " \"Borrower\": " + "\"" + Borrower + "\""+ "}" +
                     "}";
             try {
                 DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
-                        type("stall_database").id(stall[0].getStallID()).build());
+                        type("testing_database").id(stall[0].getStallID()).build());
                 return result.isSucceeded();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -422,13 +422,17 @@ public class ElasticSearchForTest{
             try {
                 DocumentResult result = client.execute(new Delete.Builder(stall[0].getStallID())
                         .index("t01")
-                        .type("stall_database")
+                        .type("testing_database")
                         .build());
-                return result.isSucceeded();
+                if (result.isSucceeded()){
+                    return result.isSucceeded();
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
                 return false;
             }
+            return false;
         }
     }
 

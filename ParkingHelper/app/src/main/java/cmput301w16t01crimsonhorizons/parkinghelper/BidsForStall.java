@@ -17,9 +17,10 @@ public class BidsForStall extends AppCompatActivity {
 
     private Stalls stall;
     ArrayList<String>all = new ArrayList<>();
+    ListView eachStallsWithBids;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ListView EachStallsWithBids;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_bids_for_stall);
         Intent intent = getIntent();
@@ -30,9 +31,9 @@ public class BidsForStall extends AppCompatActivity {
         }catch(NullPointerException e){
             Toast.makeText(getApplicationContext(),"No one bidded on your stuff",Toast.LENGTH_SHORT).show();
         }
-        EachStallsWithBids = (ListView)findViewById(R.id.BidsForStallsLv);
+        eachStallsWithBids = (ListView)findViewById(R.id.BidsForStallsLv);
         CustomLstAdapter myAdapter = new CustomLstAdapter(this, R.layout.bids_for_stalls, all);
-        EachStallsWithBids.setAdapter(myAdapter);
+        eachStallsWithBids.setAdapter(myAdapter);
     }
     //US 05.07.01
     public void declineBid(String retrieved){

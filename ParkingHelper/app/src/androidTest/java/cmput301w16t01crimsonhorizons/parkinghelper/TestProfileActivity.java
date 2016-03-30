@@ -30,7 +30,7 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
 
         try {
             account1 = executeGet.execute("__test1_").get();
-            account2 = executeGet.execute("__test2").get();
+            account2 = executeGet2.execute("__test2").get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -70,12 +70,12 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
         CurrentAccount.setAccount(account1);
 
         try{
-        executeAdd.execute(account1).get();
-        executeAdd2.execute(account2).get();
+            executeAdd.execute(account1).get();
+            executeAdd2.execute(account2).get();
 
         //netowrk syncronization
-        while(account1.getId().equals(null)){}
-        assertTrue("Account 1 should of been created",executeVerify.execute("__test1_").get());
+            while(account1.getId().equals(null)){}
+            assertTrue("Account 1 should of been created",executeVerify.execute("__test1").get());
 
 
         Intent intent = new Intent();
@@ -99,7 +99,7 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
         profile.findViewById(R.id.SaveInProfileBtn).performClick();
 
 
-        assertTrue("Account 1 should not have changed email addresses",executeVerify.execute("__test1.1").get());
+        assertTrue("Account 1 should not have changed email addresses",executeVerify2.execute("__test1.1").get());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
