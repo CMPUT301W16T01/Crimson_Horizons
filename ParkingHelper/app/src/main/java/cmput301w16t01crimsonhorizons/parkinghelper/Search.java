@@ -61,7 +61,7 @@ public class Search extends AppCompatActivity implements ViewInterface<Commands>
                 String keyWords = searchBox.getText().toString();
                 ArrayList<Stalls> temp = new ArrayList<Stalls>();
                 try {
-                    if (keyWords.equals("")==false) {
+                    if (!keyWords.equals("")) {
                         searchTask.execute(keyWords);
                         temp = searchTask.get();
                         if (temp.size()!=0){

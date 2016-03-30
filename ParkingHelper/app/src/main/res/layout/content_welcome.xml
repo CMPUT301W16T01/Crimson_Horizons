@@ -41,7 +41,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Signin"
+        android:text="SignUp"
         android:id="@+id/SigninButton"
         android:layout_below="@+id/LoginButton"
         android:layout_centerHorizontal="true"

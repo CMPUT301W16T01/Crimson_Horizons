@@ -173,6 +173,32 @@ public class ElasticSearchCtr{
         }
     }
 
+
+    public static class GetLendedStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
+        @Override
+        protected ArrayList<Stalls> doInBackground(String... search_string) {
+            verifyClient();
+            ArrayList<Stalls> AllStall = new ArrayList<>();
+            //start initial array list empty.
+            String query = "{" +"\"query\": {\"bool\": {\"must\":     { \"match\": "+
+                    "{ \"Status\": \"Borrowed\" }}," +
+                    "\"must\": { \"match\": { \""+search_string[1]+"\": "+"\""+search_string[0]+"\""+"}}}}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
+
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()){
+                    List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
+                    AllStall.addAll(returned_stalls);
+                }
+            } catch (IOException e) {
+                Log.i("TODO", "SEARCH PROBLEMS");
+            }
+
+            return AllStall;
+        }
+    }
+
     public static class addUser extends AsyncTask<Account, Void, Boolean>  {
         @Override
         protected Boolean doInBackground(Account... newAccount) {
@@ -306,7 +332,7 @@ public class ElasticSearchCtr{
      */
     public static Boolean CheckAccount(String search_string){
         verifyClient();
-        Boolean value = new Boolean(false);
+        Boolean value = false;
         String query = "{" +
                 "    \"query\": {" +
                 "        \"match\" :{ \"Email\":\"" + search_string+ "\""+
@@ -383,6 +409,7 @@ public class ElasticSearchCtr{
             String LstBidders = stall[0].getLstBidders();
             Double[] location = stall[0].getLocation();
             Bitmap thumbnail = stall[0].getThumbnail();
+            String thumbnailBase64 = stall[0].getThumbnailBase64();
             String doc = "{" +
                     "\"doc\": { \"Status\": " + "\""+ status + "\", " +
                     " \"Description\": " + "\""+ Description + "\", " +
@@ -393,20 +420,17 @@ public class ElasticSearchCtr{
                     " \"location\": [" +location[0].toString()+ "," +
                                         location[1].toString()+"],"+
                     " \"Borrower\": " + "\"" + Borrower + "\""+ "," +
-                    " \"Thumbnail\": " + "\"" + thumbnail.toString() + "\""+ "}" +
+                    " \"Thumbnail\": " + "\"" + thumbnail.toString() + "\"" + ","  +
+                    " \"thumbnailBase64\": " + "\"" + thumbnailBase64 + "\"" +  "}" +
                     "}";
             try {
                 DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
                                     type("stall_database").id(stall[0].getStallID()).build());
-                if (result.isSucceeded()){
-                    return true;
-                } else {
-                    return false;
-                }
+                return result.isSucceeded();
             } catch (IOException e) {
                 e.printStackTrace();
+                return false;
             }
-            return false;
         }
     }
 

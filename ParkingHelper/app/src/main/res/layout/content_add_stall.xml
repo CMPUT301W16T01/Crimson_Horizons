@@ -63,17 +63,9 @@
         android:text="Add"
         android:id="@+id/AddInAddBtn"
         android:onClick="saveStallInformation"
-        android:layout_alignTop="@+id/CancelInAddBtn"
-        android:layout_toStartOf="@+id/AddStallTitle" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:id="@+id/CancelInAddBtn"
         android:layout_marginBottom="69dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/addStallImage" />
+        android:layout_alignEnd="@+id/LocationAddStallTV" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -108,18 +100,9 @@
         android:layout_height="wrap_content"
         android:text="Picture"
         android:id="@+id/pictureAddStallButton"
+        android:onClick="takePicture"
         android:layout_above="@+id/AddInAddBtn"
-        android:layout_toStartOf="@+id/AddStallTitle"
-        android:onClick="takePicture" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Remove"
-        android:id="@+id/button"
-        android:layout_above="@+id/CancelInAddBtn"
-        android:layout_alignStart="@+id/CancelInAddBtn"
-        android:onClick="deletePicture" />
+        android:layout_alignStart="@+id/AddInAddBtn" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -129,4 +112,13 @@
         android:minWidth="25dp"
         android:layout_below="@+id/LocationAddStallTV"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove"
+        android:id="@+id/addRemoveBtn"
+        android:layout_alignTop="@+id/pictureAddStallButton"
+        android:layout_toEndOf="@+id/AddInAddBtn"
+        android:onClick="deletePicture" />
 </RelativeLayout>

@@ -287,6 +287,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             Boolean UserName = Boolean.valueOf(false);
+
             LoginCommands command = new LoginCommands(mEmail);
             UserName = command.CheckCommand();
             return UserName;

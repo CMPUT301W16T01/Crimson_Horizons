@@ -39,4 +39,7 @@
     <string name="title_activity_edit_stall_for_testing">EditStallForTesting</string>
     <string name="title_activity_borrow_stall">BorrowStallActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_reviews">ReviewsActivity</string>
+    <string name="title_activity_returning_stall">ReturningStallActivity</string>
+    <string name="title_activity_notification">NotificationActivity</string>
 </resources>

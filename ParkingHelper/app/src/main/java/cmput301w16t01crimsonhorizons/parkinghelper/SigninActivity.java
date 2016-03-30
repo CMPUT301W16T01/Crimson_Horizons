@@ -105,7 +105,6 @@ public class SigninActivity extends AppCompatActivity {
                 Intent intent = new Intent(this,WelcomeActivity.class);
                 startActivity(intent);
             } else {
-                //TODO: make it display a pop-up error informing the user that the username already exists
                 Toast.makeText(this, "The email was already taken, I think you can sign in with it", Toast.LENGTH_SHORT).show();
             }
         } catch (InterruptedException | ExecutionException e) {

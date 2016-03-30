@@ -95,7 +95,7 @@ public class    Profile extends AppCompatActivity {
      * @return null
      */
     public void notifications(){
-        Intent intent = new Intent(this, Notifications.class);
+        Intent intent = new Intent(this, NotificationActivity.class);
         startActivity(intent);
     }
 

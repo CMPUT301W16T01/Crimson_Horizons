@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Kevin L on 3/5/2016.
- * Command object that updates stall
+ * Command object that updates_add stall
  * The search command is called by any view classes that needs stalls from elastic search
  * On execute it simply calls notifyViews.
  */

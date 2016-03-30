@@ -1,7 +1,10 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
 import io.searchbox.annotations.JestId;
@@ -21,15 +24,44 @@ public class Stalls implements Serializable{
     private String Borrower = "";
     private String LstBidders = "";
     private Double[] location = {0.00,0.00};
-    private Bitmap thumbnail = null;
+    protected transient Bitmap thumbnail = null;
 
-
-    public Bitmap getThumbnail() {
-        return thumbnail;
+    public String getThumbnailBase64() {
+        return thumbnailBase64;
     }
 
-    public void setThumbnail(Bitmap thumbnail) {
-        this.thumbnail = thumbnail;
+    protected String thumbnailBase64 = null;
+
+
+    public void setThumbnail(Bitmap newThumbnail){
+        if (newThumbnail != null) {
+            thumbnail = newThumbnail;
+            ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
+            newThumbnail.compress(Bitmap.CompressFormat.PNG, 100, byteArrayBitmapStream);
+
+            byte[] b = byteArrayBitmapStream.toByteArray();
+            thumbnailBase64 = Base64.encodeToString(b, Base64.DEFAULT);
+        }
+        else if(thumbnail != null){
+            Bitmap.Config config = thumbnail.getConfig();
+            thumbnail.recycle();
+            thumbnail = null;
+            thumbnailBase64 = null;
+            thumbnail = Bitmap.createBitmap(1,1, Bitmap.Config.ARGB_8888);
+            ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
+            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, byteArrayBitmapStream);
+
+            byte[] b = byteArrayBitmapStream.toByteArray();
+            //thumbnailBase64 = Base64.encodeToString(b, Base64.DEFAULT);
+        }
+    }
+
+    public Bitmap getThumbnail() {
+        if (thumbnail == null && thumbnailBase64 != null) {
+            byte[] decodeString = Base64.decode(thumbnailBase64, Base64.DEFAULT);
+            thumbnail = BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length);
+        }
+        return thumbnail;
     }
 
 

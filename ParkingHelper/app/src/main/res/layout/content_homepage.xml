@@ -15,7 +15,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Account"
+        android:text="Account/Stalls"
         android:id="@+id/AccountBtn"
         android:layout_marginTop="41dp"
         android:layout_below="@+id/HomepageTitle"
@@ -65,7 +65,8 @@
         android:text="Stalls Lending"
         android:id="@+id/LendingBtn"
         android:layout_below="@+id/BidsOwnStallBtn"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="clickLending"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -75,4 +76,23 @@
         android:layout_below="@+id/LendingBtn"
         android:layout_centerHorizontal="true"
         android:onClick="clickBorrowing"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notifications"
+        android:id="@+id/NotificationsBtnHomePage"
+        android:layout_below="@+id/BorrowingBtn"
+        android:layout_centerHorizontal="true"
+        android:onClick="clickNotifications"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SignOut"
+        android:id="@+id/SignoutBtnHomePg"
+        android:layout_below="@+id/NotificationsBtnHomePage"
+        android:layout_alignParentStart="true"
+        android:onClick="clickSignOut"/>
 </RelativeLayout>

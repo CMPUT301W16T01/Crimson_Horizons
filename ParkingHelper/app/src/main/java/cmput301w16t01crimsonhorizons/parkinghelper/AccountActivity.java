@@ -1,6 +1,9 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -30,26 +33,34 @@ public class AccountActivity extends AppCompatActivity {
         account = CurrentAccount.getAccount();
         MyStalls = (ListView)findViewById(R.id.OwnStalls);
         String email = account.getEmail();
-
+        OfflineIO io = new OfflineIO();
         myAdapter = new AdapterEditStall(this, R.layout.account_stalls, StallAry);
         MyStalls.setAdapter(myAdapter);
-
-        ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
-        temp[0]=email;
-        temp[1]="Owner";
-        try {
-            //Here it sets up the String[] needed for searching
-            getStall.execute(temp);
-            ArrayList tmp = getStall.get();
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if ((connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE) != null && connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED)
+                || (connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_WIFI) != null && connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+                .getState() == NetworkInfo.State.CONNECTED)) {
+            ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
+            temp[0] = email;
+            temp[1] = "Owner";
+            try {
+                //Here it sets up the String[] needed for searching
+                getStall.execute(temp);
+                ArrayList tmp = getStall.get();
+                StallAry.clear();
+                StallAry.addAll(tmp);
+                CurrentStalls.setCurrentStalls(StallAry);
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        } else {
             StallAry.clear();
-            StallAry.addAll(tmp);
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+            StallAry.addAll(io.LoadStalls(getApplicationContext()));
         }
-
         MyStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             EditText lv = (EditText) findViewById(R.id.EmailET);
 
@@ -107,21 +118,34 @@ public class AccountActivity extends AppCompatActivity {
     public void update(){
         account = CurrentAccount.getAccount();
         String email = account.getEmail();
-        ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if ((connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE) != null && connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED)
+                || (connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_WIFI) != null && connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+                .getState() == NetworkInfo.State.CONNECTED)) {
+            ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
 
-        temp[0]=email;
-        temp[1]="Owner";
-        try {
-            //Here it sets up the String[] needed for searching
-            ArrayList<Stalls>tempAry = new ArrayList<>();
-            getStall.execute(temp);
-            tempAry = getStall.get();
+            temp[0] = email;
+            temp[1] = "Owner";
+            try {
+                //Here it sets up the String[] needed for searching
+                ArrayList<Stalls> tempAry = new ArrayList<>();
+                getStall.execute(temp);
+                tempAry = getStall.get();
+                StallAry.clear();
+                StallAry.addAll(tempAry);
+                CurrentStalls.setCurrentStalls(StallAry);
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        } else {
+            OfflineIO io = new OfflineIO();
             StallAry.clear();
-            StallAry.addAll(tempAry);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+            ArrayList<Stalls> temp = io.LoadStalls(this);
+            StallAry.addAll(temp);
         }
         MyStalls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             EditText lv = (EditText)findViewById(R.id.EmailET);
