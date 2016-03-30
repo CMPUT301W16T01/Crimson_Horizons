@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/longitudeAddStallET"
-        android:hint="enter longitude if you know"
+        android:hint="Enter the longitude (optional)"
         android:layout_alignTop="@+id/latitudeAddStallET"
         android:layout_alignStart="@+id/addStallImage" />
 
@@ -90,31 +90,35 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/latitudeAddStallET"
-        android:layout_alignTop="@+id/addStallImage"
+        android:hint="Enter the latitude (optional)"
+        android:layout_below="@+id/addStallImage"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/longitudeAddStallET"
-        android:hint="enter latitude if you know"/>
+        android:layout_marginTop="29dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Picture"
         android:id="@+id/pictureAddStallButton"
+        android:onClick="takePicture"
         android:layout_above="@+id/AddInAddBtn"
         android:layout_alignStart="@+id/AddInAddBtn" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Remove"
-        android:id="@+id/button"
-        android:layout_alignTop="@+id/pictureAddStallButton"
-        android:layout_toEndOf="@+id/addStallImage" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/addStallImage"
-        android:layout_centerVertical="true"
+        android:minHeight="25dp"
+        android:minWidth="25dp"
+        android:layout_below="@+id/LocationAddStallTV"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove"
+        android:id="@+id/addRemoveBtn"
+        android:layout_alignTop="@+id/pictureAddStallButton"
+        android:layout_toEndOf="@+id/AddInAddBtn"
+        android:onClick="deletePicture" />
 </RelativeLayout>

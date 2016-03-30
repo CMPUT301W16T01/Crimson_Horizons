@@ -107,9 +107,7 @@ public class SigninActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "The email was already taken, I think you can sign in with it", Toast.LENGTH_SHORT).show();
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }

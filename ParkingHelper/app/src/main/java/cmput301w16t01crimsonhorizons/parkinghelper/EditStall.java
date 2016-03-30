@@ -1,10 +1,13 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -26,8 +29,8 @@ public class EditStall extends AppCompatActivity {
     protected Stalls stall_ori = new Stalls();
     private Intent intent;
     static final int REQUEST_IMAGE_CAPTURE = 1234;
-    private Bitmap thumbnail;
-    private ImageView picture;
+    //private Bitmap thumbnail;
+    //private ImageView picture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,19 +49,19 @@ public class EditStall extends AppCompatActivity {
         stall_ori.setDescription(stall.getDescription());
         int pos = intent.getIntExtra("id",-1);
 
-        picture = (ImageView) findViewById(R.id.editStallImage);
-
         //Set all the fields
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
         EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
         EditText status = (EditText)findViewById(R.id.StatusEditStallEv);
         EditText longitude = (EditText)findViewById(R.id.longitudeEditStallET);
         EditText latitude = (EditText)findViewById(R.id.latitudeEditStallET);
+        ImageView picture = (ImageView)findViewById(R.id.editStallImage);
         title.setText(stall.getOwner());
         status.setText(stall.getStatus());
         description.setText(stall.getDescription());
         longitude.setText(stall.getLocation()[0].toString());
         latitude.setText(stall.getLocation()[1].toString());
+        picture.setImageBitmap(stall.getThumbnail());
     }
     @Override
     protected void onStart(){
@@ -89,16 +92,19 @@ public class EditStall extends AppCompatActivity {
         EditText status = (EditText)findViewById(R.id.StatusEditStallEv);
         EditText longitude = (EditText)findViewById(R.id.longitudeEditStallET);
         EditText latitude = (EditText)findViewById(R.id.latitudeEditStallET);
+        ImageView picture = (ImageView)findViewById(R.id.editStallImage);
         Double[] location_double = new Double[2];
         location_double[0]=Double.parseDouble(longitude.getText().toString());
         location_double[1]=Double.parseDouble(latitude.getText().toString());
         String newTitle = title.getText().toString();
         String newDescription = description.getText().toString();
         String newStatus = status.getText().toString();
+        Bitmap thumbnail = ((BitmapDrawable)picture.getDrawable()).getBitmap();
         stall.setDescription(newDescription);
         stall.setStatus(newStatus);
         stall.setOwner(newTitle);
         stall.setLocation(location_double);
+        stall.setThumbnail(thumbnail);
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if ((connectivityManager
                 .getNetworkInfo(ConnectivityManager.TYPE_MOBILE) != null && connectivityManager
@@ -116,7 +122,7 @@ public class EditStall extends AppCompatActivity {
             }
         } else {
             OfflineIO io = new OfflineIO();
-            ArrayList<Stalls>allStalls = CurrentStalls.getCurrentStalls();
+            ArrayList<Stalls> allStalls = CurrentStalls.getCurrentStalls();
             int idx = -1;
             int idxTraverse = allStalls.size()-1;
             while(idxTraverse>=0){
@@ -161,8 +167,8 @@ public class EditStall extends AppCompatActivity {
         if (intent.resolveActivity(getPackageManager()) != null){
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
-
     }
+
     public void update(){
         stall = (Stalls)intent.getSerializableExtra("entry");
         int pos = intent.getIntExtra("id",-1);
@@ -171,19 +177,50 @@ public class EditStall extends AppCompatActivity {
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
         EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
         EditText status = (EditText)findViewById(R.id.StatusEditStallEv);
+        ImageView picture = (ImageView)findViewById(R.id.editStallImage);
         title.setText(stall.getOwner());
         status.setText(stall.getStatus());
         description.setText(stall.getDescription());
+        picture.setImageBitmap(stall.getThumbnail());
     }
 
+    public void deletePicture(View view){
+        ImageView picture = (ImageView)findViewById(R.id.editStallImage);
+        picture.setImageBitmap(null);
+        stall.setThumbnail(null);
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
             Bundle extras = data .getExtras();
-            thumbnail = (Bitmap) extras.get("data");
+            ImageView picture = (ImageView)findViewById(R.id.addStallImage);
+            Bitmap bigThumbnail = (Bitmap) extras.get("data");
+
+        //Taken from:https://github.com/CMPUT301F15T07/TradingApp/blob/master/SSCTE/app/src/main/java/com/sherpasteven/sscte/Models/Image.java#L53https://github.com/CMPUT301F15T07/TradingApp/blob/master/SSCTE/app/src/main/java/com/sherpasteven/sscte/Models/Image.java#L53
+            Double width = (double) bigThumbnail.getWidth();
+            Double height = (double) bigThumbnail.getHeight();
+            Double max = 120.0;
+
+            if (width > height) {
+                height = max * (height / width);
+                width = max;
+            } else {
+                width = max * (width / height);
+                height = max;
+            }
+
+            Bitmap thumbnail = Bitmap.createScaledBitmap(bigThumbnail, width.intValue(), height.intValue(), false);
+
+            bigThumbnail.recycle();
+            bigThumbnail = null;
+
             picture.setImageBitmap(thumbnail);
         }
     }
+
+
 
     public void reviews(View view){
         Intent intent = new Intent (this,ReviewsActivity.class);

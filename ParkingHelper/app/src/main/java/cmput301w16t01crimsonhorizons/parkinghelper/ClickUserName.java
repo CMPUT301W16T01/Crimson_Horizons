@@ -13,17 +13,14 @@ import java.util.concurrent.ExecutionException;
  */
 public class ClickUserName extends AppCompatActivity {
     public <activityType extends AppCompatActivity, getType extends AsyncTask<String, Void,Account>> Intent clickUserName (activityType currentActivity, View view, getType executeGet){
-        getType executeAccount = executeGet;
         Intent newIntent= null;
         try {
             TextView inputText = (TextView) view;
-            Account newAccount = executeAccount.execute(inputText.getText().toString()).get();
+            Account newAccount = executeGet.execute(inputText.getText().toString()).get();
             newIntent = new Intent(currentActivity, ViewProfile.class);
             newIntent.putExtra("account", newAccount);
             return newIntent;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
         return newIntent;

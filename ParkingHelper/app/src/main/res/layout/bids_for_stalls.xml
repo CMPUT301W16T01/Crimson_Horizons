@@ -27,7 +27,8 @@
         android:text="Bidder"
         android:id="@+id/BidderBFS"
         android:layout_above="@+id/DeclineBtn"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="adapterClickUserName" />
 
     <TextView
         android:layout_width="wrap_content"

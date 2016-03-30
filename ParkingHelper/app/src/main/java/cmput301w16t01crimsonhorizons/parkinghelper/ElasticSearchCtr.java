@@ -1,5 +1,6 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -407,6 +408,8 @@ public class ElasticSearchCtr{
             String Borrower = stall[0].getBorrower();
             String LstBidders = stall[0].getLstBidders();
             Double[] location = stall[0].getLocation();
+            Bitmap thumbnail = stall[0].getThumbnail();
+            String thumbnailBase64 = stall[0].getThumbnailBase64();
             String doc = "{" +
                     "\"doc\": { \"Status\": " + "\""+ status + "\", " +
                     " \"Description\": " + "\""+ Description + "\", " +
@@ -416,7 +419,9 @@ public class ElasticSearchCtr{
                     " \"LstBidders\": " + "\"" +LstBidders+ "\"," +
                     " \"location\": [" +location[0].toString()+ "," +
                                         location[1].toString()+"],"+
-                    " \"Borrower\": " + "\"" + Borrower + "\""+ "}" +
+                    " \"Borrower\": " + "\"" + Borrower + "\""+ "," +
+                    " \"Thumbnail\": " + "\"" + thumbnail.toString() + "\"" + ","  +
+                    " \"thumbnailBase64\": " + "\"" + thumbnailBase64 + "\"" +  "}" +
                     "}";
             try {
                 DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
@@ -424,8 +429,8 @@ public class ElasticSearchCtr{
                 return result.isSucceeded();
             } catch (IOException e) {
                 e.printStackTrace();
+                return false;
             }
-            return false;
         }
     }
 
