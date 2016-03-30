@@ -5,53 +5,37 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.widget.EditText;
 
+import com.robotium.solo.Solo;
+
 import java.util.concurrent.ExecutionException;
 
 /**
  * Created by schuman on 3/8/16.
  */
-public class TestProfileActivity extends ActivityInstrumentationTestCase2{
+public class TestProfileActivity extends ActivityInstrumentationTestCase2 {
+    private Solo solo;
+
     public TestProfileActivity() {
-        super(Profile.class);
+        super(WelcomeActivity.class);
     }
 
-    protected void setUp(){
-
+    @Override
+    public void setUp() throws Exception {
+        solo = new Solo(getInstrumentation());
+        getActivity();
     }
 
-    protected void tearDown(){
-        ElasticSearchForTest.deleteUser executeDelete = new ElasticSearchForTest.deleteUser();
-        ElasticSearchForTest.deleteUser executeDelete2 = new ElasticSearchForTest.deleteUser();
-        ElasticSearchForTest.GetAccount executeGet = new ElasticSearchForTest.GetAccount();
-        ElasticSearchForTest.GetAccount executeGet2 = new ElasticSearchForTest.GetAccount();
-
-        Account account1 = null;
-        Account account2 = null;
-
-        try {
-            account1 = executeGet.execute("__test1_").get();
-            account2 = executeGet2.execute("__test2").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        executeDelete.execute(account1);
-        executeDelete2.execute(account2);
+    @Override
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
     }
 
 
-    @UiThreadTest
-    public void testModifyAccount(){
-        ElasticSearchForTest.addUser executeAdd = new ElasticSearchForTest.addUser();
-
-        ElasticSearchForTest.addUser executeAdd2 = new ElasticSearchForTest.addUser();
-        ElasticSearchForTest.deleteUser executeDelete = new ElasticSearchForTest.deleteUser();
-        ElasticSearchForTest.deleteUser executeDelete2 = new ElasticSearchForTest.deleteUser();
-        ElasticSearchForTest.verifyUserName executeVerify = new ElasticSearchForTest.verifyUserName();
-        ElasticSearchForTest.verifyUserName executeVerify2 = new ElasticSearchForTest.verifyUserName();
-        ElasticSearchForTest.GetAccount executeGet = new ElasticSearchForTest.GetAccount();
+    public void testModifyAccount() {
+        ElasticSearchCtr.addUser executeAdd = new ElasticSearchCtr.addUser();
+        ElasticSearchCtr.addUser executeAdd2 = new ElasticSearchCtr.addUser();
+        ElasticSearchCtr.deleteUser executeDelete = new ElasticSearchCtr.deleteUser();
+        ElasticSearchCtr.deleteUser executeDelete2 = new ElasticSearchCtr.deleteUser();
 
         Account account1 = new Account();
 
@@ -69,37 +53,54 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
 
         CurrentAccount.setAccount(account1);
 
-        try{
+        try {
             executeAdd.execute(account1).get();
             executeAdd2.execute(account2).get();
 
-        //netowrk syncronization
-            while(account1.getId().equals(null)){}
-            assertTrue("Account 1 should of been created",executeVerify.execute("__test1").get());
+            Thread.sleep(1000);
 
+            solo.clickOnView(solo.getView(R.id.LoginButton));
+            solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1_");
+            solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+            solo.assertCurrentActivity("should be in homepage", HomepageActivity.class);
+            solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
 
-        Intent intent = new Intent();
-        setActivityIntent(intent);
-        Profile profile = (Profile) getActivity();
+            solo.clickOnView(solo.getView(R.id.LoginButton));
+            solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test2");
+            solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+            solo.assertCurrentActivity("should be in homepage", HomepageActivity.class);
+            solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
 
-        EditText newEmail = (EditText) profile.findViewById(R.id.EmailET);
-        newEmail.setText("__test1.1");
+            solo.clickOnView(solo.getView(R.id.LoginButton));
+            solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1_");
+            solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+            solo.clickOnView(solo.getView(R.id.AccountBtn));
+            solo.clickOnView(solo.getView(R.id.ProfileBtn));
+            EditText editText = (EditText)solo.getView(R.id.CellPhoneET);
+            assertEquals("values", "1.2", editText.getText().toString());
+            solo.enterText((EditText) solo.getView(R.id.CellPhoneET), "123");
+            solo.clickOnView(solo.getView(R.id.SaveInProfileBtn));
 
+            solo.clickOnView(solo.getView(R.id.ProfileBtn));
+            EditText editText_changed = (EditText)solo.getView(R.id.CellPhoneET);
+            assertEquals("values changed", "1.2123", editText_changed.getText().toString());
 
-        profile.save(new ElasticSearchForTest.verifyUserName(), new ElasticSearchForTest.updateUser());
-        String temp = account1.getEmail();
-        Boolean status;
+            solo.goBack();
+            solo.goBack();
+            solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
 
-            while (!account1.getEmail().matches("__test1.1")) {
-                wait(100);
-            }
+            solo.clickOnView(solo.getView(R.id.LoginButton));
+            solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test2");
+            solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+            solo.clickOnView(solo.getView(R.id.AccountBtn));
+            solo.clickOnView(solo.getView(R.id.ProfileBtn));
+            EditText editText_a2 = (EditText)solo.getView(R.id.CellPhoneET);
+            assertEquals("values unchanged", "2.2", editText_a2.getText().toString());
 
-       newEmail.setText("__test2");
+            solo.goBack();
+            solo.goBack();
+            solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
 
-        profile.findViewById(R.id.SaveInProfileBtn).performClick();
-
-
-        assertTrue("Account 1 should not have changed email addresses",executeVerify2.execute("__test1.1").get());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -109,24 +110,7 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2{
             executeDelete2.execute(account2);
         }
 
-
     }
 
 
-   /* @UiThreadTest
-
-    public void testNotificationsButton(){
-        Intent intent = new Intent();
-        setActivityIntent(intent);
-        Profile profile = (Profile) getActivity();
-
-        Button notificationsButton = (Button) profile.findViewById(R.id.NotificationBtn);
-
-        notificationsButton.performClick();
-
-        View view = profile.getWindow().getDecorView();
-
-        ViewAsserts.assertOnScreen(view, profile.findViewById(R.id.NotificationsListView));
-
-    }*/
 }

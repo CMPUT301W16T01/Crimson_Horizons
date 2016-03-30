@@ -5,7 +5,11 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.ViewAsserts;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.robotium.solo.Solo;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -17,72 +21,67 @@ import java.util.concurrent.ExecutionException;
 public class TestOwnStallsWithBids extends ActivityInstrumentationTestCase2 {
     ArrayList<Stalls> tempAry;
     Account account1;
+    private Solo solo;
 
-    public TestOwnStallsWithBids() { super(OwnStallsWithBidsActivity.class); }
+    public TestOwnStallsWithBids() { super(WelcomeActivity.class); }
+    @Override
+    public void setUp() throws Exception {
+        solo = new Solo(getInstrumentation());
+        getActivity();
+    }
+    @Override
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
+    }
 
-    @UiThreadTest
     public void testStallsList(){
-        account1 = new Account();
-        account1.setEmail("__test1");
-        account1.setWorkPhone("1.1");
-        account1.setCellPhone("1.2");
-        ElasticSearchCtr.addUser adduser= new ElasticSearchCtr.addUser();
-        adduser.execute(account1);
-        Boolean check=false;
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+        Stalls s1 = new Stalls();
+        s1.setStatus("Bidded");
+        s1.setBidAmt(0.00);
+        s1.setOwner("__test1");
+        ElasticSearchCtr.MakeStall makeStall = new ElasticSearchCtr.MakeStall();
+        makeStall.execute(s1);
         try {
-            check = adduser.get();
+            makeStall.get();
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+        solo.clickOnView(solo.getView(R.id.BidsOwnStallBtn));
+        solo.assertCurrentActivity("should be in own stalls",OwnStallsWithBidsActivity.class);
+        ListView lv = (ListView)solo.getView(R.id.OwnStalls);
+        View listelement = lv.getChildAt(0);
+        assertNotNull(listelement);
 
-        Intent intent = new Intent();
-        setActivityIntent(intent);
-        AddStall addStall = new AddStall();
-        TextView activities1 = (TextView) addStall.findViewById(R.id.NamePrompET);
-        TextView activities2 = (TextView) addStall.findViewById(R.id.DescriptionET);
 
-        activities1.setText("__test1");
-        activities2.setText("Test.");
-
-        View addButton = addStall.findViewById(R.id.AddInAddBtn);
-        addButton.performClick();
-
-        ElasticSearchCtr.GetBidStall getBidStall = new ElasticSearchCtr.GetBidStall();
-        String[]temp = new String[4];
-        temp[0]="__test1";
-        temp[1]="Owner";
-        temp[2]="0.0";
-        temp[3]="BidAmt";
-
-        tempAry = new ArrayList<>();
+        ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
+        deleteStall.execute(s1);
+        Boolean check = false;
         try {
-            getBidStall.execute(temp);
-            tempAry = getBidStall.get();
+            check = deleteStall.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
-        OwnStallsWithBidsActivity stallsWithBidsActivity = (OwnStallsWithBidsActivity) getActivity();
-        stallsWithBidsActivity.update();
-
-        View view = stallsWithBidsActivity.getWindow().getDecorView();
-
-        ViewAsserts.assertOnScreen(view, stallsWithBidsActivity.findViewById(R.id.StallsWithBidsTitle));
+        assertTrue("didn't delete Stall", check);
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
 
-    @Override
+    /*@Override
     protected void tearDown() throws Exception {
         ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
         deleteStall.execute(tempAry.get(0));
 
         ElasticSearchCtr.deleteUser deleteUser = new ElasticSearchCtr.deleteUser();
         deleteUser.execute(account1);
-    }
+    }*/
 
 }
 
