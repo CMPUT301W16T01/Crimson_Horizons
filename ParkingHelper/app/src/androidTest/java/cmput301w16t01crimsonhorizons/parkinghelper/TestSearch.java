@@ -35,6 +35,11 @@ public class TestSearch extends ActivityInstrumentationTestCase2 {
     public void tearDown() throws Exception {
         solo.finishOpenedActivities();
     }
+
+    /**
+     * US 04.01.01
+     * US 04.02.01
+     */
     public void testSearchView() {
         solo.clickOnView(solo.getView(R.id.LoginButton));
         solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1");
@@ -54,6 +59,9 @@ public class TestSearch extends ActivityInstrumentationTestCase2 {
         solo.clickOnView(solo.getView(R.id.email_sign_in_button));
 
         solo.clickOnView(solo.getView(R.id.SearchBtn));
+        ListView lvbefore = (ListView)solo.getView(R.id.ResultLv);
+        View lvelementbefore = lvbefore.getChildAt(0);
+        assertNotNull(lvelementbefore);
         solo.enterText((EditText) solo.getView(R.id.query), "__test1oneAAAAA");
         solo.clickOnView(solo.getView(R.id.SearchBtn));
 
@@ -74,7 +82,6 @@ public class TestSearch extends ActivityInstrumentationTestCase2 {
         solo.clickInList(0);
         solo.assertCurrentActivity("should be in edit stall", EditStall.class);
         solo.clickOnView(solo.getView(R.id.EditStallDeleteBtn));
-
         solo.goBack();
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }

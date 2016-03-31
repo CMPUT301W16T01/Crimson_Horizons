@@ -29,6 +29,10 @@ public class TestReturningRobotium extends ActivityInstrumentationTestCase2 {
         solo.finishOpenedActivities();
     }
 
+    /**
+     * test if can return with UI
+     * US 07.01.01
+     */
     public void testReturningButton(){
         Stalls s1 = new Stalls();
         s1.setOwner("__test1");

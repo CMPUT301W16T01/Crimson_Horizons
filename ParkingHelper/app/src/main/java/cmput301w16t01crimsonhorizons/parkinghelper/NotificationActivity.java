@@ -12,6 +12,10 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * This is a adapter for displaying notification. Currently it displays Bidder, BidAmt and date
+ * they made bid.
+ */
 public class NotificationActivity extends AppCompatActivity {
     private NotificationAdapter myAdapter;
     private ArrayList<NotificationObject> notifications = new ArrayList<>();

@@ -4,6 +4,7 @@ import io.searchbox.annotations.JestId;
 
 /**
  * Created by Kevin L on 3/25/2016.
+ * what 1 notification would have
  */
 public class NotificationObject {
     private String Owner;

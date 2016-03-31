@@ -34,7 +34,7 @@ public class TestBidsForStall  extends ActivityInstrumentationTestCase2<WelcomeA
 
     /**
     /**
-     * US 05.05.01
+     * US 05.04.01
      * Test if bids are displayed
      */
     public void testDisplayBids(){

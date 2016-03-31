@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Kevin L on 3/23/2016.
+ * This is a broadcast receiver. It is call whenever there is internet connection
  */
 
 public class NetworkMonitor extends BroadcastReceiver {

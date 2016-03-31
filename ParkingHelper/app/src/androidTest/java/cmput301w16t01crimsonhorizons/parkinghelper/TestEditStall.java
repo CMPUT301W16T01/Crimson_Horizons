@@ -54,6 +54,11 @@ public class TestEditStall extends ActivityInstrumentationTestCase2<EditStall> {
         }
         return tempreturn;
     }
+
+    /**
+     * US 01.04.01
+     * test editing a stall
+     */
     public void testEditStall(){
        //Test that hit on list view the edit Stall view pops up.
 /*        AccountActivity activity = getActivity();
@@ -101,6 +106,11 @@ public class TestEditStall extends ActivityInstrumentationTestCase2<EditStall> {
         assertEquals(returned.get(0).getOwner(), "after");
         this.resetDatabase(s1);
     }
+
+    /**
+     * test to se
+     * US 01.05.01
+     */
     public void testDeleteStall(){
         Stalls s1 = new Stalls();
         s1.setOwner("testing");
@@ -122,18 +132,15 @@ public class TestEditStall extends ActivityInstrumentationTestCase2<EditStall> {
     }
     /**
      * US 02.01.01
-     * Test that a stall has a status. Since the status is a string, the is little
+     * Test that a stall has a status. Since the status is a string, there is little
      * way to ensure that it is always one of three values, other than testing
      * all possible scenarios. However, the code is such that only the three values
      * are used.
+     * Here it only assert that the values returned is never null.
      */
     public void testStallHasStatus() {
-        try {
-            Field f = Stalls.class.getField("Status");
-            assertEquals("Status should be a string", f.getType(), String.class);
-        } catch (NoSuchFieldException e) {
-            fail();
-        }
+        Stalls s = new Stalls();
+        assertNotNull(s.getStatus());
     }
 
     /**

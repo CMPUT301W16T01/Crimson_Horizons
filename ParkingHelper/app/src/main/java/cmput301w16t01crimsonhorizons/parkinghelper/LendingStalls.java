@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by schuman on 2/26/16.
+ * This shows a list of stalls that is lended out
  */
 public class LendingStalls extends AppCompatActivity {
     private ListView eachLendingStalls;
@@ -70,12 +71,19 @@ public class LendingStalls extends AppCompatActivity {
         this.update();
     }
 
+    /**
+     * clicks on username
+     * @param view
+     */
     public void adapterClickUserName(View view){
         ClickUserName clickUserName = new ClickUserName();
         Intent newIntent = clickUserName.clickUserName(this, view, new ElasticSearchCtr.GetAccount());
         startActivity(newIntent);
     }
 
+    /**
+     * update information
+     */
     public void update(){
         account = CurrentAccount.getAccount();
         String email = account.getEmail();

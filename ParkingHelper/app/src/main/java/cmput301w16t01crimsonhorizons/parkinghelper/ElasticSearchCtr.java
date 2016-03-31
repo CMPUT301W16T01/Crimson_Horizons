@@ -29,13 +29,13 @@ import io.searchbox.core.Update;
  */
 public class ElasticSearchCtr{
     private static JestDroidClient client;
-
+    /**
+     * This retrieve account by email
+     * .@param search_string
+     * @return Account object will be returned
+     */
     public static class GetAccount extends AsyncTask<String, Void,Account>{
-        /**
-         * This is what will be excuted in a different thread
-         * .@param search_string
-         * @return Account object will be returned
-         */
+
         @Override
         protected Account doInBackground(String... search_string) {
             verifyClient();
@@ -60,14 +60,14 @@ public class ElasticSearchCtr{
             return account;
         }
     }
-
+    /**
+     * @return returns a list of stall and takes in a String[] to search
+     * .@param search_string, it is a String[]. String[1] is the field and String[0] is what it
+     *                       wants to match
+     */
     public static class GetStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
         @Override
-        /**
-         * @return returns a list of stall and takes in a String[] to search
-         * .@param search_string, it is a String[]. String[1] is the field and String[0] is what it
-         *                       wants to match
-         */
+
         protected ArrayList<Stalls> doInBackground(String... search_string) {
             verifyClient();
             ArrayList<Stalls> AllStall = new ArrayList<>();
@@ -91,13 +91,13 @@ public class ElasticSearchCtr{
             return AllStall;
         }
     }
+
+    /**
+     * Returns a list of stalls matching 2 fields.
+     * Here it match status with bidded or available
+     */
     public static class GetAvailableStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
         @Override
-        /**
-         * @return returns a list of stall and takes in a String[] to search
-         * .@param search_string, it is a String[]. String[1] is the field and String[0] is what it
-         *                       wants to match
-         */
         protected ArrayList<Stalls> doInBackground(String... search_string) {
             verifyClient();
             ArrayList<Stalls> AllStall = new ArrayList<>();
@@ -120,13 +120,12 @@ public class ElasticSearchCtr{
             return AllStall;
         }
     }
+
+    /**
+     * Returns stalls that matches Borrower with email
+     */
     public static class GetStallBorrowing extends AsyncTask<String, Void,ArrayList<Stalls>>{
         @Override
-        /**
-         * @return returns a list of stall and takes in a String[] to search
-         * .@param search_string, it is a String[]. String[1] is the field and String[0] is what it
-         *                       wants to match
-         */
         protected ArrayList<Stalls> doInBackground(String... search_string) {
             verifyClient();
             ArrayList<Stalls> AllStall = new ArrayList<>();
@@ -149,7 +148,9 @@ public class ElasticSearchCtr{
         }
     }
 
-
+    /**
+     * returns stalls that is bidded that matches owner with email
+     */
     public static class GetBidStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
         @Override
         protected ArrayList<Stalls> doInBackground(String... search_string) {
@@ -175,7 +176,10 @@ public class ElasticSearchCtr{
         }
     }
 
-
+    /**
+     * This returns stalls that has status borrowed and Owner with email
+     * Stalls that the user has lended out.
+     */
     public static class GetLendedStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
         @Override
         protected ArrayList<Stalls> doInBackground(String... search_string) {
@@ -201,6 +205,9 @@ public class ElasticSearchCtr{
         }
     }
 
+    /**
+     * creates a user and add to elastic search
+     */
     public static class addUser extends AsyncTask<Account, Void, Boolean>  {
         @Override
         protected Boolean doInBackground(Account... newAccount) {
@@ -230,6 +237,9 @@ public class ElasticSearchCtr{
 
     }
 
+    /**
+     * delete a user from elastic search
+     */
     public static class deleteUser extends AsyncTask<Account, Void, Boolean> {
 
         @Override
@@ -260,6 +270,9 @@ public class ElasticSearchCtr{
 
     }
 
+    /**
+     * update account information
+     */
     public static class updateUser extends AsyncTask<Account, Void, Boolean>  {
 
 
@@ -287,7 +300,9 @@ public class ElasticSearchCtr{
 
     }
 
-
+    /**
+     * verify user name using AsyncTask.
+     */
     public static class verifyUserName extends AsyncTask<String, Void, Boolean >{
 
 
@@ -328,7 +343,9 @@ public class ElasticSearchCtr{
     }
 
     /**
-     * This checks if an account is valid
+     * Verify account not usin AsyncTask, used in LoginActivity, as it calls this in a method
+     * that extends asynctask. Everything is same as verifyUserName
+     * @see cmput301w16t01crimsonhorizons.parkinghelper.ElasticSearchCtr.verifyUserName
      * .@param search_string this is the email
      * @return boolean
      */
@@ -392,13 +409,13 @@ public class ElasticSearchCtr{
         }
     }
 
-
+    /**
+     *
+     * .@param stall stall with the new information
+     * @return boolean depending if it is successful or not.
+     */
     public static class updateStallES extends AsyncTask<Stalls,Void,Boolean>{
-        /**
-         *
-         * .@param stall stall with the new information
-         * @return boolean depending if it is successful or not.
-         */
+
         @Override
         protected Boolean doInBackground(Stalls... stall) {
             verifyClient();
@@ -453,13 +470,13 @@ public class ElasticSearchCtr{
         }
     }
 
-
+    /**
+     *
+     * .@param stall stall to be deleted
+     * @return boolean depending on success
+     */
     public static class DeleteStall extends AsyncTask<Stalls,Void,Boolean>{
-        /**
-         *
-         * .@param stall stall to be deleted
-         * @return boolean depending on success
-         */
+
         @Override
         protected Boolean doInBackground(Stalls... stall) {
             verifyClient();
@@ -480,15 +497,15 @@ public class ElasticSearchCtr{
         }
     }
 
-
+    /**
+     *
+     * .@param params a string of keywords found in the description of the parking stall the
+     *               user is looking for
+     * @return returnStalls a list of stall objects with at least one of the words, form
+     *          the params argument in their description
+     */
     public static class SearchDataBaseTask extends AsyncTask<String, Void, ArrayList<Stalls>> {
-        /**
-         *
-         * .@param params a string of keywords found in the description of the parking stall the
-         *               user is looking for
-         * @return returnStalls a list of stall objects with at least one of the words, form
-         *          the params argument in their description
-         */
+
         @Override
         protected ArrayList<Stalls> doInBackground(String... params) {
             verifyClient();
@@ -516,14 +533,15 @@ public class ElasticSearchCtr{
             return returnStalls;
         }
     }
+    /**
+     *
+     * It search for stalls that either the Bidder for that stall is the user, or the user exists within
+     * the list of bidders for that stall
+     * @return returnStalls a list of stall objects with at least one of the words, form
+     *          the params argument in their description
+     */
     public static class SearchYourBids extends AsyncTask<String, Void, ArrayList<Stalls>> {
-        /**
-         *
-         * .@param params a string of keywords found in the description of the parking stall the
-         *               user is looking for
-         * @return returnStalls a list of stall objects with at least one of the words, form
-         *          the params argument in their description
-         */
+
         @Override
         protected ArrayList<Stalls> doInBackground(String... params) {
             verifyClient();
@@ -552,13 +570,15 @@ public class ElasticSearchCtr{
             return returnStalls;
         }
     }
+    /**
+     *
+     * .@param search_string contains the email of the relevent user
+     * @return returnedStalls, an array list of stalls that the user with the email specified
+     *  if search_string has bidded successfully on
+     *  @deprecated replaced by SearchYourBids
+     */
     public static class GetPendingStalls extends AsyncTask<String, Void, ArrayList<Stalls>>{
-        /**
-         *
-         * .@param search_string contains the email of the relevent user
-         * @return returnedStalls, an array list of stalls that the user with the email specified
-         *  if search_string has bidded successfully on
-         */
+
         @Override
         protected ArrayList<Stalls> doInBackground(String... search_string) {
             verifyClient();
@@ -585,7 +605,10 @@ public class ElasticSearchCtr{
             return returnedStalls;
         }
     }
-    //Helper function
+
+    /**
+     * Helper function for Jest Droid
+     */
     public static void verifyClient(){
         //verify that "client" exists and if it does not make it.
         //This had to be done the other functions anyway. Just make a helper function.

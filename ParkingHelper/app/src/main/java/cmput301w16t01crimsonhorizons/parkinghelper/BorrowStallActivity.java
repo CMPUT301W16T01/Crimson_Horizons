@@ -12,6 +12,9 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * This is to show a list of stalls the user is borrowing
+ */
 public class BorrowStallActivity extends AppCompatActivity {
     private ListView eachBorrowedStalls;
     private Intent intent;

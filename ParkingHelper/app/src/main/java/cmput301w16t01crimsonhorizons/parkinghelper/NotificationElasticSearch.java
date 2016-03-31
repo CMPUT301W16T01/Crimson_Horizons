@@ -15,18 +15,19 @@ import io.searchbox.core.*;
 import io.searchbox.core.Search;
 
 /**
- * Created by Kevin L on 3/25/2016.
+ * Created by Kevin L on 3/25/2016
+ * Elastic search much like ElasticSearchCtr, but for notifications only
+ * @see ElasticSearchCtr
  */
 public class NotificationElasticSearch {
     private static JestDroidClient client;
 
+    /**
+     * Returns a list of notificaions for this user
+     */
     public static class GetNotifications extends AsyncTask<String, Void,ArrayList<NotificationObject>>{
         @Override
-        /**
-         * @return returns a list of stall and takes in a String[] to search
-         * .@param search_string, it is a String[]. String[1] is the field and String[0] is what it
-         *                       wants to match
-         */
+
         protected ArrayList<NotificationObject> doInBackground(String... search_string) {
             verifyClient();
             ArrayList<NotificationObject> Notifications = new ArrayList<>();
@@ -48,12 +49,11 @@ public class NotificationElasticSearch {
         }
     }
 
+    /**
+     * add a notification
+     */
     public static class AddNotification extends AsyncTask<NotificationObject, Void, Void>{
-        /**
-         *
-         * .@param stalls stalls to be stored
-         * @return nothing
-         */
+
 
         @Override
         protected Void doInBackground(NotificationObject... notifications) {
@@ -77,12 +77,11 @@ public class NotificationElasticSearch {
             return null;
         }
     }
+
+    /**
+     * delete a notification
+     */
     public static class DeleteNotification extends AsyncTask<NotificationObject,Void,Boolean>{
-        /**
-         *
-         * .@param stall stall to be deleted
-         * @return boolean depending on success
-         */
         @Override
         protected Boolean doInBackground(NotificationObject... notificationObjects) {
             verifyClient();
@@ -102,7 +101,10 @@ public class NotificationElasticSearch {
             return false;
         }
     }
-   //Helper function
+
+    /**
+     * helper function
+     */
     public static void verifyClient(){
         //verify that "client" exists and if it does not make it.
         //This had to be done the other functions anyway. Just make a helper function.

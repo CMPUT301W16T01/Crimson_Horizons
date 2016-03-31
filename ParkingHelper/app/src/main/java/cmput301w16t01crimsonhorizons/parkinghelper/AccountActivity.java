@@ -18,6 +18,10 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by Kevin
  * This is where it will display all the stalls the user owns.
+ * It is also where the user can add a stall or edit own profile.
+ * clicking on username will pull up user information
+ * @see AddStall
+ * @see Profile
  */
 public class AccountActivity extends AppCompatActivity {
     private ListView MyStalls;
@@ -86,6 +90,10 @@ public class AccountActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This is when the user click on the username
+     * @param view
+     */
     public void adapterClickUserName(View view){
         ClickUserName clickUserName = new ClickUserName();
         Intent newIntent = clickUserName.clickUserName(this, view, new ElasticSearchCtr.GetAccount());
@@ -103,18 +111,19 @@ public class AccountActivity extends AppCompatActivity {
         this.update();
     }
 
-
     /**
-     * If the user hits the profile button
-     * .@param view
+     * When user hits profile button
+     * @param view
      */
-
     public void profile(View view){
         Intent intent = new Intent(this,Profile.class);
         startActivity(intent);
         this.update();
     }
 
+    /**
+     * updates for view
+     */
     public void update(){
         account = CurrentAccount.getAccount();
         String email = account.getEmail();

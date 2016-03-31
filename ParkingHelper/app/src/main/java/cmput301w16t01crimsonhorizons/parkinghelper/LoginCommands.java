@@ -2,6 +2,7 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 /**
  * Created by Kevin L on 3/11/2016.
+ * commands for login
  */
 public class LoginCommands extends Commands {
     String Email;

@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * This is to return the stall
+ */
 public class ReturningStallActivity extends AppCompatActivity {
     protected Stalls stall;
     private Intent intent;

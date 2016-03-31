@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+/**
+ * Future work, may be to allow the user to edit his own bids
+ */
 public class EditBids extends AppCompatActivity {
 
     @Override

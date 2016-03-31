@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ import java.util.List;
  *
  * Idea obtained from https://www.youtube.com/watch?v=ZEEYYvVwJGY
  * This is created so that we can have a listview with buttons.
- *
+ * This is for accept/decline bids
  * @see AdapterEditStall
  */
 public class CustomLstAdapter extends ArrayAdapter<String> {
@@ -34,12 +35,18 @@ public class CustomLstAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         MyViewHolder mainHolder = null;
+        String s1 = getItem(position);
+        String[] splitted = s1.split(" ");
         if (convertView == null){
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layout,parent,false);
             final MyViewHolder viewHolder = new MyViewHolder();
             viewHolder.Bidder =(TextView)convertView.findViewById(R.id.BidderBFS);
             viewHolder.BidAmt = (TextView)convertView.findViewById(R.id.BidAmtBFS);
+
+            viewHolder.Bidder.setText(splitted[0]);
+            viewHolder.BidAmt.setText(splitted[1]);
+
             viewHolder.Accept = (Button)convertView.findViewById(R.id.AcceptBtn);
             viewHolder.Accept.setTag(position);
             // TODO: 2/15/2016 Make the button do its job
@@ -68,7 +75,8 @@ public class CustomLstAdapter extends ArrayAdapter<String> {
         else{
             //TODO SET THE STUFF FOR RIGHT DISPLAY
             mainHolder = (MyViewHolder)convertView.getTag();
-            mainHolder.Bidder.setText(getItem(position));
+            mainHolder.Bidder.setText(splitted[0]);
+            mainHolder.BidAmt.setText(splitted[1]);
         }
         return convertView;
     }

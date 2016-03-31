@@ -34,6 +34,10 @@ public class TestOwnStallsWithBids extends ActivityInstrumentationTestCase2 {
         solo.finishOpenedActivities();
     }
 
+    /**
+     * test to see if can get own stalls with bids. Has UI component
+     * US 05.04.01
+     */
     public void testStallsList(){
         solo.clickOnView(solo.getView(R.id.LoginButton));
         solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1");

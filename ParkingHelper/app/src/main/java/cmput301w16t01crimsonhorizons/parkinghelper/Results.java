@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by Kevin Lang and Lee Ingram
  *
- * This class is responsible for displaying the results from the GetPendngStalls
+ * This class is responsible for displaying what the user bidded on
  * task @see "ElasticSearchCtr"
  */
 

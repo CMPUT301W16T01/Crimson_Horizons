@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This is to check any stalls the user owns that needs bids
+ */
 public class BidsForStall extends AppCompatActivity {
 
     private Stalls stall;
@@ -27,6 +30,7 @@ public class BidsForStall extends AppCompatActivity {
         stall = (Stalls) intent.getSerializableExtra("stall");
         try{
             ArrayList<String> temp = new ArrayList<String>(Arrays.asList(stall.getLstBidders().split(",")));
+            temp.remove(0);
             all.addAll(temp);
         }catch(NullPointerException e){
             Toast.makeText(getApplicationContext(),"No one bidded on your stuff",Toast.LENGTH_SHORT).show();
@@ -49,6 +53,11 @@ public class BidsForStall extends AppCompatActivity {
         stall.setStatus("Borrowed");
     }
 
+    /**
+     * click on user name
+     * @see AccountActivity
+     * @param view
+     */
     public void adapterClickUserName(View view){
         ClickUserName clickUserName = new ClickUserName();
         Intent newIntent = clickUserName.clickUserName(this, view, new ElasticSearchCtr.GetAccount());

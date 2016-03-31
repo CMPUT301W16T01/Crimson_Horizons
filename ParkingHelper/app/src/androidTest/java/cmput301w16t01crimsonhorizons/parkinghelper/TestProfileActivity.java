@@ -30,7 +30,10 @@ public class TestProfileActivity extends ActivityInstrumentationTestCase2 {
         solo.finishOpenedActivities();
     }
 
-
+    /**
+     * test to see if user can modify account
+     *US 03.02.01
+     */
     public void testModifyAccount() {
         ElasticSearchCtr.addUser executeAdd = new ElasticSearchCtr.addUser();
         ElasticSearchCtr.addUser executeAdd2 = new ElasticSearchCtr.addUser();

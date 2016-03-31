@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 import io.searchbox.core.Get;
 
 /**
- * Developed by Kevin Lang and Lee Ingram
+ * Developed by Lee Ingram
  *
  * This class is responsible for displaying the results from
  * the SearchDataBaseTask @see "ElasticSearchCtr".

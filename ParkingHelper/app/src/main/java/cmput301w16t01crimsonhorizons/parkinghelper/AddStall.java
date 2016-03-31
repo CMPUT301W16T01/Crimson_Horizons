@@ -20,6 +20,9 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+/**
+ * This is to add a stall.
+ */
 public class AddStall extends AppCompatActivity {
     protected Stalls stall;
     static final int REQUEST_IMAGE_CAPTURE = 1234;
@@ -78,12 +81,22 @@ public class AddStall extends AppCompatActivity {
         }
         finish();
     }
+
+    /**
+     * This is for future work, it currently opens up a map, make it open at current location is the
+     * goal
+     * @param view
+     */
     public void map(View view){
         String query = "geo:0,0?q=0,0";
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(query));
         startActivity(intent);
     }
 
+    /**
+     * capture image
+     * @param view
+     */
     public void takePicture(View view){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (intent.resolveActivity(getPackageManager()) != null){
@@ -92,6 +105,10 @@ public class AddStall extends AppCompatActivity {
 
     }
 
+    /**
+     * delete image
+     * @param view
+     */
     public void deletePicture(View view){
         ImageView picture = (ImageView)findViewById(R.id.editStallImage);
         picture.setImageBitmap(null);

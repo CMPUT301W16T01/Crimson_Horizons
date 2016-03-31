@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.robotium.solo.Solo;
 
@@ -118,23 +119,6 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<WelcomeActivi
 
     /**
      * US 05.02.01
-     * Test to see if list view appears and that stalls
-     */
-    public void testListView() {
-        solo.clickOnView(solo.getView(R.id.LoginButton));
-        solo.enterText((EditText) solo.getView(R.id.emailAddress), "123@123");
-        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
-        solo.unlockScreen();
-        solo.clickOnView(solo.getView(R.id.YourBidsBtn));
-        solo.getView(R.id.YourBidsLv);
-        solo.goBack();
-        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
-
-
-    }
-
-    /**
-     * US 05.02.01
      */
     public void testOpenNextActivity() {
         solo.clickOnView(solo.getView(R.id.LoginButton));
@@ -201,7 +185,76 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<WelcomeActivi
         if (!check){
             assertTrue("Didn't clean up",false);
         }
+    }
+    /**
+     * test to see bids on one of user's things
+     * US 05.05.01
+     */
+    public void testBidsOnThing(){
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
 
+        solo.clickOnView(solo.getView(R.id.AccountBtn));
+        solo.clickOnView(solo.getView(R.id.AddBtn));
+        solo.enterText((EditText) solo.getView(R.id.NamePrompET), "__test1");
+        solo.enterText((EditText) solo.getView(R.id.DescriptionET), "__test1oneAAAAA");
 
+        solo.clickOnView(solo.getView(R.id.AddInAddBtn));
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
+
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "123@123");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+        solo.clickOnView(solo.getView(R.id.SearchBtn));
+        solo.enterText((EditText) solo.getView(R.id.query), "__test1oneAAAAA");
+        solo.clickOnView(solo.getView(R.id.SearchBtn));
+
+        ListView listView = (ListView)solo.getView(R.id.ResultLv);
+        View listelement = listView.getChildAt(0);
+        solo.clickOnView(listelement);
+        solo.enterText((EditText) solo.getView(R.id.BidStallAmtET), "1.00");
+        solo.clickOnView(solo.getView(R.id.BidStallBidBtn));
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
+
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "K");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+        solo.clickOnView(solo.getView(R.id.SearchBtn));
+        solo.enterText((EditText) solo.getView(R.id.query), "__test1oneAAAAA");
+        solo.clickOnView(solo.getView(R.id.SearchBtn));
+
+        ListView listView2 = (ListView)solo.getView(R.id.ResultLv);
+        View listelement2 = listView2.getChildAt(0);
+        solo.clickOnView(listelement2);
+        solo.enterText((EditText) solo.getView(R.id.BidStallAmtET), "2.00");
+        solo.clickOnView(solo.getView(R.id.BidStallBidBtn));
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
+
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+
+        solo.clickOnView(solo.getView(R.id.BidsOwnStallBtn));
+        solo.clickInList(0);
+        ListView ownStalls = (ListView)solo.getView(R.id.BidsForStallsLv);
+        View first = ownStalls.getChildAt(0);
+        TextView O1 = (TextView)first.findViewById(R.id.BidderBFS);
+        View second = ownStalls.getChildAt(1);
+        TextView O2 = (TextView)second.findViewById(R.id.BidderBFS);
+        assertEquals("Owner should be 123@123","123@123",O1.getText().toString());
+        assertEquals("Owner should be K","K",O2.getText().toString());
+        solo.goBack();
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.AccountBtn));
+        solo.clickInList(0);
+        solo.assertCurrentActivity("should be in edit stall", EditStall.class);
+        solo.clickOnView(solo.getView(R.id.EditStallDeleteBtn));
+
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
 }

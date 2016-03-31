@@ -37,6 +37,10 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         solo.finishOpenedActivities();
     }
 
+    /**
+     * test clicks user name
+     * US 03.03.01
+     */
     public void testClickUsername(){
         solo.clickOnView(solo.getView(R.id.LoginButton));
         solo.enterText((EditText) solo.getView(R.id.emailAddress), "123@123");
@@ -52,6 +56,11 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
 
+    /**
+     * test user can add stall/delete stall
+     * US 01.04.01
+     * US 01.05.01
+     */
     public void testStallsList(){
         solo.clickOnView(solo.getView(R.id.LoginButton));
         solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1");

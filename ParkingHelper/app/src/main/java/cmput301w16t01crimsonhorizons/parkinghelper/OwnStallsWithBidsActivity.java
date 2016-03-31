@@ -11,6 +11,9 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Activity for the stalls the user owns that contains a bid
+ */
 public class OwnStallsWithBidsActivity extends AppCompatActivity {
     private ListView OwnStalls;
     private Account account;
@@ -61,12 +64,19 @@ public class OwnStallsWithBidsActivity extends AppCompatActivity {
         this.update();
     }
 
+    /**
+     * click username
+     * @param view
+     */
     public void adapterClickUserName(View view){
         ClickUserName clickUserName = new ClickUserName();
         Intent newIntent = clickUserName.clickUserName(this, view, new ElasticSearchCtr.GetAccount());
         startActivity(newIntent);
     }
 
+    /**
+     * update
+     */
     public void update(){
         account = CurrentAccount.getAccount();
         String email = account.getEmail();

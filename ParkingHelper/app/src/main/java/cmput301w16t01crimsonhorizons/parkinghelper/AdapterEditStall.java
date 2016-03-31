@@ -13,6 +13,7 @@ import java.util.List;
  * Created by Kevin L on 2/29/2016.
  *
  * This is the adapter needed to display the list of stalls with the proper format
+ * For Account activity
  * @see CustomLstAdapter This is similar.
  */
 public class AdapterEditStall extends ArrayAdapter<Stalls>{

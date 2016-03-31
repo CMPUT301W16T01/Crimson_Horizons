@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Created by Kevin L on 3/12/2016.
+ * This is adapter for a stall the user is borrowing
  */
 public class BorrowedStallAdapter extends ArrayAdapter<Stalls> {
     private int Layout;

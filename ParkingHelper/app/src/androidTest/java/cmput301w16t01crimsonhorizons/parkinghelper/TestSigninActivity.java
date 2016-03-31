@@ -33,6 +33,10 @@ public class TestSigninActivity extends ActivityInstrumentationTestCase2 {
         }
     }
 
+    /**
+     * test for unique username
+     * US 03.01.01
+     */
     @UiThreadTest
     public void testSignup() {
         ElasticSearchCtr.verifyUserName executeVerify = new ElasticSearchCtr.verifyUserName();

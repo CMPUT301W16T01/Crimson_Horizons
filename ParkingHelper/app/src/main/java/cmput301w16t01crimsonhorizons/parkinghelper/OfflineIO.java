@@ -18,16 +18,26 @@ import java.util.ArrayList;
 
 /**
  * Created by kliang on 3/22/16.
+ * IO for offline data
  */
 public class OfflineIO {
     // It sets the constant for the file name that it will always write to.
+
+    //keeps track of the user that is last logged in
     private static final String USER_FILE ="user_file";
+    //Keeps track of the stalls the user owns
     private static final String STALL_FILE ="stall_file";
+    //Keeps track of any adding command used and stalls that is to be added
     private static final String STALL_ADD = "stall_add_file";
+    //keeps track of any update done and the stalls for update
     private static final String STALL_UPDATE = "stall_update_file";
     public OfflineIO(){};
-    // This just deletes the file
-    // This returns an array of strings of each entries.
+
+    /**
+     * This loads the user name of last login
+     * @param context
+     * @return
+     */
     public Account LoadUser(Context context){
         Account AllEntries= null;
         Gson gson = new Gson();
@@ -45,8 +55,15 @@ public class OfflineIO {
         }
         return AllEntries;
     }
-    // This write to the file using Gson and Json.
-    // It takes in the array as input and the context, as it needs it to write.
+
+
+    /**
+     * This write to the file using Gson and Json.
+     * It takes in the array as input and the context, as it needs it to write.
+     * It stores the current user name
+     * @param account
+     * @param context
+     */
     public void StoreUser(Account account,Context context){
         Gson gson = new Gson();
         try{
@@ -67,6 +84,12 @@ public class OfflineIO {
             throw new RuntimeException("Error IOexception");
         }
     }
+
+    /**
+     * Returns the stalls this user owns
+     * @param context
+     * @return
+     */
     public ArrayList<Stalls> LoadStalls(Context context){
         ArrayList<Stalls> AllEntries= new ArrayList<Stalls>();
         ArrayList<Stalls> temp = new ArrayList<Stalls>();
@@ -96,6 +119,12 @@ public class OfflineIO {
         }
         return AllEntries;
     }
+
+    /**
+     * stores the stalls this user currently owns.
+     * @param stalls
+     * @param context
+     */
     public void StoreStall(ArrayList<Stalls> stalls,Context context){
         Gson gson = new Gson();
         try{
@@ -117,6 +146,11 @@ public class OfflineIO {
         }
     }
 
+    /**
+     * stores the stalls that the use rwants to add when offline
+     * @param stalls
+     * @param context
+     */
     public void StoreStallsToAdd(ArrayList<Stalls> stalls,Context context){
         Gson gson = new Gson();
         try{
@@ -138,6 +172,11 @@ public class OfflineIO {
         }
     }
 
+    /**
+     * stores the stalls the user wants to update when offline
+     * @param stalls
+     * @param context
+     */
     public void StoreStallsToUpdate(ArrayList<Stalls> stalls,Context context){
         Gson gson = new Gson();
         try{
@@ -158,6 +197,12 @@ public class OfflineIO {
             throw new RuntimeException("Error IOexception");
         }
     }
+
+    /**
+     * loads the stalls the user wants to add when offline
+     * @param context
+     * @return
+     */
     public ArrayList<Stalls> LoadStallsToAdd(Context context){
         ArrayList<Stalls> AllEntries= new ArrayList<Stalls>();
         ArrayList<Stalls> temp = new ArrayList<Stalls>();
@@ -188,6 +233,11 @@ public class OfflineIO {
         return AllEntries;
     }
 
+    /**
+     * loads the stalls the user wants to update when offline
+     * @param context
+     * @return
+     */
     public ArrayList<Stalls> LoadStallsUpdate(Context context){
         ArrayList<Stalls> AllEntries= new ArrayList<Stalls>();
         ArrayList<Stalls> temp = new ArrayList<Stalls>();
@@ -217,9 +267,16 @@ public class OfflineIO {
         }
         return AllEntries;
     }
+
+    /**
+     * delete commands for the file
+     * @param context
+     */
     public void deleteStallFile(Context context){
         context.deleteFile(STALL_FILE);
     }
+
+
     public void deleteUserFile(Context context){
         context.deleteFile(USER_FILE);
     }
