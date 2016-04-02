@@ -6,6 +6,8 @@ import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import io.searchbox.annotations.JestId;
 
@@ -105,6 +107,13 @@ public class Stalls implements Serializable{
     }
 
     public String getStatus() {
+        ElasticSearchCtr.GetBid getBid = new ElasticSearchCtr.GetBid();
+        getBid.execute(new String[]{"StallID", this.getStallID()});
+        try {
+            ArrayList<Bid> bids = getBid.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
         return Status;
     }
     public String getStallID() {
