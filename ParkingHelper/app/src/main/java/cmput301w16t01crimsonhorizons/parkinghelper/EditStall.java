@@ -195,7 +195,7 @@ public class EditStall extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
             Bundle extras = data .getExtras();
-            ImageView picture = (ImageView)findViewById(R.id.addStallImage);
+            ImageView picture = (ImageView)findViewById(R.id.editStallImage);
             Bitmap bigThumbnail = (Bitmap) extras.get("data");
 
         //Taken from:https://github.com/CMPUT301F15T07/TradingApp/blob/master/SSCTE/app/src/main/java/com/sherpasteven/sscte/Models/Image.java#L53https://github.com/CMPUT301F15T07/TradingApp/blob/master/SSCTE/app/src/main/java/com/sherpasteven/sscte/Models/Image.java#L53
