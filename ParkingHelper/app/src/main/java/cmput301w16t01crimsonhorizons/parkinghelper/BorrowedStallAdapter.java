@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,14 +30,17 @@ public class BorrowedStallAdapter extends ArrayAdapter<Stalls> {
             EditStallViewHolder viewHolder = new EditStallViewHolder();
             viewHolder.Owner=(TextView)convertView.findViewById(R.id.OwnerBorrowedStall);
             viewHolder.Description = (TextView)convertView.findViewById(R.id.DescriptionBorrowedStall);
+            viewHolder.Picture = (ImageView)convertView.findViewById(R.id.PicBorrowedStall);
             viewHolder.Owner.setText(stall.getOwner());
             viewHolder.Description.setText(stall.getDescription());
+            viewHolder.Picture.setImageBitmap(stall.getThumbnail());
             convertView.setTag(viewHolder);
         }
         else{
             mainHolder = (EditStallViewHolder)convertView.getTag();
             mainHolder.Owner.setText(stall.getOwner());
             mainHolder.Description.setText(stall.getDescription());
+            mainHolder.Picture.setImageBitmap(stall.getThumbnail());
         }
         return convertView;
     }
@@ -45,6 +48,7 @@ public class BorrowedStallAdapter extends ArrayAdapter<Stalls> {
     public class EditStallViewHolder {
         TextView Owner;
         TextView Description;
+        ImageView Picture;
     }
 
 }

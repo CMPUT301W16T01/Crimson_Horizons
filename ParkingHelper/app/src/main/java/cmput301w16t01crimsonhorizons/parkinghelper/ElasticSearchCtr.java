@@ -8,8 +8,6 @@ import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
-import org.apache.commons.lang3.ObjectUtils;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

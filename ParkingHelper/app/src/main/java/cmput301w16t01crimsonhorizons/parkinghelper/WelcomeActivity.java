@@ -1,19 +1,11 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 /**
  * This is where the user can sign up or login.
@@ -29,6 +21,7 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

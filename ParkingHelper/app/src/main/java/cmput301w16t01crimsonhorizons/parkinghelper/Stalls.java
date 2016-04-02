@@ -25,13 +25,11 @@ public class Stalls implements Serializable{
     private String LstBidders = "";
     private Double[] location = {0.00,0.00};
     protected transient Bitmap thumbnail = null;
+    protected String thumbnailBase64 = null;
 
     public String getThumbnailBase64() {
         return thumbnailBase64;
     }
-
-    protected String thumbnailBase64 = null;
-
 
     public void setThumbnail(Bitmap newThumbnail){
         if (newThumbnail != null) {
@@ -40,7 +38,7 @@ public class Stalls implements Serializable{
             newThumbnail.compress(Bitmap.CompressFormat.PNG, 100, byteArrayBitmapStream);
 
             byte[] b = byteArrayBitmapStream.toByteArray();
-            thumbnailBase64 = Base64.encodeToString(b, Base64.DEFAULT);
+            thumbnailBase64 = Base64.encodeToString(b, Base64.NO_WRAP);
         }
         else if(thumbnail != null){
             Bitmap.Config config = thumbnail.getConfig();

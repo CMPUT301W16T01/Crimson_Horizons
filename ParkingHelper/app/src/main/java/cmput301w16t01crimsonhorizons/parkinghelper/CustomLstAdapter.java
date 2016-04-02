@@ -1,19 +1,15 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Context;
-
-import android.content.Intent;
-import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,10 +20,10 @@ import java.util.List;
  * This is for accept/decline bids
  * @see AdapterEditStall
  */
-public class CustomLstAdapter extends ArrayAdapter<String> {
+public class CustomLstAdapter extends ArrayAdapter<BidsForStallsObject> {
     private int layout;
     //Todo set what it takes in.
-    public CustomLstAdapter(Context context, int resource, List<String> objects) {
+    public CustomLstAdapter(Context context, int resource, List<BidsForStallsObject> objects) {
         super(context, resource, objects);
         layout = resource;
     }
@@ -35,17 +31,19 @@ public class CustomLstAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         MyViewHolder mainHolder = null;
-        String s1 = getItem(position);
-        String[] splitted = s1.split(" ");
+        BidsForStallsObject bidsForStall1 = getItem(position);
+        String[] splitted = bidsForStall1.getString().split(" ");
         if (convertView == null){
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layout,parent,false);
             final MyViewHolder viewHolder = new MyViewHolder();
             viewHolder.Bidder =(TextView)convertView.findViewById(R.id.BidderBFS);
             viewHolder.BidAmt = (TextView)convertView.findViewById(R.id.BidAmtBFS);
+            viewHolder.BidPic = (ImageView)convertView.findViewById(R.id.BidPicture);
 
             viewHolder.Bidder.setText(splitted[0]);
             viewHolder.BidAmt.setText(splitted[1]);
+            viewHolder.BidPic.setImageBitmap(bidsForStall1.getStalls().getThumbnail());
 
             viewHolder.Accept = (Button)convertView.findViewById(R.id.AcceptBtn);
             viewHolder.Accept.setTag(position);
@@ -77,6 +75,7 @@ public class CustomLstAdapter extends ArrayAdapter<String> {
             mainHolder = (MyViewHolder)convertView.getTag();
             mainHolder.Bidder.setText(splitted[0]);
             mainHolder.BidAmt.setText(splitted[1]);
+            mainHolder.BidPic.setImageBitmap(bidsForStall1.getStalls().getThumbnail());
         }
         return convertView;
     }
@@ -85,5 +84,6 @@ public class CustomLstAdapter extends ArrayAdapter<String> {
         TextView BidAmt;
         Button Accept;
         Button Decline;
+        ImageView BidPic;
     }
 }

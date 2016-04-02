@@ -39,4 +39,14 @@
         android:layout_alignBaseline="@+id/DeclineBtn"
         android:layout_alignBottom="@+id/DeclineBtn"
         android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/BidPicture"
+        android:minHeight="20dp"
+        android:minWidth="20dp"
+        android:layout_alignTop="@+id/BidderBFS"
+        android:layout_toStartOf="@+id/AcceptBtn"
+        android:layout_marginEnd="24dp" />
 </RelativeLayout>
