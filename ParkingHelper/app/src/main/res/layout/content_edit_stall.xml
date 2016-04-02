@@ -64,23 +64,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/latitudeEditStallET" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Status"
-        android:id="@+id/EditStallStatusTv"
-        android:layout_below="@+id/DescriptionPrompEditStall"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/DescriptionPrompEditStall" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/StatusEditStallEv"
-        android:layout_below="@+id/EditStallStatusTv"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/EditStallStatusTv" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -139,7 +122,7 @@
         android:id="@+id/editStallImage"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/StatusEditStallEv" />
+        android:layout_below="@+id/DescriptionPrompEditStall" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
