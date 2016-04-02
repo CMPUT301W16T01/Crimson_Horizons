@@ -546,10 +546,7 @@ public class ElasticSearchCtr{
             String status = stall[0].getStatus();
             String Description = stall[0].getDescription();
             String Owner = stall[0].getOwner();
-            Double BidAmt = stall[0].getBidAmt();
-            String Bidder = stall[0].getBidder();
             String Borrower = stall[0].getBorrower();
-            String LstBidders = stall[0].getLstBidders();
             Double[] location = stall[0].getLocation();
             Bitmap thumbnail = stall[0].getThumbnail();
             String thumbnailBase64 = stall[0].getThumbnailBase64();
@@ -559,9 +556,6 @@ public class ElasticSearchCtr{
                         "\"doc\": { \"Status\": " + "\"" + status + "\", " +
                         " \"Description\": " + "\"" + Description + "\", " +
                         " \"Owner\": " + "\"" + Owner + "\", " +
-                        " \"BidAmt\": " + "\"" + BidAmt + "\", " +
-                        " \"Bidder\": " + "\"" + Bidder + "\"," +
-                        " \"LstBidders\": " + "\"" + LstBidders + "\"," +
                         " \"location\": [" + location[0].toString() + "," +
                         location[1].toString() + "]," +
                         " \"Borrower\": " + "\"" + Borrower + "\"" + "," +
@@ -573,9 +567,6 @@ public class ElasticSearchCtr{
                         "\"doc\": { \"Status\": " + "\"" + status + "\", " +
                         " \"Description\": " + "\"" + Description + "\", " +
                         " \"Owner\": " + "\"" + Owner + "\", " +
-                        " \"BidAmt\": " + "\"" + BidAmt + "\", " +
-                        " \"Bidder\": " + "\"" + Bidder + "\"," +
-                        " \"LstBidders\": " + "\"" + LstBidders + "\"," +
                         " \"location\": [" + location[0].toString() + "," +
                         location[1].toString() + "]," +
                         " \"Borrower\": " + "\"" + Borrower + "\"" + "," +
@@ -591,6 +582,124 @@ public class ElasticSearchCtr{
                 e.printStackTrace();
                 return false;
             }
+        }
+    }
+
+    /**
+     *
+     * .@param bids bids to be stored
+     * @return nothing
+     */
+    public static class MakeBid extends AsyncTask<Bid,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Bid... bids) {
+            verifyClient();
+            //Since AsyncTasks work on arrays, we need to work with arrays as well
+            for (int i = 0; i < bids.length; i++){
+                Bid bid = bids[i];
+                Index index = new Index.Builder(bid).index("t01").type("bid_database").build();
+                try {
+                    DocumentResult result = client.execute(index);
+                    if (result.isSucceeded()){
+                        //Set Id for tweet, can find and edit in elastic search
+                        bid.setBidID(result.getId());
+                    }
+                    //Can also use get id,get index,get type
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            return null;
+        }
+    }
+    /**
+     *
+     * .@param bid bid with the new information
+     * @return boolean depending if it is successful or not.
+     */
+    public static class UpdateBid extends AsyncTask<Bid,Void,Boolean>{
+
+        @Override
+        protected Boolean doInBackground(Bid... bid) {
+            verifyClient();
+            String bidder = bid[0].Bidder().getEmail();
+            Double bidAmount = bid[0].BidAmount();
+            String stall = bid[0].BidStall().getStallID();
+            String doc="";
+            doc = "{" +
+                    "\"doc\": { \"Bidder\": " + "\"" + bidder + "\", " +
+                    " \"BidAmount\": " + "\"" + bidAmount.toString() + "\", " +
+                    " \"StallID\": " + "\"" + stall + "\", " +
+                    "}";
+            try {
+                DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
+                        type("bid_database").id(bid[0].getBidID()).build());
+                return result.isSucceeded();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
+    /**
+     * @return returns a list of bids
+     * .@param search_strings, it is an array of arrays of Strings. Each array is
+     * two Strings long, 0 = key, 1 = value, and specifies a search criterion
+     */
+    public static class GetBid extends AsyncTask<String[], Void,ArrayList<Bid>>{
+        @Override
+
+        protected ArrayList<Bid> doInBackground(String[]... search_strings) {
+            verifyClient();
+            ArrayList<Bid> BidsResult = new ArrayList<>();
+            //start initial array list empty.
+            String query = "{" +"\"query\": {\"bool\": {";
+            for (int i = 0; i < search_strings.length; i++) {
+                if (i != 0) { query += ", "; }
+                query += "\"must\" : {\"match\":{" +
+                        "\""+search_strings[i][0]+"\": "+"\""+search_strings[i][1]+"\""+"}}";
+            }
+            query += "}}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("bid_database").build();
+
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()){
+                    List<Bid> returned_bids = execute.getSourceAsObjectList(Bid.class);
+                    BidsResult.addAll(returned_bids);
+                }
+            } catch (IOException e) {
+                Log.i("TODO", "SEARCH PROBLEMS");
+            }
+
+            return BidsResult;
+        }}
+    /**
+     *
+     * .@param bid bid to be deleted
+     * @return boolean depending on success
+     */
+    public static class DeleteBid extends AsyncTask<Bid,Void,Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Bid... bid) {
+            verifyClient();
+            try {
+                DocumentResult result = client.execute(new Delete.Builder(bid[0].getBidID())
+                        .index("t01")
+                        .type("bid_database")
+                        .build());
+                if (result.isSucceeded()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
         }
     }
 
@@ -635,72 +744,6 @@ public class ElasticSearchCtr{
             verifyClient();
             //start initial array list empty.
             ArrayList<Stalls> returnStalls = new ArrayList<Stalls>();
-            String query = "{" +"\"query\": {\"bool\": {\"should\":     { \"match\": "+
-                    "{ \"Status\": \"Available\" }}," +
-                    "\"should\" : {\"match\":{\"Status\": \"Bidded\" }},"+
-                    "\"must\": { \"match\": { \"Description\": "+"\""+params[0]+"\""+"}}}}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").setParameter(Parameters.SIZE, 10)
-                    .setParameter(Parameters.SCROLL, "1m")
-                    .build();
-            try {
-                JestResult execute = client.execute(search);
-                String scrollId = execute.getJsonObject().get("_scroll_id").getAsString();
-                if (execute.isSucceeded()) {
-                    List<Stalls> another1 = execute.getSourceAsObjectList(Stalls.class);
-                    returnStalls.addAll(another1);
-                }
-                while (true) {
-
-                    SearchScroll scroll = new SearchScroll.Builder(scrollId, "1m")
-                            .setParameter(Parameters.SIZE, 10).build();
-
-                    execute = client.execute(scroll);
-                    if (execute.isSucceeded()) {
-                        List<Stalls> another1 = execute.getSourceAsObjectList(Stalls.class);
-                        if (another1.size()==0||another1==null){
-                            break;
-                        } else {
-                            returnStalls.addAll(another1);
-                            scrollId = execute.getJsonObject().getAsJsonPrimitive("_scroll_id").getAsString();
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return returnStalls;
-           /* Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
-
-            try {
-                SearchResult execute = client.execute(search);
-                if (execute.isSucceeded()){
-                    List<String> stalls = execute.getSourceAsStringList();
-                    List<Stalls> another1 = execute.getSourceAsObjectList(Stalls.class);
-                    String temp = "hi";
-                    returnStalls.addAll(another1);
-
-                }
-            } catch (IOException e) {
-                Log.i("TODO", "SEARCH PROBLEMS");
-            }
-
-            return returnStalls;*/
-        }
-    }
-    /**
-     *
-     * It search for stalls that either the Bidder for that stall is the user, or the user exists within
-     * the list of bidders for that stall
-     * @return returnStalls a list of stall objects with at least one of the words, form
-     *          the params argument in their description
-     */
-    public static class SearchYourBids extends AsyncTask<String, Void, ArrayList<Stalls>> {
-
-        @Override
-        protected ArrayList<Stalls> doInBackground(String... params) {
-            verifyClient();
-            //start initial array list empty.
-            ArrayList<Stalls> returnStalls = new ArrayList<Stalls>();
             String query = "{" +"\"query\": {\"bool\": {"+
                     "\"should\":{\"match\":{\"Bidder\": \""+params[0]+"\" }},"+
                     "\"should\":{ \"match\": { \"LstBidders\": "+"\""+params[0]+"\""+"}}}}}";
@@ -738,7 +781,7 @@ public class ElasticSearchCtr{
 
             try {
                 SearchResult execute = client.execute(search);
-                if (execute.isSucceeded()){
+                if (execute.isSucceeded()) {
                     List<String> stalls = execute.getSourceAsStringList();
                     List<Stalls> another1 = execute.getSourceAsObjectList(Stalls.class);
                     String temp = "hi";
@@ -750,41 +793,6 @@ public class ElasticSearchCtr{
             }
 
             return returnStalls;*/
-        }
-    }
-    /**
-     *
-     * .@param search_string contains the email of the relevent user
-     * @return returnedStalls, an array list of stalls that the user with the email specified
-     *  if search_string has bidded successfully on
-     *  @deprecated replaced by SearchYourBids
-     */
-    public static class GetPendingStalls extends AsyncTask<String, Void, ArrayList<Stalls>>{
-
-        @Override
-        protected ArrayList<Stalls> doInBackground(String... search_string) {
-            verifyClient();
-            ArrayList<Stalls> returnedStalls = new ArrayList<Stalls>();
-            List<Stalls> stalls;
-            //start initial array list empty.
-            String query = "{" +
-                    "    \"query\": {" +
-                    "        \"match\" :{ \"Bidder\":\"" + search_string[0] + "\""+
-                    "    }" +
-                    "}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
-
-            try {
-                SearchResult execute = client.execute(search);
-                if (execute.isSucceeded()){
-                    stalls = execute.getSourceAsObjectList(Stalls.class);
-                    returnedStalls.addAll(stalls);
-                }
-            } catch (IOException e) {
-                Log.i("TODO", "SEARCH PROBLEMS");
-            }
-
-            return returnedStalls;
         }
     }
 

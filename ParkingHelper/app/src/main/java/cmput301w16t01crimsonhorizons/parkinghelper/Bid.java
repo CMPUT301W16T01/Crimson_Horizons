@@ -1,5 +1,7 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
+import io.searchbox.annotations.JestId;
+
 /**
  * Created by schuman on 2/23/16.
  */
@@ -21,5 +23,15 @@ public class Bid {
         this.bidder = bidder;
         this.bidAmount = bidAmount;
         this.bidStall = bidStall;
+    }
+
+    @JestId
+    private String BidID;
+
+    public String getBidID() {
+        return BidID;
+    }
+    public void setBidID(String bidID) {
+        BidID = bidID;
     }
 }

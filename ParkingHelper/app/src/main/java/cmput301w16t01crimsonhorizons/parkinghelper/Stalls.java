@@ -18,11 +18,7 @@ import io.searchbox.annotations.JestId;
 public class Stalls implements Serializable{
     private String Owner = "";
     private String Description = "";
-    private String Status = "";
-    private Double BidAmt = 0.00;
-    private String Bidder = "";
     private String Borrower = "";
-    private String LstBidders = "";
     private Double[] location = {0.00,0.00};
     protected transient Bitmap thumbnail = null;
     protected String thumbnailBase64 = null;
@@ -81,14 +77,6 @@ public class Stalls implements Serializable{
         this.Borrower = borrower;
     }
 
-    public String getLstBidders() {
-        return LstBidders;
-    }
-
-    public void setLstBidders(String lstBidders) {
-        LstBidders = lstBidders;
-    }
-
     public String getImage() {
         return image;
     }
@@ -99,22 +87,6 @@ public class Stalls implements Serializable{
 
     @JestId
     private String StallID;
-
-    public String getBidder() {
-        return Bidder;
-    }
-
-    public void setBidder(String bidder) {
-        Bidder = bidder;
-    }
-
-    public Double getBidAmt() {
-        return BidAmt;
-    }
-
-    public void setBidAmt(Double bidAmt) {
-        BidAmt = bidAmt;
-    }
 
     public String getOwner() {
         return Owner;
@@ -134,10 +106,6 @@ public class Stalls implements Serializable{
 
     public String getStatus() {
         return Status;
-    }
-
-    public void setStatus(String status) {
-        Status = status;
     }
     public String getStallID() {
         return StallID;

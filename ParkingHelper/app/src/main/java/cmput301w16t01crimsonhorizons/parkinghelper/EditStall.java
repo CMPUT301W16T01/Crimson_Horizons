@@ -46,7 +46,6 @@ public class EditStall extends AppCompatActivity {
 
         }
         stall_ori.setOwner(stall.getOwner());
-        stall_ori.setBidAmt(stall.getBidAmt());
         stall_ori.setDescription(stall.getDescription());
         stall_ori.setThumbnail(stall.getThumbnail());
         int pos = intent.getIntExtra("id",-1);
@@ -91,7 +90,6 @@ public class EditStall extends AppCompatActivity {
     public void saveStallInformation(View view){
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
         EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
-        EditText status = (EditText)findViewById(R.id.StatusEditStallEv);
         EditText longitude = (EditText)findViewById(R.id.longitudeEditStallET);
         EditText latitude = (EditText)findViewById(R.id.latitudeEditStallET);
         ImageView picture = (ImageView)findViewById(R.id.editStallImage);
@@ -100,14 +98,13 @@ public class EditStall extends AppCompatActivity {
         location_double[1]=Double.parseDouble(latitude.getText().toString());
         String newTitle = title.getText().toString();
         String newDescription = description.getText().toString();
-        String newStatus = status.getText().toString();
+        Bitmap thumbnail = ((BitmapDrawable)picture.getDrawable()).getBitmap();
         try {
             stall.setThumbnail(((BitmapDrawable) picture.getDrawable()).getBitmap());
         }catch(NullPointerException e){
             stall.setThumbnail(null);
         }
         stall.setDescription(newDescription);
-        stall.setStatus(newStatus);
         stall.setOwner(newTitle);
         stall.setLocation(location_double);
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -235,14 +232,13 @@ public class EditStall extends AppCompatActivity {
     public Boolean compare(Stalls s1,Stalls s2){
         try {
             if ((s1.getDescription().equals(s2.getDescription())) && (s1.getOwner().equals(s2.getOwner()))
-                    && (s1.getStallID().equals(s2.getStallID())) && (s1.getBidder().equals(s2.getBidder()))) {
+                    && (s1.getStallID().equals(s2.getStallID()))) {
                 return true;
             } else {
                 return false;
             }
         } catch (NullPointerException e){
-            if ((s1.getDescription().equals(s2.getDescription())) && (s1.getOwner().equals(s2.getOwner()))
-                   && (s1.getBidder().equals(s2.getBidder()))) {
+            if ((s1.getDescription().equals(s2.getDescription())) && (s1.getOwner().equals(s2.getOwner()))) {
                 return true;
             } else {
                 return false;
