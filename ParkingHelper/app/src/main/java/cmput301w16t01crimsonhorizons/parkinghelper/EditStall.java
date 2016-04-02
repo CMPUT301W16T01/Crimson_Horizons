@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -247,5 +248,14 @@ public class EditStall extends AppCompatActivity {
                 return false;
             }
         }
+    }
+
+
+    public void map(View view){
+        Double lat =53.543811;
+        Double lon = -113.491602;
+        String query = "geo:" + lat.toString() + "," + lon.toString() + "?q=" + lat.toString() + "," + lon.toString();
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(query));
+        startActivity(intent);
     }
 }

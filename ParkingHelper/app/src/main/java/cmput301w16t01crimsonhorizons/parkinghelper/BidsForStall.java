@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This is to check any stalls the user owns that needs bids
@@ -24,13 +25,14 @@ public class BidsForStall extends AppCompatActivity {
         setContentView(R.layout.content_bids_for_stall);
         Intent intent = getIntent();
         stall = (Stalls) intent.getSerializableExtra("stall");
+        ArrayList<BidsForStallsObject> all = new ArrayList<BidsForStallsObject>();
         try{
-            ArrayList<BidsForStallsObject> temp = new ArrayList<BidsForStallsObject>();
-            for(String newText : stall.getLstBidders().split(","))
-                temp.add(new BidsForStallsObject(newText, stall));
+            ArrayList<String> temp =  new ArrayList<String>(Arrays.asList(stall.getLstBidders().split(",")));
+            temp.remove("");
 
-            temp.remove(0);
-
+            for(String newText : temp) {
+                all.add(new BidsForStallsObject(newText, stall));
+            }
 
         }catch(NullPointerException e){
             Toast.makeText(getApplicationContext(),"No one bidded on your stall",Toast.LENGTH_SHORT).show();

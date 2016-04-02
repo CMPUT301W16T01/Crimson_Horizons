@@ -42,8 +42,8 @@ public class BidStall extends AppCompatActivity {
         HighestBid.setText(temp.toString());
         Owner.setText(stall.getOwner().toString());
         Descrip.setText(stall.getDescription().toString());
-        longtitude.setText(stall.getLocation()[1].toString());
-        latitude.setText(stall.getLocation()[0].toString());
+        longtitude.setText(stall.getLocation()[0].toString());
+        latitude.setText(stall.getLocation()[1].toString());
     }
 
     /**

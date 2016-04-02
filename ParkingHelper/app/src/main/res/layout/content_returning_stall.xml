@@ -87,8 +87,7 @@
         android:ems="10"
         android:id="@+id/latitudeRetStallTV"
         android:text="No value"
-        android:layout_marginTop="74dp"
-        android:layout_below="@+id/latitudeTitleRetStallTV"
+        android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
 
     <Button
@@ -98,5 +97,6 @@
         android:id="@+id/returnStallBtn"
         android:onClick="returnStall"
         android:layout_below="@+id/latitudeRetStallTV"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp" />
 </RelativeLayout>
