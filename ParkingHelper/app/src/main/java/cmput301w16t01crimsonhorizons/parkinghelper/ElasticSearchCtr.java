@@ -14,12 +14,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.searchbox.client.JestResult;
 import io.searchbox.core.Delete;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
+import io.searchbox.core.SearchScroll;
 import io.searchbox.core.Update;
+import io.searchbox.params.Parameters;
 
 /**
  * Created by Kevin L on 2/24/2016.
@@ -76,18 +79,35 @@ public class ElasticSearchCtr{
                     "{ \"Status\": \"Available\" }}," +
                     "\"should\" : {\"match\":{\"Status\": \"Bidded\" }},"+
                     "\"must\" : {\"match\":{\""+search_string[1]+"\": "+"\""+search_string[0]+"\""+"}}}}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
-
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").setParameter(Parameters.SIZE, 10)
+                    .setParameter(Parameters.SCROLL, "1m")
+                    .build();
             try {
-                SearchResult execute = client.execute(search);
-                if (execute.isSucceeded()){
+                JestResult execute = client.execute(search);
+                String scrollId = execute.getJsonObject().get("_scroll_id").getAsString();
+                if (execute.isSucceeded()) {
                     List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
                     AllStall.addAll(returned_stalls);
                 }
-            } catch (IOException e) {
-                Log.i("TODO", "SEARCH PROBLEMS");
-            }
+                while (true) {
 
+                    SearchScroll scroll = new SearchScroll.Builder(scrollId, "1m")
+                            .setParameter(Parameters.SIZE, 10).build();
+
+                    execute = client.execute(scroll);
+                    if (execute.isSucceeded()) {
+                        List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
+                        if (returned_stalls.size()==0||returned_stalls==null){
+                            break;
+                        } else {
+                            AllStall.addAll(returned_stalls);
+                            scrollId = execute.getJsonObject().getAsJsonPrimitive("_scroll_id").getAsString();
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return AllStall;
         }
     }
@@ -96,27 +116,44 @@ public class ElasticSearchCtr{
      * Returns a list of stalls matching 2 fields.
      * Here it match status with bidded or available
      */
-    public static class GetAvailableStall extends AsyncTask<String, Void,ArrayList<Stalls>>{
+    public static class GetAvailableStall extends AsyncTask<String, Void,ArrayList<Stalls>> {
         @Override
         protected ArrayList<Stalls> doInBackground(String... search_string) {
             verifyClient();
             ArrayList<Stalls> AllStall = new ArrayList<>();
             //start initial array list empty.
-            String query = "{" +"\"query\": {\"bool\": {\"should\":     { \"match\": "+
-                    "{ \""+search_string[0]+"\": \""+search_string[1]+"\" }}," +
-                    "\"should\" : {\"match\":{\""+search_string[0]+"\": \""+search_string[2]+"\" }}"+ "}}}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
-
+            String query = "{" + "\"query\": {\"bool\": {\"should\":     { \"match\": " +
+                    "{ \"" + search_string[0] + "\": \"" + search_string[1] + "\" }}," +
+                    "\"should\" : {\"match\":{\"" + search_string[0] + "\": \"" + search_string[2] + "\" }}" + "}}}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").setParameter(Parameters.SIZE, 10)
+                    .setParameter(Parameters.SCROLL, "1m")
+                    .build();
             try {
-                SearchResult execute = client.execute(search);
-                if (execute.isSucceeded()){
+                JestResult execute = client.execute(search);
+                String scrollId = execute.getJsonObject().get("_scroll_id").getAsString();
+                if (execute.isSucceeded()) {
                     List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
                     AllStall.addAll(returned_stalls);
                 }
-            } catch (IOException e) {
-                Log.i("TODO", "SEARCH PROBLEMS");
-            }
+                while (true) {
 
+                    SearchScroll scroll = new SearchScroll.Builder(scrollId, "1m")
+                            .setParameter(Parameters.SIZE, 10).build();
+
+                    execute = client.execute(scroll);
+                    if (execute.isSucceeded()) {
+                        List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
+                        if (returned_stalls.size()==0||returned_stalls==null){
+                            break;
+                        } else {
+                            AllStall.addAll(returned_stalls);
+                            scrollId = execute.getJsonObject().getAsJsonPrimitive("_scroll_id").getAsString();
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return AllStall;
         }
     }
@@ -132,9 +169,38 @@ public class ElasticSearchCtr{
             //start initial array list empty.
             String query = "{" +"\"query\": { \"match\": "+
                     "{ \""+search_string[0]+"\": \""+search_string[1]+"\" }}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").setParameter(Parameters.SIZE, 10)
+                    .setParameter(Parameters.SCROLL, "1m")
+                    .build();
             try {
+                JestResult execute = client.execute(search);
+                String scrollId = execute.getJsonObject().get("_scroll_id").getAsString();
+                if (execute.isSucceeded()) {
+                    List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
+                    AllStall.addAll(returned_stalls);
+                }
+                while (true) {
+
+                    SearchScroll scroll = new SearchScroll.Builder(scrollId, "1m")
+                            .setParameter(Parameters.SIZE, 10).build();
+
+                    execute = client.execute(scroll);
+                    if (execute.isSucceeded()) {
+                        List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
+                        if (returned_stalls.size()==0||returned_stalls==null){
+                            break;
+                        } else {
+                            AllStall.addAll(returned_stalls);
+                            scrollId = execute.getJsonObject().getAsJsonPrimitive("_scroll_id").getAsString();
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return AllStall;
+/*            try {
                 SearchResult execute = client.execute(search);
                 if (execute.isSucceeded()){
                     List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
@@ -144,7 +210,7 @@ public class ElasticSearchCtr{
                 Log.i("TODO", "SEARCH PROBLEMS");
             }
 
-            return AllStall;
+            return AllStall;*/
         }
     }
 
@@ -160,7 +226,37 @@ public class ElasticSearchCtr{
             String query = "{" +"\"query\": {\"bool\": {\"must\":     { \"match\": "+
                     "{ \"Status\": \"Bidded\" }}," +
                     "\"must\": { \"match\": { \""+search_string[1]+"\": "+"\""+search_string[0]+"\""+"}}}}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").setParameter(Parameters.SIZE, 10)
+                    .setParameter(Parameters.SCROLL, "1m")
+                    .build();
+            try {
+                JestResult execute = client.execute(search);
+                String scrollId = execute.getJsonObject().get("_scroll_id").getAsString();
+                if (execute.isSucceeded()) {
+                    List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
+                    AllStall.addAll(returned_stalls);
+                }
+                while (true) {
+
+                    SearchScroll scroll = new SearchScroll.Builder(scrollId, "1m")
+                            .setParameter(Parameters.SIZE, 10).build();
+
+                    execute = client.execute(scroll);
+                    if (execute.isSucceeded()) {
+                        List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
+                        if (returned_stalls.size()==0||returned_stalls==null){
+                            break;
+                        } else {
+                            AllStall.addAll(returned_stalls);
+                            scrollId = execute.getJsonObject().getAsJsonPrimitive("_scroll_id").getAsString();
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return AllStall;
+            /*Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
                 SearchResult execute = client.execute(search);
@@ -172,7 +268,7 @@ public class ElasticSearchCtr{
                 Log.i("TODO", "SEARCH PROBLEMS");
             }
 
-            return AllStall;
+            return AllStall;*/
         }
     }
 
@@ -189,7 +285,37 @@ public class ElasticSearchCtr{
             String query = "{" +"\"query\": {\"bool\": {\"must\":     { \"match\": "+
                     "{ \"Status\": \"Borrowed\" }}," +
                     "\"must\": { \"match\": { \""+search_string[1]+"\": "+"\""+search_string[0]+"\""+"}}}}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").setParameter(Parameters.SIZE, 10)
+                    .setParameter(Parameters.SCROLL, "1m")
+                    .build();
+            try {
+                JestResult execute = client.execute(search);
+                String scrollId = execute.getJsonObject().get("_scroll_id").getAsString();
+                if (execute.isSucceeded()) {
+                    List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
+                    AllStall.addAll(returned_stalls);
+                }
+                while (true) {
+
+                    SearchScroll scroll = new SearchScroll.Builder(scrollId, "1m")
+                            .setParameter(Parameters.SIZE, 10).build();
+
+                    execute = client.execute(scroll);
+                    if (execute.isSucceeded()) {
+                        List<Stalls> returned_stalls = execute.getSourceAsObjectList(Stalls.class);
+                        if (returned_stalls.size()==0||returned_stalls==null){
+                            break;
+                        } else {
+                            AllStall.addAll(returned_stalls);
+                            scrollId = execute.getJsonObject().getAsJsonPrimitive("_scroll_id").getAsString();
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return AllStall;
+            /*Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
                 SearchResult execute = client.execute(search);
@@ -201,7 +327,7 @@ public class ElasticSearchCtr{
                 Log.i("TODO", "SEARCH PROBLEMS");
             }
 
-            return AllStall;
+            return AllStall;*/
         }
     }
 
@@ -248,23 +374,23 @@ public class ElasticSearchCtr{
 
             /*verifyUserName verifyUserName = new verifyUserName();
             if(verifyUserName.doInBackground(oldAccount[0].getEmail())) {*/
-                String deleteString = oldAccount[0].getEmail();
+            String deleteString = oldAccount[0].getEmail();
 
-                // curl -XDELETE https://path.to.elasticsearch/group/type/$id
-                // https://softwareprocess.es:9999/t01/user_database/my_user_id
-                //I am not quite sure how deletion works using android notation
-                Delete delete = new Delete.Builder(oldAccount[0].getId()).index("t01").type("user_database").build();
-                try {
-                    DocumentResult result = client.execute(delete);
-                    if (result.isSucceeded()) {
-                        return Boolean.TRUE;
-                    } else {
-                        return Boolean.FALSE;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+            // curl -XDELETE https://path.to.elasticsearch/group/type/$id
+            // https://softwareprocess.es:9999/t01/user_database/my_user_id
+            //I am not quite sure how deletion works using android notation
+            Delete delete = new Delete.Builder(oldAccount[0].getId()).index("t01").type("user_database").build();
+            try {
+                DocumentResult result = client.execute(delete);
+                if (result.isSucceeded()) {
+                    return Boolean.TRUE;
+                } else {
+                    return Boolean.FALSE;
                 }
-           // }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // }
             return null;
         }
 
@@ -283,17 +409,17 @@ public class ElasticSearchCtr{
             /*verifyUserName verifyUserName = new verifyUserName();
             if (verifyUserName.doInBackground(newAccount[0].getEmail())) {*/
 
-                Index index = new Index.Builder(newAccount[0]).index("t01").type("user_database").build();
-                try {
-                    DocumentResult result = client.execute(index);
-                    if (result.isSucceeded()) {
-                        return Boolean.TRUE;
-                    } else {
-                        return null;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+            Index index = new Index.Builder(newAccount[0]).index("t01").type("user_database").build();
+            try {
+                DocumentResult result = client.execute(index);
+                if (result.isSucceeded()) {
+                    return Boolean.TRUE;
+                } else {
+                    return null;
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             //}
             return Boolean.FALSE;
         }
@@ -461,7 +587,7 @@ public class ElasticSearchCtr{
             }
             try {
                 DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
-                                    type("stall_database").id(stall[0].getStallID()).build());
+                        type("stall_database").id(stall[0].getStallID()).build());
                 return result.isSucceeded();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -515,7 +641,37 @@ public class ElasticSearchCtr{
                     "{ \"Status\": \"Available\" }}," +
                     "\"should\" : {\"match\":{\"Status\": \"Bidded\" }},"+
                     "\"must\": { \"match\": { \"Description\": "+"\""+params[0]+"\""+"}}}}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").setParameter(Parameters.SIZE, 10)
+                    .setParameter(Parameters.SCROLL, "1m")
+                    .build();
+            try {
+                JestResult execute = client.execute(search);
+                String scrollId = execute.getJsonObject().get("_scroll_id").getAsString();
+                if (execute.isSucceeded()) {
+                    List<Stalls> another1 = execute.getSourceAsObjectList(Stalls.class);
+                    returnStalls.addAll(another1);
+                }
+                while (true) {
+
+                    SearchScroll scroll = new SearchScroll.Builder(scrollId, "1m")
+                            .setParameter(Parameters.SIZE, 10).build();
+
+                    execute = client.execute(scroll);
+                    if (execute.isSucceeded()) {
+                        List<Stalls> another1 = execute.getSourceAsObjectList(Stalls.class);
+                        if (another1.size()==0||another1==null){
+                            break;
+                        } else {
+                            returnStalls.addAll(another1);
+                            scrollId = execute.getJsonObject().getAsJsonPrimitive("_scroll_id").getAsString();
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return returnStalls;
+           /* Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
 
             try {
                 SearchResult execute = client.execute(search);
@@ -530,7 +686,7 @@ public class ElasticSearchCtr{
                 Log.i("TODO", "SEARCH PROBLEMS");
             }
 
-            return returnStalls;
+            return returnStalls;*/
         }
     }
     /**
@@ -550,7 +706,38 @@ public class ElasticSearchCtr{
             String query = "{" +"\"query\": {\"bool\": {"+
                     "\"should\":{\"match\":{\"Bidder\": \""+params[0]+"\" }},"+
                     "\"should\":{ \"match\": { \"LstBidders\": "+"\""+params[0]+"\""+"}}}}}";
-            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
+            Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").setParameter(Parameters.SIZE, 10)
+                    .setParameter(Parameters.SCROLL, "1m")
+                    .build();
+            try {
+                JestResult execute = client.execute(search);
+                String scrollId = execute.getJsonObject().get("_scroll_id").getAsString();
+                if (execute.isSucceeded()) {
+                    List<Stalls> another1 = execute.getSourceAsObjectList(Stalls.class);
+                    returnStalls.addAll(another1);
+                }
+                while (true) {
+
+                    SearchScroll scroll = new SearchScroll.Builder(scrollId, "1m")
+                            .setParameter(Parameters.SIZE, 10).build();
+
+                    execute = client.execute(scroll);
+                    if (execute.isSucceeded()) {
+                        List<Stalls> another1 = execute.getSourceAsObjectList(Stalls.class);
+                        if (another1.size()==0||another1==null){
+                            break;
+                        } else {
+                            returnStalls.addAll(another1);
+                            scrollId = execute.getJsonObject().getAsJsonPrimitive("_scroll_id").getAsString();
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return returnStalls;
+            /*Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
+
             try {
                 SearchResult execute = client.execute(search);
                 if (execute.isSucceeded()){
@@ -564,7 +751,7 @@ public class ElasticSearchCtr{
                 Log.i("TODO", "SEARCH PROBLEMS");
             }
 
-            return returnStalls;
+            return returnStalls;*/
         }
     }
     /**

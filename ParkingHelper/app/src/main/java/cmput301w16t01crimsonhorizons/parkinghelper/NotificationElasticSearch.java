@@ -11,8 +11,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.searchbox.client.JestResult;
 import io.searchbox.core.*;
 import io.searchbox.core.Search;
+import io.searchbox.params.Parameters;
 
 /**
  * Created by Kevin L on 3/25/2016
@@ -33,7 +35,37 @@ public class NotificationElasticSearch {
             ArrayList<NotificationObject> Notifications = new ArrayList<>();
             //start initial array list empty.
             String query = "{" +"\"query\":{\"match\":{\""+search_string[1]+"\": "+"\""+search_string[0]+"\""+"}}}";
-            io.searchbox.core.Search search = new Search.Builder(query).addIndex("t01").addType("notification_database").build();
+            Search search = new Search.Builder(query).addIndex("t01").addType("notification_database").setParameter(Parameters.SIZE, 10)
+                    .setParameter(Parameters.SCROLL, "1m")
+                    .build();
+            try {
+                JestResult execute = client.execute(search);
+                String scrollId = execute.getJsonObject().get("_scroll_id").getAsString();
+                if (execute.isSucceeded()) {
+                    List<NotificationObject> returned_notifications = execute.getSourceAsObjectList(NotificationObject.class);
+                    Notifications.addAll(returned_notifications);
+                }
+                while (true) {
+
+                    SearchScroll scroll = new SearchScroll.Builder(scrollId, "1m")
+                            .setParameter(Parameters.SIZE, 10).build();
+
+                    execute = client.execute(scroll);
+                    if (execute.isSucceeded()) {
+                        List<NotificationObject> returned_notifications = execute.getSourceAsObjectList(NotificationObject.class);
+                        if (returned_notifications.size()==0||returned_notifications==null){
+                            break;
+                        } else {
+                            Notifications.addAll(returned_notifications);
+                            scrollId = execute.getJsonObject().getAsJsonPrimitive("_scroll_id").getAsString();
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return Notifications;
+/*            io.searchbox.core.Search search = new Search.Builder(query).addIndex("t01").addType("notification_database").build();
 
             try {
                 SearchResult execute = client.execute(search);
@@ -45,7 +77,7 @@ public class NotificationElasticSearch {
                 Log.i("TODO", "SEARCH PROBLEMS");
             }
 
-            return Notifications;
+            return Notifications;*/
         }
     }
 
