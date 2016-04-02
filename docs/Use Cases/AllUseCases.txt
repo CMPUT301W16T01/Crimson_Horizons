@@ -366,3 +366,25 @@ basic flow:		1. Borrower selects an item they bidded on
 
 exceptions: 		3. No location specified by owner
 			3.1 No location notification sent
+
+WOW (part 1)
+As a borrower, before bidding, want to see the exact location of stall on google map.
+use case name: see pick up location on map
+actors: borrower
+goal: see location on map
+precondition: Borrower viewing stall
+postcondition: Opened google map with marker
+basic flow:           1. Borrower search for stalls
+                      2. Borrwer clicks stalls
+                      3. App opens up stall information
+                      4. Borrower clicks Direction button
+                      5. App opens up google map with marker on stall location
+
+Wow (part 2)
+As a user want to be able to write/read reviews of 1 stalls
+use case name: write/read reviews
+precondition: user is registered
+postcondition: user can read/write reviews
+basic flow:          1. User finds stall
+                     2. user hit button to write/read reviews
+                     3. user write/read reviews

@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutionException;
 public class LendingStalls extends AppCompatActivity {
     private ListView eachLendingStalls;
     private Account account;
-    AdapterEditStall myAdapter;
+    AdapterLendingStall myAdapter;
     ArrayList<Stalls>StallAry = new ArrayList<>();
 
     @Override
@@ -61,7 +61,7 @@ public class LendingStalls extends AppCompatActivity {
 
             }
         });
-        myAdapter = new AdapterEditStall(this, R.layout.account_stalls, StallAry);
+        myAdapter = new AdapterLendingStall(this, R.layout.account_stalls, StallAry);
         eachLendingStalls.setAdapter(myAdapter);
     }
 

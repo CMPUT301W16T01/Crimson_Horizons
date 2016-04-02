@@ -21,7 +21,7 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
     private ListView YourBids;
     private ArrayList<Stalls> userBids = new ArrayList<Stalls>();
     private String[] GetAvailable = new String[2];
-    private AdapterEditStall myAdapter;
+    private AdapterYourBids myAdapter;
     String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
             e.printStackTrace();
         }
 
-        myAdapter = new AdapterEditStall(this, R.layout.account_stalls, userBids);
+        myAdapter = new AdapterYourBids(this, R.layout.your_bids_layout, userBids);
         YourBids.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
     }
