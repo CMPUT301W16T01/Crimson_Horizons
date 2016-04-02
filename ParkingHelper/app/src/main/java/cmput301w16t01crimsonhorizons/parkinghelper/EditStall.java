@@ -47,6 +47,7 @@ public class EditStall extends AppCompatActivity {
         stall_ori.setOwner(stall.getOwner());
         stall_ori.setBidAmt(stall.getBidAmt());
         stall_ori.setDescription(stall.getDescription());
+        stall_ori.setThumbnail(stall.getThumbnail());
         int pos = intent.getIntExtra("id",-1);
 
         //Set all the fields
@@ -99,12 +100,15 @@ public class EditStall extends AppCompatActivity {
         String newTitle = title.getText().toString();
         String newDescription = description.getText().toString();
         String newStatus = status.getText().toString();
-        Bitmap thumbnail = ((BitmapDrawable)picture.getDrawable()).getBitmap();
+        try {
+            stall.setThumbnail(((BitmapDrawable) picture.getDrawable()).getBitmap());
+        }catch(NullPointerException e){
+            stall.setThumbnail(null);
+        }
         stall.setDescription(newDescription);
         stall.setStatus(newStatus);
         stall.setOwner(newTitle);
         stall.setLocation(location_double);
-        stall.setThumbnail(thumbnail);
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if ((connectivityManager
                 .getNetworkInfo(ConnectivityManager.TYPE_MOBILE) != null && connectivityManager
@@ -217,6 +221,7 @@ public class EditStall extends AppCompatActivity {
             bigThumbnail = null;
 
             picture.setImageBitmap(thumbnail);
+            stall.setThumbnail(thumbnail);
         }
     }
 

@@ -110,7 +110,7 @@ public class AddStall extends AppCompatActivity {
      * @param view
      */
     public void deletePicture(View view){
-        ImageView picture = (ImageView)findViewById(R.id.editStallImage);
+        ImageView picture = (ImageView)findViewById(R.id.addStallImage);
         picture.setImageBitmap(null);
         stall.setThumbnail(null);
     }

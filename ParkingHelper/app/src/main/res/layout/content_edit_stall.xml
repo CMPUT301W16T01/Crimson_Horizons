@@ -137,9 +137,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editStallImage"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/StatusEditStallEv" />
+        android:minHeight="25dp"
+        android:minWidth="25dp"
+        android:layout_below="@+id/StatusEditStallEv"
+        android:layout_centerHorizontal="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
