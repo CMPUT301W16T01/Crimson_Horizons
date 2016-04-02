@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,12 +37,16 @@ public class AdapterYourBids extends ArrayAdapter<Stalls>{
             viewHolder.Description = (TextView)convertView.findViewById(R.id.DescriptionEditStallV);
             viewHolder.BidAmt = (TextView)convertView.findViewById(R.id.BidAmt);
             viewHolder.Name = (TextView)convertView.findViewById(R.id.Username);
+            viewHolder.Picture = (ImageView)convertView.findViewById(R.id.PictureEditStallV);
 
             if (stall.getBidder().equals(CurrentAccount.getAccount().getEmail())) {
                 viewHolder.Owner.setText(stall.getOwner());
                 viewHolder.BidAmt.setText(stall.getBidAmt().toString());
                 viewHolder.Description.setText(stall.getDescription());
                 viewHolder.Name.setText(CurrentAccount.getAccount().getEmail());
+                try {
+                    viewHolder.Picture.setImageBitmap(stall.getThumbnail());
+                }catch (NullPointerException e){};
             } else {
                 ArrayList<String> all = new ArrayList<String>(Arrays.asList(stall.getLstBidders().split(",")));
                 int i = 0;
@@ -51,6 +56,7 @@ public class AdapterYourBids extends ArrayAdapter<Stalls>{
                         viewHolder.BidAmt.setText(all.get(i).split(" ")[1]);
                         viewHolder.Description.setText(stall.getDescription());
                         viewHolder.Name.setText(CurrentAccount.getAccount().getEmail());
+                        viewHolder.Picture.setImageBitmap(stall.getThumbnail());
                         break;
                     } else {
                         i=i+1;
@@ -65,6 +71,7 @@ public class AdapterYourBids extends ArrayAdapter<Stalls>{
             mainHolder.BidAmt.setText(stall.getBidAmt().toString());
             mainHolder.Description.setText(stall.getDescription());
             mainHolder.Name.setText(CurrentAccount.getAccount().getEmail());
+            mainHolder.Picture.setImageBitmap(stall.getThumbnail());
         }
         return convertView;
     }
@@ -74,6 +81,7 @@ public class AdapterYourBids extends ArrayAdapter<Stalls>{
         TextView BidAmt;
         TextView Description;
         TextView Owner;
+        ImageView Picture;
     }
 
 }

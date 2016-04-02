@@ -28,4 +28,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/StallNameEditStallV" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/PictureEditStallV"
+        android:minHeight="20dp"
+        android:minWidth="20dp"
+        android:layout_alignTop="@+id/DescriptionEditStallV"
+        android:layout_toEndOf="@+id/StallNameEditStallV"
+        android:layout_marginStart="30dp" />
 </RelativeLayout>

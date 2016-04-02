@@ -1,12 +1,12 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +33,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationObject>{
             viewHolder.Date = (TextView)convertView.findViewById(R.id.NotificationDate);
             viewHolder.BidAmt = (TextView)convertView.findViewById(R.id.NotificationBidAmt);
             viewHolder.Delete = (Button)convertView.findViewById(R.id.DeleteNotificationBtn);
+            viewHolder.Picture = (ImageView)convertView.findViewById(R.id.NotificationPicture);
             viewHolder.Delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -44,6 +45,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationObject>{
             viewHolder.Bidder.setText(notification.getBidder());
             viewHolder.Date.setText(notification.getDate());
             viewHolder.BidAmt.setText(notification.getBidAmt());
+            //viewHolder.Picture.setImageBitmap(notification.getOnotification.getStallID());
             convertView.setTag(viewHolder);
         }
         else{
@@ -60,6 +62,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationObject>{
         TextView BidAmt;
         TextView Date;
         Button Delete;
+        ImageView Picture;
     }
 
 }
