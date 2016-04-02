@@ -7,11 +7,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.apache.http.entity.StringEntityHC4;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * This is to check any stalls the user owns that needs bids
@@ -19,7 +15,7 @@ import java.util.List;
 public class BidsForStall extends AppCompatActivity {
 
     private Stalls stall;
-    ArrayList<String>all = new ArrayList<>();
+    ArrayList<BidsForStallsObject> all = new ArrayList<BidsForStallsObject>();
     ListView eachStallsWithBids;
 
     @Override
@@ -29,11 +25,15 @@ public class BidsForStall extends AppCompatActivity {
         Intent intent = getIntent();
         stall = (Stalls) intent.getSerializableExtra("stall");
         try{
-            ArrayList<String> temp = new ArrayList<String>(Arrays.asList(stall.getLstBidders().split(",")));
+            ArrayList<BidsForStallsObject> temp = new ArrayList<BidsForStallsObject>();
+            for(String newText : stall.getLstBidders().split(","))
+                temp.add(new BidsForStallsObject(newText, stall));
+
             temp.remove(0);
-            all.addAll(temp);
+
+
         }catch(NullPointerException e){
-            Toast.makeText(getApplicationContext(),"No one bidded on your stuff",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"No one bidded on your stall",Toast.LENGTH_SHORT).show();
         }
         eachStallsWithBids = (ListView)findViewById(R.id.BidsForStallsLv);
         CustomLstAdapter myAdapter = new CustomLstAdapter(this, R.layout.bids_for_stalls, all);

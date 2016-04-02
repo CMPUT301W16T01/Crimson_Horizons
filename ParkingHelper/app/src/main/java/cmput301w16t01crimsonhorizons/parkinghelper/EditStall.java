@@ -46,6 +46,7 @@ public class EditStall extends AppCompatActivity {
         }
         stall_ori.setOwner(stall.getOwner());
         stall_ori.setDescription(stall.getDescription());
+        stall_ori.setThumbnail(stall.getThumbnail());
         int pos = intent.getIntExtra("id",-1);
 
         //Set all the fields
@@ -97,10 +98,14 @@ public class EditStall extends AppCompatActivity {
         String newTitle = title.getText().toString();
         String newDescription = description.getText().toString();
         Bitmap thumbnail = ((BitmapDrawable)picture.getDrawable()).getBitmap();
+        try {
+            stall.setThumbnail(((BitmapDrawable) picture.getDrawable()).getBitmap());
+        }catch(NullPointerException e){
+            stall.setThumbnail(null);
+        }
         stall.setDescription(newDescription);
         stall.setOwner(newTitle);
         stall.setLocation(location_double);
-        stall.setThumbnail(thumbnail);
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if ((connectivityManager
                 .getNetworkInfo(ConnectivityManager.TYPE_MOBILE) != null && connectivityManager
@@ -191,7 +196,7 @@ public class EditStall extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
             Bundle extras = data .getExtras();
-            ImageView picture = (ImageView)findViewById(R.id.addStallImage);
+            ImageView picture = (ImageView)findViewById(R.id.editStallImage);
             Bitmap bigThumbnail = (Bitmap) extras.get("data");
 
         //Taken from:https://github.com/CMPUT301F15T07/TradingApp/blob/master/SSCTE/app/src/main/java/com/sherpasteven/sscte/Models/Image.java#L53https://github.com/CMPUT301F15T07/TradingApp/blob/master/SSCTE/app/src/main/java/com/sherpasteven/sscte/Models/Image.java#L53
@@ -213,6 +218,7 @@ public class EditStall extends AppCompatActivity {
             bigThumbnail = null;
 
             picture.setImageBitmap(thumbnail);
+            stall.setThumbnail(thumbnail);
         }
     }
 

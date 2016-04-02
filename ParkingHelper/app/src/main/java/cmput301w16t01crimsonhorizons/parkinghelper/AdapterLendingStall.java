@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -33,9 +34,11 @@ public class AdapterLendingStall extends ArrayAdapter<Stalls>{
             viewHolder.Name=(TextView)convertView.findViewById(R.id.StallNameEditStallV);
             viewHolder.Description = (TextView)convertView.findViewById(R.id.DescriptionEditStallV);
             viewHolder.Status = (TextView)convertView.findViewById(R.id.StatusEditStallV);
+            viewHolder.Picture = (ImageView)convertView.findViewById(R.id.PictureEditStallV);
             viewHolder.Name.setText(stall.getBorrower());
             viewHolder.Status.setText(stall.getStatus());
             viewHolder.Description.setText(stall.getDescription());
+            viewHolder.Picture.setImageBitmap(stall.getThumbnail());
             convertView.setTag(viewHolder);
         }
         else{
@@ -51,5 +54,6 @@ public class AdapterLendingStall extends ArrayAdapter<Stalls>{
         TextView Name;
         TextView Status;
         TextView Description;
+        ImageView Picture;
     }
 }
