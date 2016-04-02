@@ -547,13 +547,10 @@ public class ElasticSearchCtr{
             verifyClient();
             //start initial array list empty.
             ArrayList<Stalls> returnStalls = new ArrayList<Stalls>();
-            String query = "{" +"\"query\": {\"bool\": {\"should\":     { \"match\": "+
-                    "{ \"Status\": \"Available\" }}," +
-                    "\"should\" : {\"match\":{\"Status\": \"Bidded\" }},"+
-                    "\"should\" : {\"match\":{\"Bidder\": \""+params[0]+"\" }},"+
-                    "\"should\": { \"match\": { \"LstBidders\": "+"\""+params[0]+"\""+"}}}}}";
+            String query = "{" +"\"query\": {\"bool\": {"+
+                    "\"should\":{\"match\":{\"Bidder\": \""+params[0]+"\" }},"+
+                    "\"should\":{ \"match\": { \"LstBidders\": "+"\""+params[0]+"\""+"}}}}}";
             Search search = new Search.Builder(query).addIndex("t01").addType("stall_database").build();
-
             try {
                 SearchResult execute = client.execute(search);
                 if (execute.isSucceeded()){
