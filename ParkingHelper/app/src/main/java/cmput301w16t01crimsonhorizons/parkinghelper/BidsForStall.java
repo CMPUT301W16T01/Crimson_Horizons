@@ -46,17 +46,21 @@ public class BidsForStall extends AppCompatActivity {
         ElasticSearchCtr.DeleteBid deleteBid = new ElasticSearchCtr.DeleteBid();
         deleteBid.execute(bid);
         stall.setStatus();
+        EditStallSave edit = new EditStallSave(stall);
+        edit.execute();
     }
 
     //US 05.07.01
     public void acceptBid(Bid bid){
-        bidResults.clear();
         ElasticSearchCtr.DeleteBid deleteBid = new ElasticSearchCtr.DeleteBid();
         for (Bid b : bidResults) {
             deleteBid.execute(b);
         }
+        bidResults.clear();
         stall.setBorrower(bid.Bidder());
         stall.setStatus("Borrowed");
+        EditStallSave edit = new EditStallSave(stall);
+        edit.execute();
     }
 
     /**
