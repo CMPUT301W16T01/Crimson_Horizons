@@ -44,10 +44,12 @@ public class AdapterYourBids extends ArrayAdapter<Bid>{
             ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
             getStall.execute(new String[]{"_id", bid.BidStallID()});
             try {
-                Stalls stall = getStall.get().get(0);
-                viewHolder.Owner.setText(stall.getOwner());
-                viewHolder.Description.setText(stall.getDescription());
-                viewHolder.Picture.setImageBitmap(stall.getThumbnail());
+                if (getStall.get().size() != 0) {
+                    Stalls stall = getStall.get().get(0);
+                    viewHolder.Owner.setText(stall.getOwner());
+                    viewHolder.Description.setText(stall.getDescription());
+                    viewHolder.Picture.setImageBitmap(stall.getThumbnail());
+                }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
@@ -60,10 +62,12 @@ public class AdapterYourBids extends ArrayAdapter<Bid>{
             ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
             getStall.execute(new String[]{"_id", bid.BidStallID()});
             try {
-                Stalls stall = getStall.get().get(0);
-                mainHolder.Owner.setText(stall.getOwner());
-                mainHolder.Description.setText(stall.getDescription());
-                mainHolder.Picture.setImageBitmap(stall.getThumbnail());
+                if (getStall.get().size() != 0) {
+                    Stalls stall = getStall.get().get(0);
+                    mainHolder.Owner.setText(stall.getOwner());
+                    mainHolder.Description.setText(stall.getDescription());
+                    mainHolder.Picture.setImageBitmap(stall.getThumbnail());
+                }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
