@@ -20,9 +20,7 @@ public class DeleteStall extends Commands {
         Boolean check = false;
         ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
         ElasticSearchCtr.GetBid getBid = new ElasticSearchCtr.GetBid();
-        ElasticSearchCtr.DeleteBid deleteBid = new ElasticSearchCtr.DeleteBid();
         ElasticSearchCtr.GetReview getReview = new ElasticSearchCtr.GetReview();
-        ElasticSearchCtr.DeleteReview deleteReview = new ElasticSearchCtr.DeleteReview();
 
         getBid.execute(new String[] { "bidStallID", stall.getStallID() });
         getReview.execute(new String[] { "StallID", stall.getStallID() });
@@ -31,9 +29,11 @@ public class DeleteStall extends Commands {
             check = deleteStall.get();
             //Deletes all bids on the stall
             for (Bid b : getBid.get()) {
+                ElasticSearchCtr.DeleteBid deleteBid = new ElasticSearchCtr.DeleteBid();
                 deleteBid.execute(b);
             }
             for (Review r : getReview.get()) {
+                ElasticSearchCtr.DeleteReview deleteReview = new ElasticSearchCtr.DeleteReview();
                 deleteReview.execute(r);
             }
         } catch (InterruptedException | ExecutionException e) {

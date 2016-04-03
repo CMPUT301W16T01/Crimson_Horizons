@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutionException;
 public class BidsForStall extends AppCompatActivity {
 
     private static Stalls stall;
-    ArrayList<Bid> bidResults = new ArrayList<Bid>();
+    private static ArrayList<Bid> bidResults = new ArrayList<Bid>();
     ListView eachStallsWithBids;
 
     @Override
@@ -52,8 +52,8 @@ public class BidsForStall extends AppCompatActivity {
 
     //US 05.07.01
     public void acceptBid(Bid bid){
-        ElasticSearchCtr.DeleteBid deleteBid = new ElasticSearchCtr.DeleteBid();
         for (Bid b : bidResults) {
+            ElasticSearchCtr.DeleteBid deleteBid = new ElasticSearchCtr.DeleteBid();
             deleteBid.execute(b);
         }
         bidResults.clear();
