@@ -35,11 +35,7 @@ public class BidStall extends AppCompatActivity {
         TextView Descrip = (TextView)findViewById(R.id.BidStallDescriptionDisp);
         TextView latitude = (TextView)findViewById(R.id.latitudeBiStallTV);
         TextView longtitude = (TextView)findViewById(R.id.longitudeBidStallTV);
-        Double temp = stall.getHighBidAmount();
-        if (temp==null){
-            temp = 0.00;
-        }
-        HighestBid.setText(temp.toString());
+        HighestBid.setText(stall.getHighBidAmount().toString());
         Owner.setText(stall.getOwner().toString());
         Descrip.setText(stall.getDescription().toString());
         longtitude.setText(stall.getLocation()[0].toString());
@@ -67,32 +63,21 @@ public class BidStall extends AppCompatActivity {
         } else {
             stall.setStatus("Bidded");
             String bidderInfo = CurrentAccount.getAccount().getEmail()+" "+BidAmt;
-            Commands command = new EditStallSave(stall);
-            Boolean check = command.execute();
-            if (check){
-                Toast.makeText(BidStall.this, "You have made the bid!", Toast.LENGTH_SHORT).show();
-                DateFormat dateformat = new SimpleDateFormat("yyyy/mm/dd hh:mm:ss");
-                Date date = new Date();
-                NotificationObject notification = new NotificationObject();
-                notification.setOwner(stall.getOwner());
-                notification.setBidder(account.getEmail());
-                notification.setBidAmt(BidAmt.toString());
-                notification.setDate(dateformat.format(date));
-                NotificationElasticSearch.AddNotification addNotification = new NotificationElasticSearch.AddNotification();
-                addNotification.execute(notification);
-                ElasticSearchCtr.MakeBid makeBid = new ElasticSearchCtr.MakeBid();
-                makeBid.execute(new Bid(CurrentAccount.getAccount().getEmail(),
-                        BidAmt, stall.getStallID()));
-                try {
-                    addNotification.get();
-                    makeBid.get();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-                finish();
-            } else {
-                Toast.makeText(BidStall.this, "Have not made bid!",Toast.LENGTH_SHORT).show();
-            }
+            ElasticSearchCtr.MakeBid makeBid = new ElasticSearchCtr.MakeBid();
+            makeBid.execute(new Bid(CurrentAccount.getAccount().getEmail(),
+                    BidAmt, stall.getStallID()));
+
+            Toast.makeText(BidStall.this, "You have made the bid!", Toast.LENGTH_SHORT).show();
+            DateFormat dateformat = new SimpleDateFormat("yyyy/mm/dd hh:mm:ss");
+            Date date = new Date();
+            NotificationObject notification = new NotificationObject();
+            notification.setOwner(stall.getOwner());
+            notification.setBidder(account.getEmail());
+            notification.setBidAmt(BidAmt.toString());
+            notification.setDate(dateformat.format(date));
+            NotificationElasticSearch.AddNotification addNotification = new NotificationElasticSearch.AddNotification();
+            addNotification.execute(notification);
+            finish();
         }
     }
 
