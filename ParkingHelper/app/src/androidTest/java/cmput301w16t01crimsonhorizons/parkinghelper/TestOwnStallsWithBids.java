@@ -44,7 +44,7 @@ public class TestOwnStallsWithBids extends ActivityInstrumentationTestCase2 {
         solo.clickOnView(solo.getView(R.id.email_sign_in_button));
         Stalls s1 = new Stalls();
         s1.setStatus("Bidded");
-        s1.setBidAmt(0.00);
+        Bid b1 = new Bid("123@123", 100.00, s1.getStallID());
         s1.setOwner("__test1");
         ElasticSearchCtr.MakeStall makeStall = new ElasticSearchCtr.MakeStall();
         makeStall.execute(s1);

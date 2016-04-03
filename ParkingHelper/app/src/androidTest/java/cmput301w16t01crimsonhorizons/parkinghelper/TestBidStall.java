@@ -93,7 +93,7 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<WelcomeActivi
      */
     public void testBidOnAvailable(){
         Stalls stall = new Stalls();
-        stall.setBidAmt(100.00);
+        Bid b1 = new Bid("123@123", 100.00, stall.getStallID());
         stall.setOwner("testing");
         this.createStall(stall);
         ArrayList<Stalls>returned = new ArrayList<>();
@@ -103,14 +103,14 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<WelcomeActivi
         while (returned.size()<1) {
             returned = this.retrieveStall(temp);
         }
-        assertEquals("It should have bid of 100.00", 100.00, returned.get(0).getBidAmt());
+        assertEquals("It should have bid of 100.00", 100.00, returned.get(0).getHighBidAmount());
 
-        stall.setBidAmt(200.00);
+        Bid b2 = new Bid("123@123", 200.00, stall.getStallID());
         Boolean check = this.bidSimulate(stall);
         assertTrue(check);
         returned.clear();
         returned = this.retrieveStall(temp);
-        while (returned.get(0).getBidAmt()!=200){
+        while (returned.get(0).getHighBidAmount()!=200){
             returned = this.retrieveStall(temp);
         }
         this.resetDatabase(stall);

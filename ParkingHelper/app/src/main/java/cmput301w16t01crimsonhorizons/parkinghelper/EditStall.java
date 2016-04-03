@@ -53,12 +53,10 @@ public class EditStall extends AppCompatActivity {
         //Set all the fields
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
         EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
-        EditText status = (EditText)findViewById(R.id.StatusEditStallEv);
         EditText longitude = (EditText)findViewById(R.id.longitudeEditStallET);
         EditText latitude = (EditText)findViewById(R.id.latitudeEditStallET);
         ImageView picture = (ImageView)findViewById(R.id.editStallImage);
         title.setText(stall.getOwner());
-        status.setText(stall.getStatus());
         description.setText(stall.getDescription());
         longitude.setText(stall.getLocation()[0].toString());
         latitude.setText(stall.getLocation()[1].toString());
@@ -178,10 +176,8 @@ public class EditStall extends AppCompatActivity {
         //Set all the fields
         EditText title = (EditText)findViewById(R.id.NamePrompEditStall);
         EditText description = (EditText)findViewById(R.id.DescriptionPrompEditStall);
-        EditText status = (EditText)findViewById(R.id.StatusEditStallEv);
         ImageView picture = (ImageView)findViewById(R.id.editStallImage);
         title.setText(stall.getOwner());
-        status.setText(stall.getStatus());
         description.setText(stall.getDescription());
         picture.setImageBitmap(stall.getThumbnail());
     }

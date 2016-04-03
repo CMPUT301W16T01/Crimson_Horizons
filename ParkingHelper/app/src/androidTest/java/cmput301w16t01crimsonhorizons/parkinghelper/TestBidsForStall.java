@@ -53,7 +53,7 @@ public class TestBidsForStall  extends ActivityInstrumentationTestCase2<WelcomeA
      */
     public void testAcceptBid(){
         Stalls s1 = new Stalls();
-        s1.setBidAmt(100.00);
+        Bid b1 = new Bid("123@123", 100.00, s1.getStallID());
 
         //Replace with the accept bid command
         CommandForTesting command = new CommandForTesting(s1);
@@ -66,12 +66,12 @@ public class TestBidsForStall  extends ActivityInstrumentationTestCase2<WelcomeA
      */
     public void testDeclineBid(){
         Stalls stall = new Stalls();
-        stall.setBidAmt(100.0);
+        Bid bid = new Bid("123@123", 100.00, stall.getStallID());
         BidsForStall bidsForStall = new BidsForStall();
         //TODO replace with the commands for declining stall. Extend from it. Make it modify all
         // Except for calling elastic search.
         CommandForTesting commandForTesting = new CommandForTesting(stall);
         commandForTesting.execute();
-        assertEquals("bidAmt should be now 0",0,stall.getBidAmt());
+        assertEquals("bidAmt should be now 0",0,stall.getHighBidAmount());
     }
 }
