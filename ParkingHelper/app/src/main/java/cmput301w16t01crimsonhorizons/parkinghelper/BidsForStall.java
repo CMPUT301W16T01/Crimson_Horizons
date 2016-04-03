@@ -27,7 +27,7 @@ public class BidsForStall extends AppCompatActivity {
         Intent intent = getIntent();
         stall = (Stalls) intent.getSerializableExtra("stall");
         ElasticSearchCtr.GetBid getBid = new ElasticSearchCtr.GetBid();
-        getBid.execute(new String[] { "StallID", stall.getStallID()});
+        getBid.execute(new String[] { "bidStallID", stall.getStallID()});
         try {
             bidResults = getBid.get();
         } catch (InterruptedException | ExecutionException e) {

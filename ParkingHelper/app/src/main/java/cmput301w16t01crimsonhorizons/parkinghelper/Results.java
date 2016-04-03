@@ -33,7 +33,7 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
         command.addView(this);
 
         ElasticSearchCtr.GetBid getYourBids = new ElasticSearchCtr.GetBid();
-        getYourBids.execute(new String[] { "Bidder", CurrentAccount.getAccount().getEmail() });
+        getYourBids.execute(new String[] { "bidder", CurrentAccount.getAccount().getEmail() });
         try {
             userBids = getYourBids.get();
         } catch (InterruptedException | ExecutionException e) {
@@ -73,7 +73,7 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
     @Override
     public void updateView(Commands model) {
         ElasticSearchCtr.GetBid getYourBids = new ElasticSearchCtr.GetBid();
-        getYourBids.execute(new String[] { "Bidder", CurrentAccount.getAccount().getEmail() });
+        getYourBids.execute(new String[] { "bidder", CurrentAccount.getAccount().getEmail() });
         try {
             userBids = getYourBids.get();
         } catch (InterruptedException | ExecutionException e) {

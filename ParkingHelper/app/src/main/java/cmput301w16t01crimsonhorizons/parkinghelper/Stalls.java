@@ -119,7 +119,7 @@ public class Stalls implements Serializable{
             Status = "Borrowed";
         }
         ElasticSearchCtr.GetBid getBid = new ElasticSearchCtr.GetBid();
-        getBid.execute();
+        getBid.execute(new String[] { "bidStallID", this.getStallID() });
         try {
             if (getBid.get().size() > 0) {
                 Status = "Bidded";
@@ -141,7 +141,7 @@ public class Stalls implements Serializable{
         ArrayList<Bid> bidResults = new ArrayList<Bid>();
         Double result = 0.00;
         ElasticSearchCtr.GetBid getBid = new ElasticSearchCtr.GetBid();
-        getBid.execute();
+        getBid.execute(new String[] { "bidStallID", this.getStallID() });
         try {
             bidResults = getBid.get();
         } catch (InterruptedException | ExecutionException e) {

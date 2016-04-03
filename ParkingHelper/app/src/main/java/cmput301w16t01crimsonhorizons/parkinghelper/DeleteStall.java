@@ -21,15 +21,20 @@ public class DeleteStall extends Commands {
         ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
         ElasticSearchCtr.GetBid getBid = new ElasticSearchCtr.GetBid();
         ElasticSearchCtr.DeleteBid deleteBid = new ElasticSearchCtr.DeleteBid();
+        ElasticSearchCtr.GetReview getReview = new ElasticSearchCtr.GetReview();
+        ElasticSearchCtr.DeleteReview deleteReview = new ElasticSearchCtr.DeleteReview();
 
-        getBid.execute(new String[] { "StallID", stall.getStallID() });
+        getBid.execute(new String[] { "bidStallID", stall.getStallID() });
+        getReview.execute(new String[] { "StallID", stall.getStallID() });
         deleteStall.execute(stall);
         try {
             check = deleteStall.get();
             //Deletes all bids on the stall
             for (Bid b : getBid.get()) {
                 deleteBid.execute(b);
-                check &= deleteBid.get();
+            }
+            for (Review r : getReview.get()) {
+                deleteReview.execute(r);
             }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();

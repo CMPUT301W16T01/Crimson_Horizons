@@ -559,7 +559,7 @@ public class ElasticSearchCtr{
                         " \"location\": [" + location[0].toString() + "," +
                         location[1].toString() + "]," +
                         " \"Borrower\": " + "\"" + Borrower + "\"" + "," +
-                        " \"Thumbnail\": " + "\"" + thumbnail.toString() + "\"" + "," +
+                        " \"thumbnail\": " + "\"" + thumbnail.toString() + "\"" + "," +
                         " \"thumbnailBase64\": " + "\"" + thumbnailBase64 + "\"" + "}" +
                         "}";
             }catch(NullPointerException e ){
@@ -570,7 +570,7 @@ public class ElasticSearchCtr{
                         " \"location\": [" + location[0].toString() + "," +
                         location[1].toString() + "]," +
                         " \"Borrower\": " + "\"" + Borrower + "\"" + "," +
-                        " \"Thumbnail\": " + "\"" + "" + "\"" + "," +
+                        " \"thumbnail\": " + "\"" + "" + "\"" + "," +
                         " \"thumbnailBase64\": " + "\"" + "" + "\"" + "}" +
                         "}";
             }
@@ -629,9 +629,9 @@ public class ElasticSearchCtr{
             String stall = bid[0].BidStallID();
             String doc="";
             doc = "{" +
-                    "\"doc\": { \"Bidder\": " + "\"" + bidder + "\", " +
-                    " \"BidAmount\": " + "\"" + bidAmount.toString() + "\", " +
-                    " \"StallID\": " + "\"" + stall + "\", " +
+                    "\"doc\": { \"bidder\": " + "\"" + bidder + "\", " +
+                    " \"bidAmount\": " + "\"" + bidAmount.toString() + "\", " +
+                    " \"bidStallID\": " + "\"" + stall + "\", " +
                     "}";
             try {
                 DocumentResult result = client.execute(new Update.Builder(doc).index("t01").
@@ -719,6 +719,95 @@ public class ElasticSearchCtr{
                         .type("stall_database")
                         .build());
                 if (result.isSucceeded()){
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+    }
+
+    /**
+     *
+     * .@param reviews reviews to be stored
+     * @return nothing
+     */
+    public static class MakeReview extends AsyncTask<Review,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Review... reviews) {
+            verifyClient();
+            //Since AsyncTasks work on arrays, we need to work with arrays as well
+            for (int i = 0; i < reviews.length; i++){
+                Review review = reviews[i];
+                Index index = new Index.Builder(review).index("t01").type("review_database").build();
+                try {
+                    DocumentResult result = client.execute(index);
+                    if (result.isSucceeded()){
+                        //Set Id for tweet, can find and edit in elastic search
+                        review.setReviewID(result.getId());
+                    }
+                    //Can also use get id,get index,get type
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            return null;
+        }
+    }
+    /**
+     * @return returns a list of reviews
+     * .@param search_strings, it is an array of arrays of Strings. Each array is
+     * two Strings long, 0 = key, 1 = value, and specifies a search criterion
+     */
+    public static class GetReview extends AsyncTask<String[], Void,ArrayList<Review>>{
+        @Override
+
+        protected ArrayList<Review> doInBackground(String[]... search_strings) {
+            verifyClient();
+            ArrayList<Review> ReviewsResult = new ArrayList<>();
+            //start initial array list empty.
+            String query = "{" +"\"query\": {\"bool\": {";
+            for (int i = 0; i < search_strings.length; i++) {
+                if (i != 0) { query += ", "; }
+                query += "\"must\" : {\"match\":{" +
+                        "\""+search_strings[i][0]+"\": "+"\""+search_strings[i][1]+"\""+"}}";
+            }
+            query += "}}}";
+            Search search = new Search.Builder(query).addIndex("t01").addType("review_database").build();
+
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()){
+                    List<Review> returned_reviews = execute.getSourceAsObjectList(Review.class);
+                    ReviewsResult.addAll(returned_reviews);
+                }
+            } catch (IOException e) {
+                Log.i("TODO", "SEARCH PROBLEMS");
+            }
+
+            return ReviewsResult;
+        }}
+    /**
+     *
+     * .@param review review to be deleted
+     * @return boolean depending on success
+     */
+    public static class DeleteReview extends AsyncTask<Review,Void,Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Review... review) {
+            verifyClient();
+            try {
+                DocumentResult result = client.execute(new Delete.Builder(review[0].getReviewID())
+                        .index("t01")
+                        .type("bid_database")
+                        .build());
+                if (result.isSucceeded()) {
                     return true;
                 } else {
                     return false;

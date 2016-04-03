@@ -3,7 +3,7 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 import io.searchbox.annotations.JestId;
 
 /**
- * Created by schuman on 2/23/16.
+ * Created by schuman on 2/23/16, modified by jero1994
  */
 public class Bid {
     private String bidder = "";
