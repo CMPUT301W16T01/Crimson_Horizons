@@ -833,7 +833,7 @@ public class ElasticSearchCtr{
             verifyClient();
             //start initial array list empty.
             ArrayList<Stalls> returnStalls = new ArrayList<Stalls>();
-            String query = "{" +"\"query\": {\"bool\": {\"should\":     { \"match\": "+
+            String query = "{" +"\"query\": {\"bool\": {\"should\": { \"match\": "+
                     "{ \"Status\": \"Available\" }}," +
                     "\"should\" : {\"match\":{\"Status\": \"Bidded\" }},"+
                     "\"must_not\" : {\"match\":{\"Status\": \"Borrowed\" }},"+
