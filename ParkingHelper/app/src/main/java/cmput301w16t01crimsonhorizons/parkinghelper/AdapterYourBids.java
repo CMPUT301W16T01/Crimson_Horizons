@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,13 +43,21 @@ public class AdapterYourBids extends ArrayAdapter<Bid>{
             viewHolder.BidAmt.setText(bid.BidAmount().toString());
             viewHolder.Name.setText(CurrentAccount.getAccount().getEmail());
             ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
-            getStall.execute(new String[]{"_id", bid.BidStallID()});
+            String[] query = new String[2];
+            query[1]="_id";
+            query[0]=bid.BidStallID();
+            getStall.execute(query);
             try {
-                if (getStall.get().size() != 0) {
-                    Stalls stall = getStall.get().get(0);
-                    viewHolder.Owner.setText(stall.getOwner());
-                    viewHolder.Description.setText(stall.getDescription());
-                    viewHolder.Picture.setImageBitmap(stall.getThumbnail());
+                ArrayList<Stalls>StallAry = getStall.get();
+                if (StallAry.size() != 0) {
+                    Stalls stall = StallAry.get(0);
+                    viewHolder.Owner.setText(stall.getOwner().toString());
+                    viewHolder.Description.setText(stall.getDescription().toString());
+                    try {
+                        viewHolder.Picture.setImageBitmap(stall.getThumbnail());
+                    }catch (NullPointerException e){};
+                } else {
+                    Toast.makeText(getContext(),"cannot find the stall",Toast.LENGTH_SHORT).show();
                 }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
@@ -60,13 +69,19 @@ public class AdapterYourBids extends ArrayAdapter<Bid>{
             mainHolder.BidAmt.setText(bid.BidAmount().toString());
             mainHolder.Name.setText(CurrentAccount.getAccount().getEmail());
             ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
-            getStall.execute(new String[]{"_id", bid.BidStallID()});
+            String[] query = new String[2];
+            query[1]="_id";
+            query[0]=bid.BidStallID();
+            getStall.execute(query);
             try {
-                if (getStall.get().size() != 0) {
-                    Stalls stall = getStall.get().get(0);
+                ArrayList<Stalls>StallAry = getStall.get();
+                if (StallAry.size() != 0) {
+                    Stalls stall = StallAry.get(0);
                     mainHolder.Owner.setText(stall.getOwner());
                     mainHolder.Description.setText(stall.getDescription());
-                    mainHolder.Picture.setImageBitmap(stall.getThumbnail());
+                    try {
+                        mainHolder.Picture.setImageBitmap(stall.getThumbnail());
+                    }catch (NullPointerException e){};
                 }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();

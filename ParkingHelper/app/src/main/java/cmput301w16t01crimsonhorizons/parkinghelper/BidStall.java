@@ -62,11 +62,12 @@ public class BidStall extends AppCompatActivity {
             Toast.makeText(BidStall.this,"Stall unavailable", Toast.LENGTH_SHORT).show();
         } else {
             stall.setStatus("Bidded");
+            Commands command = new EditStallSave(stall);
+            Boolean check = command.execute();
             String bidderInfo = CurrentAccount.getAccount().getEmail()+" "+BidAmt;
             ElasticSearchCtr.MakeBid makeBid = new ElasticSearchCtr.MakeBid();
             makeBid.execute(new Bid(CurrentAccount.getAccount().getEmail(),
                     BidAmt, stall.getStallID()));
-
             Toast.makeText(BidStall.this, "You have made the bid!", Toast.LENGTH_SHORT).show();
             DateFormat dateformat = new SimpleDateFormat("yyyy/mm/dd hh:mm:ss");
             Date date = new Date();

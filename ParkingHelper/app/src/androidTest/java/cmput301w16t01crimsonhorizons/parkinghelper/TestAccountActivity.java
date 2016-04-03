@@ -2,6 +2,7 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.EditText;
@@ -182,7 +183,8 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         solo.clickOnView(solo.getView(R.id.AccountBtn));
         ListView lv = (ListView)solo.getView(R.id.OwnStalls);
         View listelement = lv.getChildAt(0);
-        assertEquals("should be a picture element", ImageView.class, listelement.findViewById(R.id.PictureEditStallV).getClass());
+        ImageView image = (ImageView)listelement.findViewById(R.id.PictureEditStallV);
+        assertTrue("view not visible",image.isShown());
         solo.goBack();
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
