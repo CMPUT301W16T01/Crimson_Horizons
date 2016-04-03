@@ -50,7 +50,6 @@ public class AddStall extends AppCompatActivity {
         String newDescription = description.getText().toString();
         stall.setOwner(CurrentAccount.getAccount().getEmail());
         stall.setDescription(newDescription);
-        stall.setStatus("Available");
         stall.setLocation(location_double);
 
         //http://stackoverflow.com/questions/8306623/get-bitmap-attached-to-imageview

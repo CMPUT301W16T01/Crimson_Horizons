@@ -21,6 +21,7 @@ public class Stalls implements Serializable{
     private String Owner = "";
     private String Description = "";
     private String Borrower = "";
+    private String Status = "Available";
     private Double[] location = {0.00,0.00};
     protected transient Bitmap thumbnail = null;
     protected String thumbnailBase64 = null;
@@ -107,13 +108,6 @@ public class Stalls implements Serializable{
     }
 
     public String getStatus() {
-        ElasticSearchCtr.GetBid getBid = new ElasticSearchCtr.GetBid();
-        getBid.execute(new String[]{"StallID", this.getStallID()});
-        try {
-            ArrayList<Bid> bids = getBid.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
         return Status;
     }
     public String getStallID() {
@@ -121,5 +115,21 @@ public class Stalls implements Serializable{
     }
     public void setStallID(String stallID) {
         StallID = stallID;
+    }
+
+    public Double getHighBidAmount() {
+        ArrayList<Bid> bidResults = new ArrayList<Bid>();
+        Double result = 0.00;
+        ElasticSearchCtr.GetBid getBid = new ElasticSearchCtr.GetBid();
+        getBid.execute();
+        try {
+            bidResults = getBid.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        for (Bid b : bidResults) {
+            result = Math.max(result, b.BidAmount());
+        }
+        return result;
     }
 }
