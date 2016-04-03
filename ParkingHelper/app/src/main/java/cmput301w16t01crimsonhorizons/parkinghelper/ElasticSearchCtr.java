@@ -559,7 +559,7 @@ public class ElasticSearchCtr{
                         " \"location\": [" + location[0].toString() + "," +
                         location[1].toString() + "]," +
                         " \"Borrower\": " + "\"" + Borrower + "\"" + "," +
-                        " \"thumbnail\": " + "\"" + thumbnail.toString() + "\"" + "," +
+                        " \"Thumbnail\": " + "\"" + thumbnail.toString() + "\"" + "," +
                         " \"thumbnailBase64\": " + "\"" + thumbnailBase64 + "\"" + "}" +
                         "}";
             }catch(NullPointerException e ){
@@ -570,7 +570,7 @@ public class ElasticSearchCtr{
                         " \"location\": [" + location[0].toString() + "," +
                         location[1].toString() + "]," +
                         " \"Borrower\": " + "\"" + Borrower + "\"" + "," +
-                        " \"thumbnail\": " + "\"" + "" + "\"" + "," +
+                        " \"Thumbnail\": " + "\"" + "" + "\"" + "," +
                         " \"thumbnailBase64\": " + "\"" + "" + "\"" + "}" +
                         "}";
             }

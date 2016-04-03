@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -44,9 +45,13 @@ public class CustomLstAdapter extends ArrayAdapter<Bid> {
             viewHolder.Bidder.setText(bidsForStall1.Bidder());
             viewHolder.BidAmt.setText(bidsForStall1.BidAmount().toString());
             ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
-            getStall.execute(new String[]{"_id", bidsForStall1.BidStallID()});
+            String[] query = new String[2];
+            query[1]="_id";
+            query[0]=bidsForStall1.BidStallID();
+            getStall.execute(query);
             try {
-                Stalls stall = getStall.get().get(0);
+                ArrayList<Stalls> StallAry = getStall.get();
+                Stalls stall = StallAry.get(0);
                 viewHolder.BidPic.setImageBitmap(stall.getThumbnail());
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
@@ -81,9 +86,13 @@ public class CustomLstAdapter extends ArrayAdapter<Bid> {
             mainHolder.Bidder.setText(bidsForStall1.Bidder());
             mainHolder.BidAmt.setText(bidsForStall1.BidAmount().toString());
             ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
-            getStall.execute(new String[]{"_id", bidsForStall1.BidStallID()});
+            String[] query = new String[2];
+            query[1]="_id";
+            query[0]=bidsForStall1.BidStallID();
+            getStall.execute(query);
             try {
-                Stalls stall = getStall.get().get(0);
+                ArrayList<Stalls> StallAry = getStall.get();
+                Stalls stall = StallAry.get(0);
                 mainHolder.BidPic.setImageBitmap(stall.getThumbnail());
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();

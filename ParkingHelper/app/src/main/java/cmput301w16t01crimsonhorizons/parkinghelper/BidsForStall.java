@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class BidsForStall extends AppCompatActivity {
 
-    private Stalls stall;
+    private static Stalls stall;
     ArrayList<Bid> bidResults = new ArrayList<Bid>();
     ListView eachStallsWithBids;
 
