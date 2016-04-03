@@ -1,13 +1,11 @@
 package cmput301w16t01crimsonhorizons.parkinghelper;
 
-import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.test.ActivityInstrumentationTestCase2;
-
-import android.test.UiThreadTest;
-
-import android.test.ViewAsserts;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -109,6 +107,54 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
 
+    public void testPictureStalls(){
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+
+
+        solo.clickOnView(solo.getView(R.id.AccountBtn));
+        solo.clickOnView(solo.getView(R.id.AddBtn));
+
+        solo.enterText((EditText) solo.getView(R.id.NamePrompET), "__test1");
+        solo.enterText((EditText) solo.getView(R.id.DescriptionET), "Test.");
+        ImageView imageView = (ImageView) solo.getView(R.id.addStallImage);
+        Bitmap bitmap = Bitmap.createBitmap(new int[]{1, 2, 5, 4}, 2, 2, Bitmap.Config.ARGB_8888);
+        imageView.setImageBitmap(bitmap);
+
+        solo.clickOnView(solo.getView(R.id.AddInAddBtn));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
+        String[]temp = new String[2];
+        temp[0]="__test1";
+        temp[1]="Owner";
+        tempAry = new ArrayList<>();
+        try {
+            getStall.execute(temp);
+            tempAry = getStall.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        assertTrue(tempAry.size() == 1);
+        assertEquals("Should be the created bitmap", bitmap, tempAry.get(0).getThumbnail());
+
+        solo.clickOnView(solo.getView(R.id.AccountBtn));
+        ListView lv = (ListView)solo.getView(R.id.OwnStalls);
+        View listelement = lv.getChildAt(0);
+        TextView description = (TextView) listelement.findViewById(R.id.DescriptionEditStallV);
+        solo.clickOnView(solo.getView(description));
+        assertTrue("picture should not be null", ((BitmapDrawable)(((ImageView)solo.getView(R.id.editStallImage)).getDrawable())).getBitmap() != null);
+
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
+    }
+
     /**
      * US 01.03.01
      * Test that an object is displayed in account.
@@ -124,4 +170,37 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         solo.goBack();
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
+
+    /**
+     * US 09.03.01
+     * Test that a picture is displayed in an account
+     */
+    public void testDisplayPicture(){
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "123@123");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+        solo.clickOnView(solo.getView(R.id.AccountBtn));
+        ListView lv = (ListView)solo.getView(R.id.OwnStalls);
+        View listelement = lv.getChildAt(0);
+        assertEquals("should be a picture element", ImageView.class, listelement.findViewById(R.id.PictureEditStallV).getClass());
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
+    }
+
+    /**
+     * US 09.04.01
+     * Test that the picture takes up less than 655636 bytes
+     */
+    public void testPictureSize(){
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "123@123");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+        solo.clickOnView(solo.getView(R.id.AccountBtn));
+        ListView lv = (ListView)solo.getView(R.id.OwnStalls);
+        View listelement = lv.getChildAt(0);
+        assertTrue("should take up less than 65536 bytes", ((BitmapDrawable)(((ImageView)listelement.findViewById(R.id.PictureEditStallV)).getDrawable())).getBitmap().getByteCount() < 65536);
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
+    }
+
 }

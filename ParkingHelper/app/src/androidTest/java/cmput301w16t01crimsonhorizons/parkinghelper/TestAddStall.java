@@ -6,6 +6,8 @@ import android.test.UiThreadTest;
 import android.view.View;
 import android.widget.TextView;
 
+import com.robotium.solo.Solo;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -18,6 +20,7 @@ import java.util.concurrent.ExecutionException;
 public class TestAddStall extends ActivityInstrumentationTestCase2 {
     ArrayList<Stalls> tempAry;
     Account account1;
+    private Solo solo;
 
     public TestAddStall() {
         super(AddStall.class);
