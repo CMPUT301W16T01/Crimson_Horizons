@@ -35,7 +35,7 @@ public class BidStall extends AppCompatActivity {
         TextView Descrip = (TextView)findViewById(R.id.BidStallDescriptionDisp);
         TextView latitude = (TextView)findViewById(R.id.latitudeBiStallTV);
         TextView longtitude = (TextView)findViewById(R.id.longitudeBidStallTV);
-        Double temp = Double.valueOf(stall.getBidAmt());
+        Double temp = stall.getHighBidAmount();
         if (temp==null){
             temp = 0.00;
         }
@@ -60,14 +60,13 @@ public class BidStall extends AppCompatActivity {
         EditText UserBid = (EditText)findViewById(R.id.BidStallAmtET);
         Double BidAmt = Double.valueOf(two.format(Double.parseDouble(UserBid.getText().toString())));
 
-        if (BidAmt<=stall.getBidAmt()){
+        if (BidAmt<=stall.getHighBidAmount()){
             Toast.makeText(BidStall.this,"Your bid was too low", Toast.LENGTH_SHORT).show();
+        } else if (stall.getStatus() == "Borrowed") {
+            Toast.makeText(BidStall.this,"Stall unavailable", Toast.LENGTH_SHORT).show();
         } else {
             stall.setStatus("Bidded");
-            stall.setBidAmt(BidAmt);
             String bidderInfo = CurrentAccount.getAccount().getEmail()+" "+BidAmt;
-            stall.setLstBidders(stall.getLstBidders() + "," + bidderInfo);
-            stall.setBidder(account.getEmail());
             Commands command = new EditStallSave(stall);
             Boolean check = command.execute();
             if (check){
@@ -81,11 +80,13 @@ public class BidStall extends AppCompatActivity {
                 notification.setDate(dateformat.format(date));
                 NotificationElasticSearch.AddNotification addNotification = new NotificationElasticSearch.AddNotification();
                 addNotification.execute(notification);
+                ElasticSearchCtr.MakeBid makeBid = new ElasticSearchCtr.MakeBid();
+                makeBid.execute(new Bid(CurrentAccount.getAccount().getEmail(),
+                        BidAmt, stall.getStallID()));
                 try {
                     addNotification.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                    makeBid.get();
+                } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
                 finish();

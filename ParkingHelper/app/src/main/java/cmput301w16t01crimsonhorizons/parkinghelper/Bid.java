@@ -6,23 +6,23 @@ import io.searchbox.annotations.JestId;
  * Created by schuman on 2/23/16.
  */
 public class Bid {
-    private Account bidder;
-    private double bidAmount;
-    private Stalls bidStall;
-    public Account Bidder() {
+    private String bidder = "";
+    private Double bidAmount;
+    private String bidStallID;
+    public String Bidder() {
         return bidder;
     }
-    public double BidAmount() {
+    public Double BidAmount() {
         return bidAmount;
     }
-    public Stalls BidStall() {
-        return bidStall;
+    public String BidStallID() {
+        return bidStallID;
     }
 
-    public Bid(Account bidder, double bidAmount, Stalls bidStall) {
+    public Bid(String bidder, Double bidAmount, String bidStallID) {
         this.bidder = bidder;
         this.bidAmount = bidAmount;
-        this.bidStall = bidStall;
+        this.bidStallID = bidStallID;
     }
 
     @JestId

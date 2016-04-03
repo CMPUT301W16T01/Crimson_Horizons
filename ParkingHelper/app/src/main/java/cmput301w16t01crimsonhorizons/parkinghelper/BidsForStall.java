@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 /**
  * This is to check any stalls the user owns that needs bids
@@ -16,7 +17,7 @@ import java.util.Arrays;
 public class BidsForStall extends AppCompatActivity {
 
     private Stalls stall;
-    ArrayList<BidsForStallsObject> all = new ArrayList<BidsForStallsObject>();
+    ArrayList<Bid> bidResults = new ArrayList<Bid>();
     ListView eachStallsWithBids;
 
     @Override
@@ -25,33 +26,33 @@ public class BidsForStall extends AppCompatActivity {
         setContentView(R.layout.content_bids_for_stall);
         Intent intent = getIntent();
         stall = (Stalls) intent.getSerializableExtra("stall");
-        ArrayList<BidsForStallsObject> all = new ArrayList<BidsForStallsObject>();
-        try{
-            ArrayList<String> temp =  new ArrayList<String>(Arrays.asList(stall.getLstBidders().split(",")));
-            temp.remove("");
-
-            for(String newText : temp) {
-                all.add(new BidsForStallsObject(newText, stall));
-            }
-
-        }catch(NullPointerException e){
-            Toast.makeText(getApplicationContext(),"No one bidded on your stall",Toast.LENGTH_SHORT).show();
+        ElasticSearchCtr.GetBid getBid = new ElasticSearchCtr.GetBid();
+        getBid.execute(new String[] { "StallID", stall.getStallID()});
+        try {
+            bidResults = getBid.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
         eachStallsWithBids = (ListView)findViewById(R.id.BidsForStallsLv);
-        CustomLstAdapter myAdapter = new CustomLstAdapter(this, R.layout.bids_for_stalls, all);
+        CustomLstAdapter myAdapter = new CustomLstAdapter(this, R.layout.bids_for_stalls, bidResults);
         eachStallsWithBids.setAdapter(myAdapter);
     }
     //US 05.07.01
-    public void declineBid(String retrieved){
-        all.remove(retrieved);
-        String LstModified = all.toString();
-        stall.setLstBidders(LstModified);
+    public void declineBid(Bid bid){
+        bidResults.remove(bid);
+        ElasticSearchCtr.DeleteBid deleteBid = new ElasticSearchCtr.DeleteBid();
+        deleteBid.execute(bid);
+        stall.setStatus();
     }
 
     //US 05.07.01
-    public void acceptBid(String retrieved){
-        String bidder = retrieved.split(" ")[1];
-        stall.setBorrower(bidder);
+    public void acceptBid(Bid bid){
+        bidResults.clear();
+        ElasticSearchCtr.DeleteBid deleteBid = new ElasticSearchCtr.DeleteBid();
+        for (Bid b : bidResults) {
+            deleteBid.execute(b);
+        }
+        stall.setBorrower(bid.Bidder());
         stall.setStatus("Borrowed");
     }
 

@@ -41,7 +41,7 @@ public class AdapterYourBids extends ArrayAdapter<Stalls>{
 
             if (stall.getBidder().equals(CurrentAccount.getAccount().getEmail())) {
                 viewHolder.Owner.setText(stall.getOwner());
-                viewHolder.BidAmt.setText(new Double(stall.getHighBidAmount()).toString());
+                viewHolder.BidAmt.setText(stall.getHighBidAmount().toString());
                 viewHolder.Description.setText(stall.getDescription());
                 viewHolder.Name.setText(CurrentAccount.getAccount().getEmail());
                 try {
@@ -68,7 +68,7 @@ public class AdapterYourBids extends ArrayAdapter<Stalls>{
         else{
             mainHolder = (EditStallViewHolder)convertView.getTag();
             mainHolder.Owner.setText(stall.getOwner());
-            mainHolder.BidAmt.setText(new Double(stall.getHighBidAmount()).toString());
+            mainHolder.BidAmt.setText(stall.getHighBidAmount().toString());
             mainHolder.Description.setText(stall.getDescription());
             mainHolder.Name.setText(CurrentAccount.getAccount().getEmail());
             mainHolder.Picture.setImageBitmap(stall.getThumbnail());

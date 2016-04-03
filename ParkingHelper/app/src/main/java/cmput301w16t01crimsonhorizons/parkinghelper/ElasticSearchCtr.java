@@ -624,9 +624,9 @@ public class ElasticSearchCtr{
         @Override
         protected Boolean doInBackground(Bid... bid) {
             verifyClient();
-            String bidder = bid[0].Bidder().getEmail();
+            String bidder = bid[0].Bidder();
             Double bidAmount = bid[0].BidAmount();
-            String stall = bid[0].BidStall().getStallID();
+            String stall = bid[0].BidStallID();
             String doc="";
             doc = "{" +
                     "\"doc\": { \"Bidder\": " + "\"" + bidder + "\", " +

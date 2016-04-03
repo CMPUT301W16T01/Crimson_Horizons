@@ -2,6 +2,7 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.StaticLayout;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
@@ -109,6 +110,25 @@ public class Stalls implements Serializable{
 
     public String getStatus() {
         return Status;
+    }
+    public void setStatus(String status) {
+        this.Status = status;
+    }
+    public void setStatus() {
+        if (Borrower != "") {
+            Status = "Borrowed";
+        }
+        ElasticSearchCtr.GetBid getBid = new ElasticSearchCtr.GetBid();
+        getBid.execute();
+        try {
+            if (getBid.get().size() > 0) {
+                Status = "Bidded";
+            } else {
+                Status = "Available";
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
     public String getStallID() {
         return StallID;
