@@ -119,9 +119,13 @@ public class Stalls implements Serializable{
             Status = "Borrowed";
         }
         ElasticSearchCtr.GetBid getBid = new ElasticSearchCtr.GetBid();
-        getBid.execute(new String[] { "bidStallID", this.getStallID() });
+        String[] query = new String[2];
+        query[1]="bidStallID";
+        query[0]=this.getStallID();
+        getBid.execute(query);
         try {
-            if (getBid.get().size() > 0) {
+            ArrayList<Bid>all = getBid.get();
+            if (all.size() > 0) {
                 Status = "Bidded";
             } else {
                 Status = "Available";
