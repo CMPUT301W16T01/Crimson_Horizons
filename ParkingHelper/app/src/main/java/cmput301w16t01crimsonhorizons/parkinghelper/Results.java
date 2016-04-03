@@ -19,10 +19,8 @@ import java.util.concurrent.ExecutionException;
 
 public class Results extends AppCompatActivity implements ViewInterface<Commands> {
     private ListView YourBids;
-    private ArrayList<Stalls> userBids = new ArrayList<Stalls>();
-    private String[] GetAvailable = new String[2];
+    private ArrayList<Bid> userBids = new ArrayList<Bid>();
     private AdapterYourBids myAdapter;
-    String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,22 +32,11 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
         final EditStallSave command = new EditStallSave();
         command.addView(this);
 
-        Intent intent = getIntent();
-        email = intent.getStringExtra("email");
-
-        GetAvailable[0] = email;
-
-        ElasticSearchCtr.SearchYourBids getYourBids =
-                new ElasticSearchCtr.SearchYourBids();
-        getYourBids.execute(GetAvailable);
+        ElasticSearchCtr.GetBid getYourBids = new ElasticSearchCtr.GetBid();
+        getYourBids.execute(new String[] { "Bidder", CurrentAccount.getAccount().getEmail() });
         try {
-            ArrayList<Stalls> tempAry = new ArrayList<>();
-            tempAry = getYourBids.get();
-            userBids.clear();
-            userBids.addAll(tempAry);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+            userBids = getYourBids.get();
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
@@ -85,25 +72,15 @@ public class Results extends AppCompatActivity implements ViewInterface<Commands
 
     @Override
     public void updateView(Commands model) {
-        ElasticSearchCtr.SearchYourBids getYourBids =
-                new ElasticSearchCtr.SearchYourBids();
-        getYourBids.execute(email);
+        ElasticSearchCtr.GetBid getYourBids = new ElasticSearchCtr.GetBid();
+        getYourBids.execute(new String[] { "Bidder", CurrentAccount.getAccount().getEmail() });
         try {
-            ArrayList<Stalls> tempAry = new ArrayList<>();
-            tempAry = getYourBids.get();
-            userBids.clear();
-            userBids.addAll(tempAry);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+            userBids = getYourBids.get();
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
         myAdapter.notifyDataSetChanged();
 
-    }
-
-    ArrayList<Stalls> getUserBids(){
-        return userBids;
     }
 }

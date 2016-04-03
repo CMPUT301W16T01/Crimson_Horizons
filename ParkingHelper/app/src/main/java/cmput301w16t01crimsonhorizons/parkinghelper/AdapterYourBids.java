@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Kevin L on 2/29/2016.
@@ -19,16 +20,16 @@ import java.util.List;
  * For Account activity
  * @see CustomLstAdapter This is similar.
  */
-public class AdapterYourBids extends ArrayAdapter<Stalls>{
+public class AdapterYourBids extends ArrayAdapter<Bid>{
     private int Layout;
-    public AdapterYourBids(Context context, int resource, List<Stalls> objects) {
+    public AdapterYourBids(Context context, int resource, List<Bid> objects) {
         super(context, resource, objects);
         Layout=resource;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         EditStallViewHolder mainHolder = null;
-        Stalls stall = getItem(position);
+        Bid bid = getItem(position);
         if (convertView == null){
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(Layout,parent,false);
@@ -38,40 +39,34 @@ public class AdapterYourBids extends ArrayAdapter<Stalls>{
             viewHolder.BidAmt = (TextView)convertView.findViewById(R.id.BidAmt);
             viewHolder.Name = (TextView)convertView.findViewById(R.id.Username);
             viewHolder.Picture = (ImageView)convertView.findViewById(R.id.PictureEditStallV);
-
-            if (stall.getBidder().equals(CurrentAccount.getAccount().getEmail())) {
+            viewHolder.BidAmt.setText(bid.BidAmount().toString());
+            viewHolder.Name.setText(CurrentAccount.getAccount().getEmail());
+            ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
+            getStall.execute(new String[]{"_id", bid.BidStallID()});
+            try {
+                Stalls stall = getStall.get().get(0);
                 viewHolder.Owner.setText(stall.getOwner());
-                viewHolder.BidAmt.setText(stall.getHighBidAmount().toString());
                 viewHolder.Description.setText(stall.getDescription());
-                viewHolder.Name.setText(CurrentAccount.getAccount().getEmail());
-                try {
-                    viewHolder.Picture.setImageBitmap(stall.getThumbnail());
-                }catch (NullPointerException e){};
-            } else {
-                ArrayList<String> all = new ArrayList<String>(Arrays.asList(stall.getLstBidders().split(",")));
-                int i = 0;
-                while (i < all.size()) {
-                    if (all.get(i).split(" ")[0].equals(CurrentAccount.getAccount().getEmail())){
-                        viewHolder.Owner.setText(stall.getOwner());
-                        viewHolder.BidAmt.setText(all.get(i).split(" ")[1]);
-                        viewHolder.Description.setText(stall.getDescription());
-                        viewHolder.Name.setText(CurrentAccount.getAccount().getEmail());
-                        viewHolder.Picture.setImageBitmap(stall.getThumbnail());
-                        break;
-                    } else {
-                        i=i+1;
-                    }
-                }
+                viewHolder.Picture.setImageBitmap(stall.getThumbnail());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
             }
             convertView.setTag(viewHolder);
         }
         else{
             mainHolder = (EditStallViewHolder)convertView.getTag();
-            mainHolder.Owner.setText(stall.getOwner());
-            mainHolder.BidAmt.setText(stall.getHighBidAmount().toString());
-            mainHolder.Description.setText(stall.getDescription());
+            mainHolder.BidAmt.setText(bid.BidAmount().toString());
             mainHolder.Name.setText(CurrentAccount.getAccount().getEmail());
-            mainHolder.Picture.setImageBitmap(stall.getThumbnail());
+            ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
+            getStall.execute(new String[]{"_id", bid.BidStallID()});
+            try {
+                Stalls stall = getStall.get().get(0);
+                mainHolder.Owner.setText(stall.getOwner());
+                mainHolder.Description.setText(stall.getDescription());
+                mainHolder.Picture.setImageBitmap(stall.getThumbnail());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
         }
         return convertView;
     }
