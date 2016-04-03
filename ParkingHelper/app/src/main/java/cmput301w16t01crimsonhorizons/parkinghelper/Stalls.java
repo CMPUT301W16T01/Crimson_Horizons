@@ -120,8 +120,8 @@ public class Stalls implements Serializable{
         }
         ElasticSearchCtr.GetBid getBid = new ElasticSearchCtr.GetBid();
         String[] query = new String[2];
-        query[1]="bidStallID";
-        query[0]=this.getStallID();
+        query[0]="bidStallID";
+        query[1]=this.getStallID();
         getBid.execute(query);
         try {
             ArrayList<Bid>all = getBid.get();
