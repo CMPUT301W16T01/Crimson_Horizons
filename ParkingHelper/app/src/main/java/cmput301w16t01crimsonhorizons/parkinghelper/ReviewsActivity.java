@@ -22,4 +22,12 @@ public class ReviewsActivity extends AppCompatActivity {
 
     }
 
+    private Double average() {
+        Double result = 0.00;
+        for (Review r : reviewList) {
+            result += r.getRating();
+        }
+        result /= reviewList.size();
+        return result;
+    }
 }
