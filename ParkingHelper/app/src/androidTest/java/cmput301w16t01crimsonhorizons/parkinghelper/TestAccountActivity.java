@@ -2,7 +2,6 @@ package cmput301w16t01crimsonhorizons.parkinghelper;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.EditText;
@@ -28,11 +27,40 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
     }
     @Override
     public void setUp() throws Exception {
+        ElasticSearchForTest.addUser addUser = new ElasticSearchForTest.addUser();
+        Account account = new Account();
+        account.setEmail("__test1");
+        addUser.execute(account);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         solo = new Solo(getInstrumentation());
         getActivity();
     }
     @Override
     public void tearDown() throws Exception {
+        ElasticSearchForTest.GetAccount getAccount = new ElasticSearchForTest.GetAccount();
+        ElasticSearchForTest.deleteUser deleteUser = new ElasticSearchForTest.deleteUser();
+        Account account = getAccount.execute("__test1").get();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        deleteUser.execute(account);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         solo.finishOpenedActivities();
     }
 
@@ -117,19 +145,19 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
      * US 09.01.01
      * US 09.02.01
      */
-    public void testPictureStalls() {
+    public void testPictureStalls(){
+        Bitmap bitmap = Bitmap.createBitmap(new int[]{1, 2, 5, 4}, 2, 2, Bitmap.Config.ARGB_8888);
+
         solo.clickOnView(solo.getView(R.id.LoginButton));
         solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1");
         solo.clickOnView(solo.getView(R.id.email_sign_in_button));
 
 
         solo.clickOnView(solo.getView(R.id.AccountBtn));
-        solo.clickOnView(solo.getView(R.id.AddBtn));
 
+        solo.clickOnView(solo.getView(R.id.AddBtn));
         solo.enterText((EditText) solo.getView(R.id.NamePrompET), "__test1");
         solo.enterText((EditText) solo.getView(R.id.DescriptionET), "Test.");
-        Bitmap bitmap = Bitmap.createBitmap(new int[]{1, 2, 5, 4}, 2, 2, Bitmap.Config.ARGB_8888);
-
         solo.clickOnView(solo.getView(R.id.AddInAddBtn));
         try {
             Thread.sleep(1000);
@@ -137,22 +165,29 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
             e.printStackTrace();
         }
         ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
-        String[] temp = new String[2];
-        temp[0] = "__test1";
-        temp[1] = "Owner";
+        String[]temp = new String[2];
+        temp[0]="__test1";
+        temp[1]="Owner";
         tempAry = new ArrayList<>();
         try {
             getStall.execute(temp);
             tempAry = getStall.get();
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+        assertTrue(tempAry.size() == 1);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         tempAry.get(0).setThumbnail(bitmap);
 
-        //assertTrue(tempAry.size() == 1);
+        ElasticSearchForTest.updateStallES updateStallES = new ElasticSearchForTest.updateStallES();
+
+        updateStallES.execute(tempAry.get(0));
 
         try {
             Thread.sleep(1000);
@@ -165,7 +200,7 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         ListView lv = (ListView)solo.getView(R.id.OwnStalls);
         View listelement = lv.getChildAt(0);
         TextView description = (TextView) listelement.findViewById(R.id.DescriptionEditStallV);
-        solo.clickOnView(solo.getView(description));
+        solo.clickOnView(description);
 
         solo.clickOnView(solo.getView(R.id.DelPicEditStallBtn));
         solo.clickOnView(solo.getView(R.id.SaveEdit));
@@ -187,9 +222,21 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
             e.printStackTrace();
         }
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         assertEquals("Should be a null bitmap", null, tempAry.get(0).getThumbnail());
 
-        ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ElasticSearchForTest.DeleteStall deleteStall = new ElasticSearchForTest.DeleteStall();
         deleteStall.execute(tempAry.get(0));
         Boolean check = false;
         try {
@@ -200,10 +247,10 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
             e.printStackTrace();
         }
         assertTrue("didn't delete Stall", check);
-
         solo.goBack();
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
+
 
     /**
      * US 01.03.01
