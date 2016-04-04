@@ -92,7 +92,11 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
             e.printStackTrace();
         }
         assertTrue(tempAry.size() == 1);
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
         deleteStall.execute(tempAry.get(0));
         Boolean check = false;
