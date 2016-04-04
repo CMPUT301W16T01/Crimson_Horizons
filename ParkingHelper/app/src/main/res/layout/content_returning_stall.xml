@@ -69,7 +69,7 @@
         android:ems="10"
         android:id="@+id/latitudeTitleRetStallTV"
         android:text="latitude"
-        android:layout_below="@+id/longitudeRetStallTV"
+        android:layout_above="@+id/latitudeRetStallTV"
         android:layout_alignParentStart="true" />
 
     <TextView
@@ -78,8 +78,9 @@
         android:ems="10"
         android:id="@+id/longitudeRetStallTV"
         android:text="No value"
-        android:layout_below="@+id/longitudeTitleRetStallTV"
-        android:layout_alignParentStart="true" />
+        android:layout_alignTop="@+id/longitudeTitleRetStallTV"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -34,7 +34,10 @@ public class TestBorrowing extends ActivityInstrumentationTestCase2<HomepageActi
     public void testBorrowingStall(){
         solo.unlockScreen();
         solo.clickOnView(solo.getView(R.id.BorrowingBtn));
-        solo.assertCurrentActivity("Expected borrwiong stall activity",BorrowStallActivity.class);
+        solo.assertCurrentActivity("Expected borrwiong stall activity", BorrowStallActivity.class);
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
+
     }
 
 /*    *
@@ -44,6 +47,8 @@ public class TestBorrowing extends ActivityInstrumentationTestCase2<HomepageActi
     public void testLendingStall(){
         solo.unlockScreen();
         solo.clickOnView(solo.getView(R.id.LendingBtn));
-        solo.assertCurrentActivity("Expected borrwiong stall activity",LendingStalls.class);
+        solo.assertCurrentActivity("Expected borrwiong stall activity", LendingStalls.class);
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
 }

@@ -119,7 +119,7 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        assertTrue(tempAry.size() == 1);
+        assertTrue(tempAry.size() >= 1);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

@@ -84,38 +84,6 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<WelcomeActivi
         return check;
     }
 
-    /**
-     * US 05.01.01
-     * Test bidding on an available stall.
-     * It basically makes a stall set with some bids. It then update the bids, just like what would
-     * happen if the user hit the bid button after entering amount.
-     * It then tries to update this information and assert it is done.
-     */
-    public void testBidOnAvailable(){
-        Stalls stall = new Stalls();
-        Bid b1 = new Bid("123@123", 100.00, stall.getStallID());
-        stall.setOwner("testing");
-        this.createStall(stall);
-        ArrayList<Stalls>returned = new ArrayList<>();
-        String[] temp = new String[2];
-        temp[1] = "_id";
-        temp[0] = stall.getStallID();
-        while (returned.size()<1) {
-            returned = this.retrieveStall(temp);
-        }
-        assertEquals("It should have bid of 100.00", 100.00, returned.get(0).getHighBidAmount());
-
-        Bid b2 = new Bid("123@123", 200.00, stall.getStallID());
-        Boolean check = this.bidSimulate(stall);
-        assertTrue(check);
-        returned.clear();
-        returned = this.retrieveStall(temp);
-        while (returned.get(0).getHighBidAmount()!=200){
-            returned = this.retrieveStall(temp);
-        }
-        this.resetDatabase(stall);
-
-    }
 
     /**
      * US 05.02.01

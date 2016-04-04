@@ -49,6 +49,8 @@ public class TestBidsForStall  extends ActivityInstrumentationTestCase2<WelcomeA
     }
 
     /**
+     * US 05.01.01
+     * Test if the user can bid on stall
      * US 05.06.01
      * Test if one can accept the bid
      */
@@ -78,6 +80,7 @@ public class TestBidsForStall  extends ActivityInstrumentationTestCase2<WelcomeA
         solo.enterText((EditText) solo.getView(R.id.BidStallAmtET), "1.00");
         solo.clickOnView(solo.getView(R.id.BidStallBidBtn));
         solo.goBack();
+        solo.goBack();
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
 
         //sign in as 123@123 make bid
@@ -90,6 +93,7 @@ public class TestBidsForStall  extends ActivityInstrumentationTestCase2<WelcomeA
         solo.clickInList(0);
         solo.enterText((EditText) solo.getView(R.id.BidStallAmtET), "2.00");
         solo.clickOnView(solo.getView(R.id.BidStallBidBtn));
+        solo.goBack();
         solo.goBack();
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
 

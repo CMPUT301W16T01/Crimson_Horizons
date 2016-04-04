@@ -134,15 +134,6 @@
         android:layout_centerHorizontal="true"
         android:onClick="deletePicture" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Review"
-        android:id="@+id/ReviewBtnEditStall"
-        android:layout_alignBaseline="@+id/SaveEdit"
-        android:layout_alignBottom="@+id/SaveEdit"
-        android:layout_centerHorizontal="true"
-        android:onClick="reviews"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"

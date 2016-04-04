@@ -88,11 +88,11 @@ public class TestAddStall extends ActivityInstrumentationTestCase2 {
         check = deleteStall.get();
         assertTrue("didn't delete Stall", check);
         Thread.sleep(1000);
-        ElasticSearchCtr.deleteUser deleteUser = new ElasticSearchCtr.deleteUser();
+        /*ElasticSearchCtr.deleteUser deleteUser = new ElasticSearchCtr.deleteUser();
         deleteUser.execute(account1);
         Boolean check2 = false;
         check2 = deleteUser.get();
-        assertTrue("didn't delete user",check2);
+        assertTrue("didn't delete user",check2);*/
     }
 
 }
