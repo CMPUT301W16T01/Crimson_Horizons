@@ -149,16 +149,21 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         Bitmap bitmap = Bitmap.createBitmap(new int[]{1, 2, 5, 4}, 2, 2, Bitmap.Config.ARGB_8888);
 
         solo.clickOnView(solo.getView(R.id.LoginButton));
-        solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1");
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "robo");
         solo.clickOnView(solo.getView(R.id.email_sign_in_button));
 
 
         solo.clickOnView(solo.getView(R.id.AccountBtn));
 
         solo.clickOnView(solo.getView(R.id.AddBtn));
-        solo.enterText((EditText) solo.getView(R.id.NamePrompET), "__test1");
+        solo.enterText((EditText) solo.getView(R.id.NamePrompET), "robo");
         solo.enterText((EditText) solo.getView(R.id.DescriptionET), "Test.");
         solo.clickOnView(solo.getView(R.id.AddInAddBtn));
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.AccountBtn));
+        ListView lv = (ListView)solo.getView(R.id.OwnStalls);
+        View element = lv.getChildAt(0);
+        assertNotNull(element);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -166,7 +171,7 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         }
         ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
         String[]temp = new String[2];
-        temp[0]="__test1";
+        temp[0]="robo";
         temp[1]="Owner";
         tempAry = new ArrayList<>();
         try {
@@ -197,8 +202,8 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
 
         assertEquals("Should be the created bitmap", bitmap, tempAry.get(0).getThumbnail());
 
-        ListView lv = (ListView)solo.getView(R.id.OwnStalls);
-        View listelement = lv.getChildAt(0);
+        ListView lv2 = (ListView)solo.getView(R.id.OwnStalls);
+        View listelement = lv2.getChildAt(0);
         TextView description = (TextView) listelement.findViewById(R.id.DescriptionEditStallV);
         solo.clickOnView(description);
 
@@ -229,24 +234,17 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         }
 
         assertEquals("Should be a null bitmap", null, tempAry.get(0).getThumbnail());
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "robo");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
 
-        ElasticSearchForTest.DeleteStall deleteStall = new ElasticSearchForTest.DeleteStall();
-        deleteStall.execute(tempAry.get(0));
-        Boolean check = false;
-        try {
-            check = deleteStall.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        assertTrue("didn't delete Stall", check);
+        solo.clickOnView(solo.getView(R.id.AccountBtn));
+        solo.clickInList(0);
+        solo.assertCurrentActivity("should be in edit stall", EditStall.class);
+        solo.clickOnView(solo.getView(R.id.EditStallDeleteBtn));
         solo.goBack();
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
