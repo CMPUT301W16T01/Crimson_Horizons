@@ -208,7 +208,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cmput301w16t01crimsonhorizons.parkinghelper.HomepageActivity" />
         </activity>
-
         <activity
             android:name=".ReturningStallActivity"
             android:label="@string/title_activity_returning_stall"
@@ -234,6 +233,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cmput301w16t01crimsonhorizons.parkinghelper.HomepageActivity" />
         </activity>
+        <activity android:name=".NewReview"></activity>
     </application>
 
 </manifest>
