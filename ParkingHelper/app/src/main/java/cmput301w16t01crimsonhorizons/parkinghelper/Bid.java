@@ -4,6 +4,7 @@ import io.searchbox.annotations.JestId;
 
 /**
  * Created by schuman on 2/23/16, modified by jero1994
+ * what a bid would consist
  */
 public class Bid {
     private String bidder = "";
