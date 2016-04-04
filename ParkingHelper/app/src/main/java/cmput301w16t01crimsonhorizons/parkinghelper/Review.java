@@ -10,11 +10,13 @@ public class Review {
     private String User;
     private String StallID;
     private String text;
+    private int rating;
 
-    public Review(String User, String StallID, String text) {
+    public Review(String User, String StallID, String text, int rating) {
         this.User = User;
         this.StallID = StallID;
         this.text = text;
+        this.rating = rating;
     }
 
     public String getText() {
@@ -27,6 +29,10 @@ public class Review {
 
     public String getUser() {
         return User;
+    }
+
+    public int getRating() {
+        return rating;
     }
 
     @JestId
