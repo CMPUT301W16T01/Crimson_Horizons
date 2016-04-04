@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 /**
  * Created by schuman on 3/2/16.
+ * For viewing a user profile
  */
 public class ViewProfile extends AppCompatActivity {
     private TextView emailAddress;

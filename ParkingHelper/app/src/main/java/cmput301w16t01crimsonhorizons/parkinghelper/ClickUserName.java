@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by schuman on 3/9/16.
+ * This displays the data associated with a username. Called upon clicking a username
  */
 public class ClickUserName extends AppCompatActivity {
     public <activityType extends AppCompatActivity, getType extends AsyncTask<String, Void,Account>> Intent clickUserName (activityType currentActivity, View view, getType executeGet){

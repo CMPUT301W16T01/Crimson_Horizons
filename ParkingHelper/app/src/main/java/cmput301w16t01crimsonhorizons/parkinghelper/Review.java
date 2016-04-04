@@ -4,7 +4,7 @@ import io.searchbox.annotations.JestId;
 
 /**
  * Created by jero1994 on 2016-04-02.
- * What a review would consist
+ * What a user review on a stall would consist
  */
 public class Review {
     private String User;

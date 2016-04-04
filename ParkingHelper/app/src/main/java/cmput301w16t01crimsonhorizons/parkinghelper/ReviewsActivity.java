@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 /**
- * View for the review activity
+ * Activity for viewing a list of all reviews submitted for a given stall.
  */
 
 public class ReviewsActivity extends AppCompatActivity {

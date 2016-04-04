@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 /**
- * This is to check any stalls the user owns that needs bids
+ * This is to check any stalls the user owns that have been bidded upon
  */
 public class BidsForStall extends AppCompatActivity {
 
