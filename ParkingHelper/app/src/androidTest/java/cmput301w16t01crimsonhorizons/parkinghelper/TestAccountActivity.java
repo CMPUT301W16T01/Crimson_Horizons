@@ -108,7 +108,12 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
 
-    public void testPictureStalls(){
+    /**
+     * Test adding/deleting a picture to/from a stall
+     * US 09.01.01
+     * US 09.02.01
+     */
+    public void testPictureStalls() {
         solo.clickOnView(solo.getView(R.id.LoginButton));
         solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1");
         solo.clickOnView(solo.getView(R.id.email_sign_in_button));
@@ -119,9 +124,7 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
 
         solo.enterText((EditText) solo.getView(R.id.NamePrompET), "__test1");
         solo.enterText((EditText) solo.getView(R.id.DescriptionET), "Test.");
-        ImageView imageView = (ImageView) solo.getView(R.id.addStallImage);
         Bitmap bitmap = Bitmap.createBitmap(new int[]{1, 2, 5, 4}, 2, 2, Bitmap.Config.ARGB_8888);
-        imageView.setImageBitmap(bitmap);
 
         solo.clickOnView(solo.getView(R.id.AddInAddBtn));
         try {
@@ -130,10 +133,40 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
             e.printStackTrace();
         }
         ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
-        String[]temp = new String[2];
-        temp[0]="__test1";
-        temp[1]="Owner";
+        String[] temp = new String[2];
+        temp[0] = "Test.";
+        temp[1] = "Description";
         tempAry = new ArrayList<>();
+        try {
+            getStall.execute(temp);
+            tempAry = getStall.get();
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        tempAry.get(0).setThumbnail(bitmap);
+
+        //assertTrue(tempAry.size() == 1);
+        assertEquals("Should be the created bitmap", bitmap, tempAry.get(0).getThumbnail());
+
+        ListView lv = (ListView)solo.getView(R.id.OwnStalls);
+        View listelement = lv.getChildAt(0);
+        TextView description = (TextView) listelement.findViewById(R.id.DescriptionEditStallV);
+        solo.clickOnView(solo.getView(description));
+
+        solo.clickOnView(solo.getView(R.id.DelPicEditStallBtn));
+        solo.clickOnView(solo.getView(R.id.SaveEdit));
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        getStall = new ElasticSearchCtr.GetStall();
+
         try {
             getStall.execute(temp);
             tempAry = getStall.get();
@@ -142,15 +175,8 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        assertTrue(tempAry.size() == 1);
-        assertEquals("Should be the created bitmap", bitmap, tempAry.get(0).getThumbnail());
 
-        solo.clickOnView(solo.getView(R.id.AccountBtn));
-        ListView lv = (ListView)solo.getView(R.id.OwnStalls);
-        View listelement = lv.getChildAt(0);
-        TextView description = (TextView) listelement.findViewById(R.id.DescriptionEditStallV);
-        solo.clickOnView(solo.getView(description));
-        assertTrue("picture should not be null", ((BitmapDrawable)(((ImageView)solo.getView(R.id.editStallImage)).getDrawable())).getBitmap() != null);
+        assertEquals("Should be a null bitmap", null, tempAry.get(0).getThumbnail());
 
         solo.goBack();
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
@@ -184,7 +210,7 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         ListView lv = (ListView)solo.getView(R.id.OwnStalls);
         View listelement = lv.getChildAt(0);
         ImageView image = (ImageView)listelement.findViewById(R.id.PictureEditStallV);
-        assertTrue("view not visible",image.isShown());
+        assertTrue("view not visible",((BitmapDrawable)(((ImageView)listelement.findViewById(R.id.PictureEditStallV)).getDrawable())).getBitmap() != null);
         solo.goBack();
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
