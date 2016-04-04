@@ -1,4 +1,0 @@
-Aaron:LendingStalls, BorrowedStalls, Stalls, StallWithBids, and OwnStalls
-JP: BidStallManager (Model), BidStall(Controller), YourBids (View), BidsForStall(Controller), EditBids(Controller)
-JO: LendingStallsCtr(Controller), Search(View), SaveLoad(Model), OwnStallsWithBidsActivity(View), Model(Generic Model)
-Lee:AccountActivity (View), HomepageActivity(View), Notification(View), LendingStalls(View)(REPEATS), ViewInterface(Generic interface)
