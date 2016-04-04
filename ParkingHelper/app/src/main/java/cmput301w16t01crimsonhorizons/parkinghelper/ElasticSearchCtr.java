@@ -805,7 +805,7 @@ public class ElasticSearchCtr{
             try {
                 DocumentResult result = client.execute(new Delete.Builder(review[0].getReviewID())
                         .index("t01")
-                        .type("bid_database")
+                        .type("review_database")
                         .build());
                 if (result.isSucceeded()) {
                     return true;
