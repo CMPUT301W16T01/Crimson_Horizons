@@ -99,8 +99,8 @@
         android:text="Bid"
         android:id="@+id/BidStallBidBtn"
         android:onClick="BidStall"
-        android:layout_below="@+id/BidStallAmtET"
-        android:layout_alignEnd="@+id/BidStallTitle" />
+        android:layout_alignTop="@+id/ReviewBtn"
+        android:layout_toEndOf="@+id/ReviewBtn" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -145,16 +145,16 @@
         android:layout_height="wrap_content"
         android:text="Direction"
         android:id="@+id/directionBidStallBtn"
-        android:layout_alignBottom="@+id/BidStallBidBtn"
-        android:layout_alignStart="@+id/BidStallTitle"
+        android:layout_alignTop="@+id/ReviewBtn"
+        android:layout_toStartOf="@+id/ReviewBtn"
         android:onClick="getDirection"/>
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Review"
+        android:text="See Reviews"
         android:id="@+id/ReviewBtn"
         android:layout_below="@+id/BidStallAmtET"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="newReview" />
 </RelativeLayout>
