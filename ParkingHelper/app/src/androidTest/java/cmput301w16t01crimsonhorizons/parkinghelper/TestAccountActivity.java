@@ -138,13 +138,13 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         }
         ElasticSearchCtr.GetStall getStall = new ElasticSearchCtr.GetStall();
         String[] temp = new String[2];
-        temp[0] = "Test.";
-        temp[1] = "Description";
+        temp[0] = "__test1";
+        temp[1] = "Owner";
         tempAry = new ArrayList<>();
         try {
             getStall.execute(temp);
             tempAry = getStall.get();
-            Thread.sleep(1000);
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -153,6 +153,13 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         tempAry.get(0).setThumbnail(bitmap);
 
         //assertTrue(tempAry.size() == 1);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         assertEquals("Should be the created bitmap", bitmap, tempAry.get(0).getThumbnail());
 
         ListView lv = (ListView)solo.getView(R.id.OwnStalls);
@@ -181,6 +188,18 @@ public class TestAccountActivity extends ActivityInstrumentationTestCase2 {
         }
 
         assertEquals("Should be a null bitmap", null, tempAry.get(0).getThumbnail());
+
+        ElasticSearchCtr.DeleteStall deleteStall = new ElasticSearchCtr.DeleteStall();
+        deleteStall.execute(tempAry.get(0));
+        Boolean check = false;
+        try {
+            check = deleteStall.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        assertTrue("didn't delete Stall", check);
 
         solo.goBack();
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
