@@ -60,4 +60,10 @@ public class ReviewsActivity extends AppCompatActivity {
         result /= reviewlist.size();
         return result;
     }
+
+    public void addReview(View view){
+        Intent intent = new Intent(getApplicationContext(),NewReview.class);
+        intent.putExtra("stall",stall);
+        startActivity(intent);
+    }
 }

@@ -15,8 +15,19 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/reviewsLVEditStall">
+        android:id="@+id/reviewsLVEditStall"
+        android:layout_above="@+id/addReveiwBtn">
 
     </ListView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Reviews"
+        android:id="@+id/addReveiwBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="49dp"
+        android:onClick="addReview"/>
 
 </RelativeLayout>
