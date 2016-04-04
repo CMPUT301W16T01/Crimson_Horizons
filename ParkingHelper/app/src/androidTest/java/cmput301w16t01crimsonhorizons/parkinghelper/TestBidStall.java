@@ -180,6 +180,7 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<WelcomeActivi
         solo.enterText((EditText) solo.getView(R.id.BidStallAmtET), "1.00");
         solo.clickOnView(solo.getView(R.id.BidStallBidBtn));
         solo.goBack();
+        solo.goBack();
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
 
         solo.clickOnView(solo.getView(R.id.LoginButton));
@@ -194,6 +195,7 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<WelcomeActivi
         solo.clickOnView(listelement2);
         solo.enterText((EditText) solo.getView(R.id.BidStallAmtET), "2.00");
         solo.clickOnView(solo.getView(R.id.BidStallBidBtn));
+        solo.goBack();
         solo.goBack();
         solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
 
