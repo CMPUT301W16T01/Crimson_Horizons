@@ -100,5 +100,9 @@ public class BidStall extends AppCompatActivity {
         Intent newIntent = clickUserName.clickUserName(this, view, new ElasticSearchCtr.GetAccount());
         startActivity(newIntent);
     }
-
+    public void newReview(View view) {
+        Intent intent = new Intent(getApplicationContext(),ReviewsActivity.class);
+        intent.putExtra("stall",stall);
+        startActivity(intent);
+    }
 }
