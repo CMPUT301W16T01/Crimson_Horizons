@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.robotium.solo.Solo;
+import com.searchly.jestdroid.DroidClientConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,52 +108,46 @@ public class TestBidStall extends ActivityInstrumentationTestCase2<WelcomeActivi
      * will it be stored properly.
      */
     public void testNotification(){
-        NotificationObject notification = new NotificationObject();
-        notification.setOwner("testing");
-        notification.setBidder("bidder");
-        notification.setBidAmt("9.99");
-        notification.setDate("Where the date is");
-        NotificationESForTest.AddNotification addNotification = new NotificationESForTest.AddNotification();
-        addNotification.execute(notification);
-        try {
-            addNotification.get();
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        NotificationESForTest.GetNotifications getNotifications = new NotificationESForTest.GetNotifications();
-        String[] query = new String[2];
-        query[1]="Owner";
-        query[0]="testing";
-        ArrayList<NotificationObject>returned = new ArrayList<>();
-        getNotifications.execute(query);
-        try {
-            returned=getNotifications.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        assertEquals("Size should be only one",1,returned.size());
-        assertEquals("Owner should be same",notification.getOwner(),returned.get(0).getOwner());
-        assertEquals("Bidder should be same",notification.getBidder(),returned.get(0).getBidder());
-        assertEquals("Date should be same",notification.getDate(),returned.get(0).getDate());
-        NotificationESForTest.DeleteNotification reset = new NotificationESForTest.DeleteNotification();
-        Boolean check = false;
-        try {
-            Thread.sleep(2000);
-            reset.execute(notification);
-            check = reset.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        if (!check){
-            assertTrue("Didn't clean up",false);
-        }
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+
+        solo.clickOnView(solo.getView(R.id.AccountBtn));
+        solo.clickOnView(solo.getView(R.id.AddBtn));
+        solo.enterText((EditText) solo.getView(R.id.NamePrompET), "__test1");
+        solo.enterText((EditText) solo.getView(R.id.DescriptionET), "__test1oneAAAAA");
+
+        solo.clickOnView(solo.getView(R.id.AddInAddBtn));
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
+
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "123@123");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+        solo.clickOnView(solo.getView(R.id.SearchBtn));
+        solo.enterText((EditText) solo.getView(R.id.query), "__test1oneAAAAA");
+        solo.clickOnView(solo.getView(R.id.SearchBtn));
+
+        ListView listView = (ListView)solo.getView(R.id.ResultLv);
+        View listelement = listView.getChildAt(0);
+        solo.clickOnView(listelement);
+        solo.enterText((EditText) solo.getView(R.id.BidStallAmtET), "1.00");
+        solo.clickOnView(solo.getView(R.id.BidStallBidBtn));
+        solo.goBack();
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
+
+        solo.clickOnView(solo.getView(R.id.LoginButton));
+        solo.enterText((EditText) solo.getView(R.id.emailAddress), "__test1");
+        solo.clickOnView(solo.getView(R.id.email_sign_in_button));
+        solo.clickOnView(solo.getView(R.id.NotificationsBtnHomePage));
+        ListView lv = (ListView)solo.getView(R.id.NotificationsListView);
+        assertNotNull(lv);
+        View elem = lv.getChildAt(0);
+        Button delete = (Button)elem.findViewById(R.id.DeleteNotificationBtn);
+        solo.clickOnView(delete);
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.SignoutBtnHomePg));
     }
     /**
      * test to see bids on one of user's things
