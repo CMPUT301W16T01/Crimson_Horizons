@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/reviewsLVEditStall"
-        android:layout_above="@+id/addReveiwBtn">
+        android:layout_above="@+id/txtAverageRating">
 
     </ListView>
 
@@ -29,5 +29,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="49dp"
         android:onClick="addReview"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Average Rating: N/A"
+        android:id="@+id/txtAverageRating"
+        android:layout_above="@+id/addReveiwBtn"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -45,11 +46,18 @@ public class ReviewsActivity extends AppCompatActivity {
         ArrayList<String> review_string = new ArrayList<>();
         int idx =0;
         while (idx<reviewlist.size()){
-            review_string.add(reviewlist.get(0).getText().toString());
+            String temp = reviewlist.get(idx).getUser() + " says: \""
+                    + reviewlist.get(idx).getText().toString()
+                    + "\" (Rating: " + reviewlist.get(idx).getRating() + ")";
+            review_string.add(temp);
             idx = idx+1;
         }
         myAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.review_layout,review_string);
         reviewsLV.setAdapter(myAdapter);
+
+        TextView average = (TextView)findViewById(R.id.txtAverageRating);
+        String averageValue = (reviewlist.size() > 0) ? average().toString() : "N/A";
+        average.setText("Average Rating: " + averageValue);
     }
 
     private Double average() {
