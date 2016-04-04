@@ -21,7 +21,7 @@ public class ReviewsActivity extends AppCompatActivity {
     private ArrayAdapter<String> myAdapter;
     private ListView reviewsLV;
     private Stalls stall;
-
+    private ArrayList<Review>reviewlist = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +34,7 @@ public class ReviewsActivity extends AppCompatActivity {
         query[0]="StallID";
         query[1]=stall.getStallID();
         getReview.execute(query);
-        ArrayList<Review>reviewlist = new ArrayList<>();
+
         try {
             reviewlist = getReview.get();
         } catch (InterruptedException e) {
@@ -54,10 +54,10 @@ public class ReviewsActivity extends AppCompatActivity {
 
     private Double average() {
         Double result = 0.00;
-        for (Review r : reviewList) {
+        for (Review r : reviewlist) {
             result += r.getRating();
         }
-        result /= reviewList.size();
+        result /= reviewlist.size();
         return result;
     }
 }
