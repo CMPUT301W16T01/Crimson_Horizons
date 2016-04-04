@@ -31,9 +31,9 @@ public class AddStall extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_add_stall);
+        stall = new Stalls();
     }
     public void saveStallInformation(View view){
-        stall = new Stalls();
         EditText description = (EditText)findViewById(R.id.DescriptionET);
         EditText longitude = (EditText)findViewById(R.id.longitudeAddStallET);
         EditText latitude = (EditText)findViewById(R.id.latitudeAddStallET);
